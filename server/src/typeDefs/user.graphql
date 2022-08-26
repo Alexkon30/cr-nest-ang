@@ -1,0 +1,61 @@
+enum Gender {
+	UNKNOWN
+	MALE
+	FEMALE
+}
+
+type Users {
+	users: [User!]
+}
+
+input LoginUserInput {
+	email: String! #@length(max: 7)
+	password: String!
+}
+
+type LoginResponse {
+	accessToken: String!
+	refreshToken: String!
+}
+
+type RefreshTokenResponse {
+	accessToken: String!
+}
+
+type Local {
+	email: String
+	password: String
+}
+
+enum UserType {
+	BASIC 
+	PREMIUM
+}
+
+input CreateUserInput {
+	firstName: String!
+	lastName: String!
+	email: String!
+	password: String!
+	gender: Gender!
+}
+
+type User {
+	_id: ID!
+	local: Local
+	# google: Google
+	# facebook: Facebook
+	firstName: String!
+	lastName: String!
+	avatar: String
+	gender: Gender!
+	resetPasswordToken: String
+	resetPasswordExpires: Float
+	isVerified: Boolean!
+	isOnline: Boolean!
+	isLocked: Boolean!
+	isActive: Boolean!
+	type: UserType!
+	createdAt: String!
+	updatedAt: String!
+}
