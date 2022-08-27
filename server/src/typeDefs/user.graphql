@@ -59,3 +59,7 @@ type User {
 	createdAt: String!
 	updatedAt: String!
 }
+
+type Query {
+	hello: String!
+}

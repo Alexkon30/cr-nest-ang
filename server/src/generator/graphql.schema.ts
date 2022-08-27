@@ -68,4 +68,8 @@ export class User {
     updatedAt: string;
 }
 
+export abstract class IQuery {
+    abstract hello(): string | Promise<string>;
+}
+
 type Nullable<T> = T | null;

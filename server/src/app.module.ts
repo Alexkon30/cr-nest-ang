@@ -3,22 +3,24 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { TypeOrmService } from './config';
+import * as Resolvers from './resolvers'
+
 
 @Module({
   imports: [
-    // GraphQLModule.forRoot<ApolloDriverConfig>({
-    //   driver: ApolloDriver,
-    //   debug: true,
-    //   playground: false,
-    //   autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-    //   sortSchema: true,
-    // }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      typePaths: ['./src/**/*.(gql|graphql)'],
+      debug: true,
+    }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmService
     }),
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService, ...Object.values(Resolvers)],
 })
 export class AppModule {}
