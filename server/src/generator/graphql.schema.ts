@@ -20,8 +20,8 @@ export enum UserType {
 }
 
 export class LoginUserInput {
-    email: string;
-    password: string;
+    email?: Nullable<string>;
+    password?: Nullable<string>;
 }
 
 export class CreateUserInput {
@@ -30,6 +30,12 @@ export class CreateUserInput {
     email: string;
     password: string;
     gender: Gender;
+}
+
+export abstract class IQuery {
+    abstract login(user?: Nullable<LoginUserInput>): LoginResponse | Promise<LoginResponse>;
+
+    abstract hello(): string | Promise<string>;
 }
 
 export class Users {
@@ -66,10 +72,6 @@ export class User {
     type: UserType;
     createdAt: string;
     updatedAt: string;
-}
-
-export abstract class IQuery {
-    abstract hello(): string | Promise<string>;
 }
 
 type Nullable<T> = T | null;

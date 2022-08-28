@@ -9,7 +9,7 @@ type Users {
 }
 
 input LoginUserInput {
-	email: String! #@length(max: 7)
+	email: String!
 	password: String!
 }
 
