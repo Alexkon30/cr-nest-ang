@@ -10,7 +10,6 @@ export class AuthResolver {
 
     @Query('login')
     async login(@Args('user') loginUserInput: LoginUserInput): Promise<LoginResponse> {
-        console.log('graph', loginUserInput)
-        return this.authService.validateUserByPassword(loginUserInput)
+        return this.authService.validateUser(loginUserInput)
     }
 }

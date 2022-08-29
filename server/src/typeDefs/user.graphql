@@ -1,5 +1,4 @@
 enum Gender {
-	UNKNOWN
 	MALE
 	FEMALE
 }
@@ -14,8 +13,7 @@ input LoginUserInput {
 }
 
 type LoginResponse {
-	accessToken: String!
-	refreshToken: String!
+	accessToken: String!	
 }
 
 type RefreshTokenResponse {
@@ -42,9 +40,10 @@ input CreateUserInput {
 
 type User {
 	_id: ID!
-	local: Local
 	# google: Google
 	# facebook: Facebook
+	email: String!
+	password: String!
 	firstName: String!
 	lastName: String!
 	avatar: String

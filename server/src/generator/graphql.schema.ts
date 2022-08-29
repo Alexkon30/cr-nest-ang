@@ -9,7 +9,6 @@
 /* eslint-disable */
 
 export enum Gender {
-    UNKNOWN = "UNKNOWN",
     MALE = "MALE",
     FEMALE = "FEMALE"
 }
@@ -20,8 +19,8 @@ export enum UserType {
 }
 
 export class LoginUserInput {
-    email?: Nullable<string>;
-    password?: Nullable<string>;
+    email: string;
+    password: string;
 }
 
 export class CreateUserInput {
@@ -33,7 +32,7 @@ export class CreateUserInput {
 }
 
 export abstract class IQuery {
-    abstract login(user?: Nullable<LoginUserInput>): LoginResponse | Promise<LoginResponse>;
+    abstract login(user: LoginUserInput): LoginResponse | Promise<LoginResponse>;
 
     abstract hello(): string | Promise<string>;
 }
@@ -44,7 +43,6 @@ export class Users {
 
 export class LoginResponse {
     accessToken: string;
-    refreshToken: string;
 }
 
 export class RefreshTokenResponse {
@@ -58,7 +56,8 @@ export class Local {
 
 export class User {
     _id: string;
-    local?: Nullable<Local>;
+    email: string;
+    password: string;
     firstName: string;
     lastName: string;
     avatar?: Nullable<string>;

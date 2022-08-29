@@ -1,5 +1,5 @@
-import { Gender, Local, UserType } from 'src/generator/graphql.schema';
-import { Column, Entity, ObjectIdColumn } from 'typeorm';
+import { Gender, UserType } from 'src/generator/graphql.schema';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { plainToClass } from 'class-transformer';
 import { v4 as uuidv4 } from 'uuid';
 import * as moment from 'moment';
@@ -11,8 +11,14 @@ import * as moment from 'moment';
   },
 })
 export class User {
-  @ObjectIdColumn()
+  @PrimaryGeneratedColumn('uuid')
   _id: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  password: string;
 
   @Column()
   firstName: string;
@@ -25,9 +31,6 @@ export class User {
 
   @Column()
   gender: Gender;
-
-  @Column()
-  local: Local;
 
   @Column()
   resetRasswordToken: string;
