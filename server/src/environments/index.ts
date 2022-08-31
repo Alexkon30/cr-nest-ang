@@ -23,10 +23,21 @@ const enviroment = {
 }
 const TYPEORM = enviroment[NODE_ENV]
 
+// jsonwebtoken
+const ACCESS_TOKEN_SECRET: string =
+	process.env.ACCESS_TOKEN_SECRET || 'access-token-key'
+const REFRESH_TOKEN_SECRET: string =
+	process.env.REFRESH_TOKEN_SECRET || 'refresh-token-key'
+const RESETPASS_TOKEN_SECRET: string =
+	process.env.RESETPASS_TOKEN_SECRET || 'resetpass-token-key'
+
 
 export {
     NODE_ENV,
     BCRYPT_SALT,
     TYPEORM,
-    RATE_LIMIT_MAX
+    RATE_LIMIT_MAX,
+    ACCESS_TOKEN_SECRET,
+    REFRESH_TOKEN_SECRET,
+    RESETPASS_TOKEN_SECRET
 }

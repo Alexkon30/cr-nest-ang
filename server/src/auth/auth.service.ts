@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { User } from "src/entities";
+import { UserWithoutPass } from "src/entities/types";
 import { LoginResponse, LoginUserInput } from "src/generator/graphql.schema";
 import { comparePassword } from "src/utils";
-import { UserService } from "./user.service";
+import { UserService } from "../services/user.service";
 
 @Injectable()
 export class AuthService {
@@ -11,7 +11,7 @@ export class AuthService {
         private readonly jwtService: JwtService,
         private readonly userService: UserService,
     ) {}
-    async validateUser(loginAttempt: LoginUserInput): Promise<Omit<User, 'password'> | null> {
+    async validateUser(loginAttempt: LoginUserInput): Promise<UserWithoutPass | null> {
         const { email, password } = loginAttempt
         const user = await this.userService.findUserByEmail(email)
 
@@ -26,7 +26,7 @@ export class AuthService {
         return null
     }
 
-    async login(user: User): Promise<LoginResponse> {
+    async login(user: UserWithoutPass): Promise<LoginResponse> {
         const payload = {email: user.email, sub: user._id}
 
         return {
