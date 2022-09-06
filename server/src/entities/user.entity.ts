@@ -11,68 +11,67 @@ import * as moment from 'moment';
   },
 })
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid') //constructor
   _id: string;
 
   @Column()
-  email: string;
+  email: string; //input
 
   @Column()
-  password: string;
+  password: string; //input
 
   @Column()
-  firstName: string;
+  firstName: string; //input
 
   @Column()
-  lastName: string;
+  lastName: string; //input
 
   @Column()
-  avatar: string;
+  avatar: string; //constructor
 
   @Column()
-  gender: Gender;
+  gender: Gender; //input
+
+  // @Column()
+  // resetRasswordToken: string;
+
+  // @Column()
+  // resetPasswordExpires: number;
 
   @Column()
-  resetRasswordToken: string;
+  isVerified: boolean; //constructor
 
   @Column()
-  resetPasswordExpires: number;
+  isOnline: boolean; //constructor
 
   @Column()
-  isVerified: boolean;
+  isActive: boolean; //constructor
 
   @Column()
-  isOnline: boolean;
+  isLocked: boolean; //constructor
 
   @Column()
-  isActive: boolean;
+  createdAt: string; //constructor
 
   @Column()
-  isLocked: boolean;
+  updatedAt: string; //constructor
 
   @Column()
-  createdAt: string;
-
-  @Column()
-  updatedAt: string;
-
-  @Column()
-  type: UserType;
+  type: UserType; //constructor
 
   constructor(user: Partial<User>) {
     Object.assign(
       this,
-      plainToClass(User, user, {
-        excludeExtraneousValues: true,
-      }),
+      plainToClass(User, user),
     );
     this._id = this._id || uuidv4();
-    this.isVerified !== undefined ? this.isVerified : false;
+    this.isVerified = this.isVerified !== undefined ? this.isVerified : false;
     this.isOnline = this.isOnline !== undefined ? this.isOnline : false;
     this.isLocked = this.isLocked !== undefined ? this.isLocked : false;
     this.isActive = this.isActive !== undefined ? this.isActive : true;
     this.type = this.type || UserType.BASIC;
     this.createdAt = this.createdAt || moment().format();
     this.updatedAt = moment().format();
+    this.avatar = this.avatar || '';
   }
 }

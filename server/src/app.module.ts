@@ -6,7 +6,6 @@ import { TypeOrmService } from './config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './modules/user.module';
 import * as Resolvers from './resolvers'
-import { AppController } from './app.controller';
 
 
 @Module({
@@ -22,7 +21,7 @@ import { AppController } from './app.controller';
     UserModule,
     AuthModule
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [...Object.values(Resolvers)],
 })
 export class AppModule {}

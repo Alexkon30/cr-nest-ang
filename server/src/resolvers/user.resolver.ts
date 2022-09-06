@@ -1,16 +1,24 @@
-import { Query, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { User } from "src/entities";
-import { v4 as uuidv4 } from "uuid";
+import { CreateUserInput } from "src/generator/graphql.schema";
+import { UserService } from "src/services/user.service";
 
 @Resolver('User')
 export class UserResolver {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    constructor() {
-        
-    }
+    constructor(
+        private readonly userService: UserService
+    ) {}
 
     @Query()
-    async hello(): Promise<string> {
-        return 'world'
+    async users(): Promise<User[]> {
+        const users = await this.userService.findAllUsers()
+        return users
+    }
+
+    @Mutation()
+    async createUser(
+        @Args('input') input: CreateUserInput,
+    ): Promise<any> {
+        return this.userService.createUser(input)
     }
 }

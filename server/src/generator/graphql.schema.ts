@@ -34,7 +34,7 @@ export class CreateUserInput {
 export abstract class IQuery {
     abstract login(user: LoginUserInput): LoginResponse | Promise<LoginResponse>;
 
-    abstract hello(): string | Promise<string>;
+    abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
 }
 
 export class Users {
@@ -71,6 +71,10 @@ export class User {
     type: UserType;
     createdAt: string;
     updatedAt: string;
+}
+
+export abstract class IMutation {
+    abstract createUser(input: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
 }
 
 type Nullable<T> = T | null;

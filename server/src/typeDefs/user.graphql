@@ -60,5 +60,9 @@ type User {
 }
 
 type Query {
-	hello: String!
+	users: [User!]
+}
+
+type Mutation {
+	createUser(input: CreateUserInput! ): User
 }
