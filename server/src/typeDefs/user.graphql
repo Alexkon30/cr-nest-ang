@@ -48,8 +48,8 @@ type User {
 	lastName: String!
 	avatar: String
 	gender: Gender!
-	resetPasswordToken: String
-	resetPasswordExpires: Float
+	# resetPasswordToken: String
+	# resetPasswordExpires: Float
 	isVerified: Boolean!
 	isOnline: Boolean!
 	isLocked: Boolean!

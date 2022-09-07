@@ -62,8 +62,6 @@ export class User {
     lastName: string;
     avatar?: Nullable<string>;
     gender: Gender;
-    resetPasswordToken?: Nullable<string>;
-    resetPasswordExpires?: Nullable<number>;
     isVerified: boolean;
     isOnline: boolean;
     isLocked: boolean;

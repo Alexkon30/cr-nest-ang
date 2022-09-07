@@ -18,7 +18,7 @@ export class UserResolver {
     @Mutation()
     async createUser(
         @Args('input') input: CreateUserInput,
-    ): Promise<any> {
+    ): Promise<User | undefined> {
         return this.userService.createUser(input)
     }
 }
