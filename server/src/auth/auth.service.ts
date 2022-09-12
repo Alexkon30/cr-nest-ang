@@ -15,12 +15,11 @@ export class AuthService {
         const { email, password } = loginAttempt
         const user = await this.userService.findUserByEmail(email)
 
-        if (user && comparePassword(user.password, password)) {
+        if (user && await comparePassword(password, user.password)) {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { password, ...result } = user;
             return result;
           }
-
         return null
     }
 
