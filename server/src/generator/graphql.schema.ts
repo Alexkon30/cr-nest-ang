@@ -13,17 +13,16 @@ export enum Gender {
     FEMALE = "FEMALE"
 }
 
-export enum UserType {
-    BASIC = "BASIC",
-    PREMIUM = "PREMIUM"
+export enum Role {
+    OWNER = "OWNER",
+    ADMIN = "ADMIN",
+    TEACHER = "TEACHER",
+    STUDENT = "STUDENT"
 }
 
 export class CreateUserInput {
-    firstName: string;
-    lastName: string;
     email: string;
     password: string;
-    gender: Gender;
 }
 
 export class Users {
@@ -38,15 +37,11 @@ export class User {
     _id: string;
     email: string;
     password: string;
-    firstName: string;
-    lastName: string;
+    firstName?: Nullable<string>;
+    lastName?: Nullable<string>;
     avatar?: Nullable<string>;
-    gender: Gender;
-    isVerified: boolean;
-    isOnline: boolean;
-    isLocked: boolean;
-    isActive: boolean;
-    type: UserType;
+    gender?: Nullable<Gender>;
+    type?: Nullable<Role>;
     createdAt: string;
     updatedAt: string;
 }

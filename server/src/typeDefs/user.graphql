@@ -11,36 +11,30 @@ type RefreshTokenResponse {
 	accessToken: String!
 }
 
-enum UserType {
-	BASIC 
-	PREMIUM
+enum Role {
+	OWNER 
+	ADMIN
+	TEACHER
+	STUDENT
 }
 
 input CreateUserInput {
-	firstName: String!
-	lastName: String!
 	email: String!
 	password: String!
-	gender: Gender!
 }
 
 type User {
 	_id: ID!
-	# google: Google
-	# facebook: Facebook
 	email: String!
 	password: String!
-	firstName: String!
-	lastName: String!
+	firstName: String
+	lastName: String
 	avatar: String
-	gender: Gender!
-	# resetPasswordToken: String
-	# resetPasswordExpires: Float
-	isVerified: Boolean!
-	isOnline: Boolean!
-	isLocked: Boolean!
-	isActive: Boolean!
-	type: UserType!
+	gender: Gender
+	# isVerified: Boolean!
+	# isOnline: Boolean!
+	# isLocked: Boolean!
+	type: Role
 	createdAt: String!
 	updatedAt: String!
 }

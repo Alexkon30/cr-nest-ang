@@ -5,7 +5,7 @@ import { getMetadataArgsStorage } from "typeorm";
 
 export class TypeOrmService implements TypeOrmOptionsFactory {
     async createTypeOrmOptions(): Promise<TypeOrmModuleOptions> {
-        const options = {
+        const options: TypeOrmModuleOptions = {
             ...TYPEORM,
             type: "postgres",
             entities: getMetadataArgsStorage().tables.map(tbl => tbl.target),
@@ -22,7 +22,8 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			keepConnectionAlive: true,
-			logging: true
+			logging: true,
+			// dropSchema: true
         }
         return options
     }

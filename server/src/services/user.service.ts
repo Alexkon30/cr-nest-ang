@@ -31,10 +31,10 @@ export class UserService {
                 throw new ForbiddenException('Email already existed')
             }
     
-            const newUser = new User({
-                                ...userInput, 
-                                password: await hashPassword(userInput.password)
-                            })
+            const newUser = this.userRepository.create({
+                email,
+                password: await hashPassword(userInput.password)
+            })
             
             await this.userRepository.save(newUser)
     

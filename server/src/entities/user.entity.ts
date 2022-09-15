@@ -1,8 +1,5 @@
-import { Gender, UserType } from 'src/generator/graphql.schema';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { plainToClass } from 'class-transformer';
-import { v4 as uuidv4 } from 'uuid';
-import * as moment from 'moment';
+import { Gender, Role } from 'src/generator/graphql.schema';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({
   name: 'users',
@@ -11,67 +8,60 @@ import * as moment from 'moment';
   },
 })
 export class User {
-  @PrimaryGeneratedColumn('uuid') //constructor
+  @PrimaryGeneratedColumn('uuid')
   _id: string;
 
-  @Column()
-  email: string; //input
+  @Column({
+    unique: true
+  })
+  email: string;
 
   @Column()
-  password: string; //input
+  password: string;
 
-  @Column()
-  firstName: string; //input
+  @Column({
+    nullable: true
+  })
+  firstName: string;
 
-  @Column()
-  lastName: string; //input
+  @Column({
+    nullable: true
+  })
+  lastName: string;
 
-  @Column()
-  avatar: string; //constructor
+  @Column({
+    nullable: true
+  })
+  avatar: string;
 
-  @Column()
-  gender: Gender; //input
+  @Column({
+    nullable: true
+  })
+  gender: Gender;
 
-  // @Column()
-  // resetRasswordToken: string;
+  @Column({
+    default: false
+  })
+  isVerified: boolean;
 
-  // @Column()
-  // resetPasswordExpires: number;
+  @Column({
+    default: false,
+  })
+  isOnline: boolean;
 
-  @Column()
-  isVerified: boolean; //constructor
+  @Column({
+    default: false
+  })
+  isLocked: boolean;
 
-  @Column()
-  isOnline: boolean; //constructor
+  @Column({
+    nullable: true 
+  })
+  role: Role;
 
-  @Column()
-  isActive: boolean; //constructor
+  @CreateDateColumn()
+  createdAt: number;
 
-  @Column()
-  isLocked: boolean; //constructor
-
-  @Column()
-  createdAt: string; //constructor
-
-  @Column()
-  updatedAt: string; //constructor
-
-  @Column()
-  type: UserType; //constructor
-
-  constructor(user: Partial<User>) {
-    Object.assign(
-      this,
-      plainToClass(User, user),
-    );
-    this._id = this._id || uuidv4();
-    this.isVerified = this.isVerified !== undefined ? this.isVerified : false;
-    this.isOnline = this.isOnline !== undefined ? this.isOnline : false;
-    this.isLocked = this.isLocked !== undefined ? this.isLocked : false;
-    this.isActive = this.isActive !== undefined ? this.isActive : true;
-    this.type = this.type || UserType.BASIC;
-    this.createdAt = this.createdAt || moment().format();
-    this.updatedAt = moment().format();
-    this.avatar = this.avatar || '';
-  }
+  @UpdateDateColumn()
+  updatedAt: number;
 }
