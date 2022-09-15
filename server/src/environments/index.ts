@@ -13,8 +13,8 @@ const enviroment = {
 	development: {
 		host: process.env.HOST,
         port: process.env.PORT,
-        username: process.env.USERNAME,
-        password: process.env.PASSWORD,
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
         database: process.env.DATABASE,
 	},
 	production: {

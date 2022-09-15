@@ -7,22 +7,8 @@ type Users {
 	users: [User!]
 }
 
-input LoginUserInput {
-	email: String!
-	password: String!
-}
-
-type LoginResponse {
-	accessToken: String!	
-}
-
 type RefreshTokenResponse {
 	accessToken: String!
-}
-
-type Local {
-	email: String
-	password: String
 }
 
 enum UserType {

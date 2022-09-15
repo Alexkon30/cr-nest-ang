@@ -18,11 +18,6 @@ export enum UserType {
     PREMIUM = "PREMIUM"
 }
 
-export class LoginUserInput {
-    email: string;
-    password: string;
-}
-
 export class CreateUserInput {
     firstName: string;
     lastName: string;
@@ -31,27 +26,12 @@ export class CreateUserInput {
     gender: Gender;
 }
 
-export abstract class IQuery {
-    abstract login(user: LoginUserInput): LoginResponse | Promise<LoginResponse>;
-
-    abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
-}
-
 export class Users {
     users?: Nullable<User[]>;
 }
 
-export class LoginResponse {
-    accessToken: string;
-}
-
 export class RefreshTokenResponse {
     accessToken: string;
-}
-
-export class Local {
-    email?: Nullable<string>;
-    password?: Nullable<string>;
 }
 
 export class User {
@@ -69,6 +49,10 @@ export class User {
     type: UserType;
     createdAt: string;
     updatedAt: string;
+}
+
+export abstract class IQuery {
+    abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
 }
 
 export abstract class IMutation {

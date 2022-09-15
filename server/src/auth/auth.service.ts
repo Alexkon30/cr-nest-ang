@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { UserWithoutPass } from "src/entities/types";
-import { LoginResponse, LoginUserInput } from "src/generator/graphql.schema";
+import { LoginResponse, LoginUserInput, UserWithoutPass } from "src/entities/types";
 import { comparePassword } from "src/utils";
 import { UserService } from "../services/user.service";
 
