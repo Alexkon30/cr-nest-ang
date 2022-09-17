@@ -7,7 +7,7 @@ type RefreshTokenResponse {
 	accessToken: String!
 }
 
-enum Role {
+enum UserRole {
 	OWNER 
 	ADMIN
 	TEACHER
@@ -25,12 +25,12 @@ type User {
 	password: String!
 	firstName: String
 	lastName: String
+	patronymic: String
 	avatar: String
 	gender: Gender
 	isVerified: Boolean
 	isOnline: Boolean
 	isLocked: Boolean
-	type: Role
 	createdAt: String!
 	updatedAt: String!
 }

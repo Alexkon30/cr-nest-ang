@@ -1,8 +1,7 @@
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ApolloError } from "apollo-server-core";
-import { User } from "src/entities";
-import { CreateUserInput } from "src/generator/graphql.schema";
+import { CreateUserInput, User } from "src/generator/graphql.schema";
 import { hashPassword } from "src/utils";
 import { Repository } from "typeorm";
 

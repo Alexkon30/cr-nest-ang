@@ -4,8 +4,10 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmService } from './config';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './modules/user.module';
-import * as Resolvers from './resolvers'
+import { UserModule } from './modules/users/user.module';
+import { OrganizationsModule } from './modules/organizations/organizations.module';
+import { OrgUserRolesModule } from './modules/org-user-roles/org-user-roles.module';
+import { RolesService } from './modules/roles/roles.service';
 
 
 @Module({
@@ -19,9 +21,10 @@ import * as Resolvers from './resolvers'
       useClass: TypeOrmService
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    OrganizationsModule,
+    OrgUserRolesModule
   ],
-  controllers: [],
-  providers: [...Object.values(Resolvers)],
+  providers: [RolesService]
 })
 export class AppModule {}

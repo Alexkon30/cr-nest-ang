@@ -13,7 +13,7 @@ export enum Gender {
     FEMALE = "FEMALE"
 }
 
-export enum Role {
+export enum UserRole {
     OWNER = "OWNER",
     ADMIN = "ADMIN",
     TEACHER = "TEACHER",
@@ -35,9 +35,12 @@ export class User {
     password: string;
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
+    patronymic?: Nullable<string>;
     avatar?: Nullable<string>;
     gender?: Nullable<Gender>;
-    type?: Nullable<Role>;
+    isVerified?: Nullable<boolean>;
+    isOnline?: Nullable<boolean>;
+    isLocked?: Nullable<boolean>;
     createdAt: string;
     updatedAt: string;
 }

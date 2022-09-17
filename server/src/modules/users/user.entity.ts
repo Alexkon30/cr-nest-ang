@@ -1,11 +1,11 @@
-import { Gender, Role } from 'src/generator/graphql.schema';
+import { Gender } from 'src/generator/graphql.schema';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({
   name: 'users',
   orderBy: {
-    createdAt: 'ASC',
-  },
+    lastName: 'ASC',
+  }
 })
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -32,6 +32,11 @@ export class User {
   @Column({
     nullable: true
   })
+  patronymic: string;
+
+  @Column({
+    nullable: true
+  })
   avatar: string;
 
   @Column({
@@ -53,11 +58,6 @@ export class User {
     default: false
   })
   isLocked: boolean;
-
-  @Column({
-    nullable: true 
-  })
-  role: Role;
 
   @CreateDateColumn()
   createdAt: number;
