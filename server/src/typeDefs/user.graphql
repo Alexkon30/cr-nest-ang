@@ -3,10 +3,6 @@ enum Gender {
 	FEMALE
 }
 
-type Users {
-	users: [User!]
-}
-
 type RefreshTokenResponse {
 	accessToken: String!
 }
@@ -31,9 +27,9 @@ type User {
 	lastName: String
 	avatar: String
 	gender: Gender
-	# isVerified: Boolean!
-	# isOnline: Boolean!
-	# isLocked: Boolean!
+	isVerified: Boolean
+	isOnline: Boolean
+	isLocked: Boolean
 	type: Role
 	createdAt: String!
 	updatedAt: String!

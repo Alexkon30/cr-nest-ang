@@ -45,7 +45,7 @@ export class User {
   isVerified: boolean;
 
   @Column({
-    default: false,
+    default: false
   })
   isOnline: boolean;
 

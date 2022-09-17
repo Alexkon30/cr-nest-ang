@@ -25,10 +25,6 @@ export class CreateUserInput {
     password: string;
 }
 
-export class Users {
-    users?: Nullable<User[]>;
-}
-
 export class RefreshTokenResponse {
     accessToken: string;
 }
