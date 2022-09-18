@@ -10,5 +10,5 @@ export class Role {
     type: 'enum',
     enum: UserRole
   })
-  value: UserRole; //
+  value: UserRole; 
 }

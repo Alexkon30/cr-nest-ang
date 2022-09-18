@@ -1,0 +1,58 @@
+enum Gender {
+	MALE
+	FEMALE
+}
+
+type RefreshTokenResponse {
+	accessToken: String!
+}
+
+enum UserRole {
+	OWNER 
+	ADMIN
+	TEACHER
+	STUDENT
+}
+
+input CreateUserInput {
+	email: String!
+	password: String!
+}
+
+input UpdateUserInput {
+	email: String!
+	password: String
+	firstName: String
+	lastName: String
+	patronymic: String
+	# avatar: String
+	# gender: Gender
+	# isVerified: Boolean
+	# isOnline: Boolean
+	# isLocked: Boolean
+}
+
+type User {
+	_id: ID!
+	email: String!
+	password: String!
+	firstName: String
+	lastName: String
+	patronymic: String
+	# avatar: String
+	# gender: Gender
+	# isVerified: Boolean
+	# isOnline: Boolean
+	# isLocked: Boolean
+	# createdAt: String!
+	# updatedAt: String!
+}
+
+type Query {
+	users: [User!] #test route
+}
+
+type Mutation {
+	createUser(input: CreateUserInput! ): User
+	updateUser(input: UpdateUserInput! ): User
+}

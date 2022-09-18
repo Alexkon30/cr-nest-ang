@@ -25,6 +25,14 @@ export class CreateUserInput {
     password: string;
 }
 
+export class UpdateUserInput {
+    email: string;
+    password?: Nullable<string>;
+    firstName?: Nullable<string>;
+    lastName?: Nullable<string>;
+    patronymic?: Nullable<string>;
+}
+
 export class RefreshTokenResponse {
     accessToken: string;
 }
@@ -36,13 +44,6 @@ export class User {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     patronymic?: Nullable<string>;
-    avatar?: Nullable<string>;
-    gender?: Nullable<Gender>;
-    isVerified?: Nullable<boolean>;
-    isOnline?: Nullable<boolean>;
-    isLocked?: Nullable<boolean>;
-    createdAt: string;
-    updatedAt: string;
 }
 
 export abstract class IQuery {
@@ -51,6 +52,8 @@ export abstract class IQuery {
 
 export abstract class IMutation {
     abstract createUser(input: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract updateUser(input: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
 }
 
 type Nullable<T> = T | null;

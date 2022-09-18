@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Organization } from "../organizations/organization.entity";
 import { Role } from "../roles/role.entity";
 import { User } from "../users/user.entity";
@@ -14,11 +14,11 @@ export class OrganizationUserRoles {
   @JoinColumn()
   organization: Organization
 
-  @Column(() => User)
+  @OneToOne(() => User)
   @JoinColumn()
   user: User
 
-  @Column(() => Role)
+  @OneToOne(() => Role)
   @JoinColumn()
   role: Role
 }

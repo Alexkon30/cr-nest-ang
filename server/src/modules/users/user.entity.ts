@@ -34,34 +34,34 @@ export class User {
   })
   patronymic: string;
 
-  @Column({
-    nullable: true
-  })
-  avatar: string;
+  // @Column({
+  //   nullable: true
+  // })
+  // avatar: string;
 
-  @Column({
-    nullable: true
-  })
-  gender: Gender;
+  // @Column({
+  //   nullable: true
+  // })
+  // gender: Gender;
 
-  @Column({
-    default: false
-  })
-  isVerified: boolean;
+  // @Column({
+  //   default: false
+  // })
+  // isVerified: boolean;
 
-  @Column({
-    default: false
-  })
-  isOnline: boolean;
+  // @Column({
+  //   default: false
+  // })
+  // isOnline: boolean;
 
-  @Column({
-    default: false
-  })
-  isLocked: boolean;
+  // @Column({
+  //   default: false
+  // })
+  // isLocked: boolean;
 
-  @CreateDateColumn()
-  createdAt: number;
+  // @CreateDateColumn()
+  // createdAt: number;
 
-  @UpdateDateColumn()
-  updatedAt: number;
+  // @UpdateDateColumn()
+  // updatedAt: number;
 }
