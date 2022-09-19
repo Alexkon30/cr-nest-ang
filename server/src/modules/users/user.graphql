@@ -7,7 +7,7 @@ type RefreshTokenResponse {
 	accessToken: String!
 }
 
-enum UserRole {
+enum Role {
 	OWNER 
 	ADMIN
 	TEACHER
@@ -16,7 +16,11 @@ enum UserRole {
 
 input CreateUserInput {
 	email: String!
-	password: String!
+	password: String
+	firstName: String
+	lastName: String
+	patronymic: String
+	roles: [Role!]
 }
 
 input UpdateUserInput {
@@ -25,6 +29,7 @@ input UpdateUserInput {
 	firstName: String
 	lastName: String
 	patronymic: String
+	roles: [Role!]
 	# avatar: String
 	# gender: Gender
 	# isVerified: Boolean
@@ -35,7 +40,7 @@ input UpdateUserInput {
 type User {
 	_id: ID!
 	email: String!
-	password: String!
+	password: String
 	firstName: String
 	lastName: String
 	patronymic: String
@@ -48,11 +53,17 @@ type User {
 	# updatedAt: String!
 }
 
+type UserRole {
+	value: String!
+}
+
 type Query {
 	users: [User!] #test route
+	roles: [UserRole!]
 }
 
 type Mutation {
 	createUser(input: CreateUserInput! ): User
 	updateUser(input: UpdateUserInput! ): User
+	createUsersByAdmin(inputs: [CreateUserInput!]!, organizationId: String!): String
 }

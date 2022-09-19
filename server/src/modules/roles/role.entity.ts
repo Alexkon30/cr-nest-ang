@@ -1,14 +1,14 @@
-import { UserRole } from "src/generator/graphql.schema";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Role } from '../../generator/graphql.schema';
 
 @Entity()
-export class Role {
+export class UserRole {
   @PrimaryGeneratedColumn()
-  _id: number
+  _id: number;
 
   @Column({
     type: 'enum',
-    enum: UserRole
+    enum: Role
   })
-  value: UserRole; 
+  value: Role; 
 }

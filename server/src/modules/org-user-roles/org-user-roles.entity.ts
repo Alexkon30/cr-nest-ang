@@ -1,14 +1,14 @@
 import { Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Organization } from "../organizations/organization.entity";
-import { Role } from "../roles/role.entity";
+import { UserRole } from "../roles/role.entity";
 import { User } from "../users/user.entity";
 
 @Entity({
   name: 'organization_user_roles'
 })
-export class OrganizationUserRoles {
-  @PrimaryGeneratedColumn('uuid')
-  _id: string;
+export class OrganizationUserRole {
+  @PrimaryGeneratedColumn()
+  _id: number;
 
   @OneToOne(() => Organization)
   @JoinColumn()
@@ -18,7 +18,7 @@ export class OrganizationUserRoles {
   @JoinColumn()
   user: User
 
-  @OneToOne(() => Role)
+  @OneToOne(() => UserRole)
   @JoinColumn()
-  role: Role
+  role: UserRole
 }

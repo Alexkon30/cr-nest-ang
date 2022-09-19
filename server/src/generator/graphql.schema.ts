@@ -13,7 +13,7 @@ export enum Gender {
     FEMALE = "FEMALE"
 }
 
-export enum UserRole {
+export enum Role {
     OWNER = "OWNER",
     ADMIN = "ADMIN",
     TEACHER = "TEACHER",
@@ -22,7 +22,11 @@ export enum UserRole {
 
 export class CreateUserInput {
     email: string;
-    password: string;
+    password?: Nullable<string>;
+    firstName?: Nullable<string>;
+    lastName?: Nullable<string>;
+    patronymic?: Nullable<string>;
+    roles?: Nullable<Role[]>;
 }
 
 export class UpdateUserInput {
@@ -31,6 +35,7 @@ export class UpdateUserInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     patronymic?: Nullable<string>;
+    roles?: Nullable<Role[]>;
 }
 
 export class RefreshTokenResponse {
@@ -40,20 +45,28 @@ export class RefreshTokenResponse {
 export class User {
     _id: string;
     email: string;
-    password: string;
+    password?: Nullable<string>;
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     patronymic?: Nullable<string>;
 }
 
+export class UserRole {
+    value: string;
+}
+
 export abstract class IQuery {
     abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
+
+    abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
 }
 
 export abstract class IMutation {
     abstract createUser(input: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
 
     abstract updateUser(input: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract createUsersByAdmin(inputs: CreateUserInput[], organizationId: string): Nullable<string> | Promise<Nullable<string>>;
 }
 
 type Nullable<T> = T | null;
