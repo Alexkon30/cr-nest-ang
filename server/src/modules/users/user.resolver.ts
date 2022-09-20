@@ -4,7 +4,6 @@ import { GqlAuthGuard } from "src/auth/guards/gql-auth.guard";
 import { CreateUserInput, UpdateUserInput, User } from "src/generator/graphql.schema";
 import { UserService } from "src/modules/users/user.service";
 import { UserWithoutPass } from "src/types";
-import { UserRole } from "../roles/role.entity";
 
 @Resolver('User')
 export class UserResolver {
@@ -16,11 +15,6 @@ export class UserResolver {
     // @UseGuards(GqlAuthGuard)
     users(): Promise<User[]> {
         return this.userService.findAllUsers()
-    }
-
-    @Query()
-    roles(): Promise<UserRole[]> {
-        return this.userService.findAllRoles()
     }
 
     @Mutation()

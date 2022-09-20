@@ -6,9 +6,9 @@ import { CreateUserInput, UpdateUserInput, User } from "src/generator/graphql.sc
 import { UserWithoutPass } from "src/types";
 import { hashPassword } from "src/utils";
 import { Repository } from "typeorm";
-import { OrganizationUserRole } from "../org-user-roles/org-user-roles.entity";
-import { Organization } from "../organizations/organization.entity";
-import { UserRole } from "../roles/role.entity";
+import { OrgUserRolesService } from "../org-user-roles/org-user-roles.service";
+import { OrganizationsService } from "../organizations/organizations.service";
+import { RolesService } from "../roles/roles.service";
 import { User as UserEntity } from "./user.entity";
 
 @Injectable()
@@ -16,12 +16,9 @@ export class UserService {
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
-        @InjectRepository(UserRole)
-        private readonly userRoleRepository: Repository<UserRole>,
-        @InjectRepository(OrganizationUserRole)
-        private readonly orgUserRoleRepository: Repository<OrganizationUserRole>,
-        @InjectRepository(Organization)
-        private readonly organizationRepository: Repository<Organization>
+        private readonly rolesService: RolesService,
+        private readonly organizationService: OrganizationsService,
+        private readonly orgUserRoleService: OrgUserRolesService
     ) {}
 
     findUserByEmail(email: string): Promise<User> {
@@ -30,10 +27,6 @@ export class UserService {
 
     findAllUsers(): Promise<User[]> {
         return this.userRepository.find()
-    }
-
-    findAllRoles(): Promise<UserRole[]> {
-        return this.userRoleRepository.find()
     }
 
     async createUser(userInput: CreateUserInput): Promise<UserWithoutPass | undefined> {
@@ -77,6 +70,8 @@ export class UserService {
             await Promise.all(properties.map(async (prop) => {
                 if (prop === 'password') {
                     existedUser.password = await hashPassword(userInput[prop])
+                } else if (prop === 'roles') {
+                    //roles logic
                 } else {
                     existedUser[prop] = userInput[prop]
                 }
@@ -101,34 +96,32 @@ export class UserService {
                 const existedUser = await this.userRepository.findOneBy({ email: userInfo.email })
                 if (!existedUser) {
                     const newUser = this.userRepository.create(userInfo)
-                    // await this.userRepository.save(newUser)
+                    await this.userRepository.save(newUser)
 
                     const infoPlain = instanceToPlain(userInfo)
+
                     if (infoPlain.hasOwnProperty('roles') && infoPlain.roles.length > 0) {
                         await Promise.all(userInfo.roles.map(async (role) => {
-                            const userRole = await this.userRoleRepository.findOneBy({value: role})
-                            const organization = await this.organizationRepository.findOneBy({_id: organizationId})
 
-                            const newOrgUserRole = this.orgUserRoleRepository.create({
+                            const userRole = await this.rolesService.findRoleByValue(role)
+
+                            const organization = await this.organizationService.findOrganizationById(organizationId)
+
+                            await this.orgUserRoleService.createOrgUserRole({
                                 organization,
                                 user: newUser,
                                 role: userRole
                             })
-
-                            await this.orgUserRoleRepository.save(newOrgUserRole)
                         }))
                     }
-                    
-
-                    console.log(newUser._id)
                     result[userInfo.email] = 'Created'
                 } else {
                     result[userInfo.email] = 'Existed'
                 }
             }
 
-            console.log(result)
-            return 'ok'
+            console.log(result) 
+            return 'ok' //add types
         } catch(err) {
             throw new ApolloError(err)
         }

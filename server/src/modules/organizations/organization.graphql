@@ -1,0 +1,8 @@
+type Organization {
+    _id: ID!
+    title: String!
+}
+
+input CreateOrganizationInput {
+    title: String!
+}

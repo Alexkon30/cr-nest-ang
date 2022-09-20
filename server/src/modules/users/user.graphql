@@ -53,13 +53,8 @@ type User {
 	# updatedAt: String!
 }
 
-type UserRole {
-	value: String!
-}
-
 type Query {
 	users: [User!] #test route
-	roles: [UserRole!]
 }
 
 type Mutation {

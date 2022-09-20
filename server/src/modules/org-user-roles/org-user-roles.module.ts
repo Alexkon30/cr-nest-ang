@@ -6,6 +6,7 @@ import { OrgUserRolesService } from './org-user-roles.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([OrganizationUserRole])],
-  providers: [OrgUserRolesService, OrgUserRolesResolver]
+  providers: [OrgUserRolesService, OrgUserRolesResolver],
+  exports: [OrgUserRolesService]
 })
 export class OrgUserRolesModule {}

@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './modules/users/user.module';
 import { OrganizationsModule } from './modules/organizations/organizations.module';
 import { OrgUserRolesModule } from './modules/org-user-roles/org-user-roles.module';
+import { RolesModule } from './modules/roles/roles.module';
 
 
 @Module({
@@ -22,7 +23,8 @@ import { OrgUserRolesModule } from './modules/org-user-roles/org-user-roles.modu
     UserModule,
     AuthModule,
     OrganizationsModule,
-    OrgUserRolesModule
+    OrgUserRolesModule,
+    RolesModule
   ]
 })
 export class AppModule {}

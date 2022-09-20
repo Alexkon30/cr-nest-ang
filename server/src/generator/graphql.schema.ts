@@ -20,6 +20,10 @@ export enum Role {
     STUDENT = "STUDENT"
 }
 
+export class CreateOrganizationInput {
+    title: string;
+}
+
 export class CreateUserInput {
     email: string;
     password?: Nullable<string>;
@@ -38,6 +42,21 @@ export class UpdateUserInput {
     roles?: Nullable<Role[]>;
 }
 
+export class Organization {
+    _id: string;
+    title: string;
+}
+
+export class UserRole {
+    value: Role;
+}
+
+export abstract class IQuery {
+    abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
+
+    abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
+}
+
 export class RefreshTokenResponse {
     accessToken: string;
 }
@@ -49,16 +68,6 @@ export class User {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     patronymic?: Nullable<string>;
-}
-
-export class UserRole {
-    value: string;
-}
-
-export abstract class IQuery {
-    abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
-
-    abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
 }
 
 export abstract class IMutation {

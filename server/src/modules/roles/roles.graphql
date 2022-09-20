@@ -1,0 +1,7 @@
+type UserRole {
+	value: Role!
+}
+
+type Query {
+	roles: [UserRole!]
+}
