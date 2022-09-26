@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt';
-import { BCRYPT_SALT } from 'src/environments';
+import { BCRYPT_SALT } from '../../environments';
 
 export const hashPassword = async (password: string): Promise<string> => {
 	return await hash(password, BCRYPT_SALT);

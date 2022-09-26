@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserRole } from '../roles/role.entity';
 import { OrganizationUserRole } from './org-user-roles.entity';
 import { OrgUserRolesResolver } from './org-user-roles.resolver';
 import { OrgUserRolesService } from './org-user-roles.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([OrganizationUserRole])],
+  imports: [TypeOrmModule.forFeature([OrganizationUserRole, UserRole])],
   providers: [OrgUserRolesService, OrgUserRolesResolver],
   exports: [OrgUserRolesService]
 })

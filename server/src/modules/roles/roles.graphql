@@ -1,5 +1,6 @@
 type UserRole {
 	value: Role!
+	_id: Int
 }
 
 type Query {

@@ -49,6 +49,7 @@ export class Organization {
 
 export class UserRole {
     value: Role;
+    _id?: Nullable<number>;
 }
 
 export abstract class IQuery {

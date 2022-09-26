@@ -2,6 +2,7 @@
 
 ## Стек технологий
 Backend: Nest, PostgreSQL, TypeORM, GraphQL, jwt, Swagger
+
 Frontend: Angular, GraphQL
 
 
