@@ -1,7 +1,7 @@
 import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { GqlAuthGuard } from "src/auth/guards/gql-auth.guard";
-import { CreateUserInput, UpdateUserInput, User } from "src/generator/graphql.schema";
+import { CreateUserInput, UpdateOrganizationRolesInput, UpdateUserInput, User } from "src/generator/graphql.schema";
 import { UserService } from "src/modules/users/user.service";
 import { UserWithoutPass } from "src/types";
 
@@ -37,5 +37,12 @@ export class UserResolver {
         @Args('organizationId') organizationId: string
     ): Promise<any> {
         return this.userService.createUsersByAdmin(inputs, organizationId)
+    }
+
+    @Mutation()
+    updateOrganizationRoles(
+        @Args('input') input: UpdateOrganizationRolesInput
+    ) {
+        return this.userService.updateOrganizationRoles(input)
     }
 }

@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role } from 'src/generator/graphql.schema';
+import { Role as RoleEnum } from 'src/generator/graphql.schema';
 import { Repository } from 'typeorm';
-import { UserRole } from './role.entity';
+import { Role } from './role.entity';
 
 @Injectable()
 export class RolesService {
     constructor(
-        @InjectRepository(UserRole)
-        private readonly userRoleRepository: Repository<UserRole>,
+        @InjectRepository(Role)
+        private readonly userRoleRepository: Repository<Role>,
     ) {}
 
-    async findAll(): Promise<UserRole[]> {
+    async findAll(): Promise<Role[]> {
         return this.userRoleRepository.find()
     }
 
-    async findRoleByValue(value: Role): Promise<UserRole> {
+    async findRoleByValue(value: RoleEnum): Promise<Role> {
         return this.userRoleRepository.findOneBy({value})
     }
 }

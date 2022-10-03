@@ -42,6 +42,12 @@ export class UpdateUserInput {
     roles?: Nullable<Role[]>;
 }
 
+export class UpdateOrganizationRolesInput {
+    organizationId: string;
+    email: string;
+    roles?: Nullable<Role[]>;
+}
+
 export class Organization {
     _id: string;
     title: string;
@@ -77,6 +83,8 @@ export abstract class IMutation {
     abstract updateUser(input: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
 
     abstract createUsersByAdmin(inputs: CreateUserInput[], organizationId: string): Nullable<string> | Promise<Nullable<string>>;
+
+    abstract updateOrganizationRoles(input: UpdateOrganizationRolesInput): Nullable<string> | Promise<Nullable<string>>;
 }
 
 type Nullable<T> = T | null;

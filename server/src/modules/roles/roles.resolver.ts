@@ -1,5 +1,5 @@
 import { Query, Resolver } from '@nestjs/graphql';
-import { UserRole } from './role.entity';
+import { Role } from './role.entity';
 import { RolesService } from './roles.service';
 
 @Resolver()
@@ -9,7 +9,7 @@ export class RolesResolver {
     ) {}
 
     @Query()
-    roles(): Promise<UserRole[]> {
+    roles(): Promise<Role[]> {
         return this.roleService.findAll()
     }
 

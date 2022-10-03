@@ -12,8 +12,12 @@ export class OrganizationsService {
         private readonly organizationRepository: Repository<Organization>
     ) {}
 
-    async findOrganizationById(id: string): Promise<Organization> {
+    async findOneById(id: string): Promise<Organization> {
         return this.organizationRepository.findOneBy({_id: id})
+    }
+
+    async findAll(): Promise<Organization[]> {
+        return this.organizationRepository.find()
     }
 
     async createOrganization(input: CreateOrganizationInput): Promise<Organization | undefined> {
@@ -27,4 +31,14 @@ export class OrganizationsService {
             throw new ApolloError(err)
         }
     }
+
+    async deleteOrganization(id: string) {
+        try {
+            await this.organizationRepository.delete({_id: id})
+        } catch(err) {
+            throw new ApolloError(err)
+        }
+
+    }
+
 }

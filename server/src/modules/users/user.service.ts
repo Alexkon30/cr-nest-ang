@@ -2,23 +2,24 @@ import { ForbiddenException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ApolloError } from "apollo-server-core";
 import { instanceToPlain } from "class-transformer";
-import { CreateUserInput, UpdateUserInput, User } from "src/generator/graphql.schema";
+import { CreateUserInput, UpdateOrganizationRolesInput, UpdateUserInput } from "src/generator/graphql.schema";
 import { UserWithoutPass } from "src/types";
 import { hashPassword } from "src/utils";
 import { Repository } from "typeorm";
 import { OrgUserRolesService } from "../org-user-roles/org-user-roles.service";
 import { OrganizationsService } from "../organizations/organizations.service";
-import { RolesService } from "../roles/roles.service";
-import { User as UserEntity } from "./user.entity";
+import { RolesService } from '../roles/roles.service'
+import { Role } from "../roles/role.entity";
+import { User } from "./user.entity";
 
 @Injectable()
 export class UserService {
     constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>,
-        private readonly rolesService: RolesService,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>,
+        private readonly orgUserRoleService: OrgUserRolesService,
         private readonly organizationService: OrganizationsService,
-        private readonly orgUserRoleService: OrgUserRolesService
+        private readonly roleService: RolesService
     ) {}
 
     findUserByEmail(email: string): Promise<User> {
@@ -94,30 +95,16 @@ export class UserService {
 
             for (const userInfo of inputs) {
                 const existedUser = await this.userRepository.findOneBy({ email: userInfo.email })
+
                 if (!existedUser) {
                     const newUser = this.userRepository.create(userInfo)
                     await this.userRepository.save(newUser)
-
-                    const infoPlain = instanceToPlain(userInfo)
-
-                    if (infoPlain.hasOwnProperty('roles') && infoPlain.roles.length > 0) {
-                        await Promise.all(userInfo.roles.map(async (role) => {
-
-                            const userRole = await this.rolesService.findRoleByValue(role)
-
-                            const organization = await this.organizationService.findOrganizationById(organizationId)
-
-                            await this.orgUserRoleService.createOrgUserRole({
-                                organization,
-                                user: newUser,
-                                role: userRole
-                            })
-                        }))
-                    }
                     result[userInfo.email] = 'Created'
                 } else {
                     result[userInfo.email] = 'Existed'
                 }
+
+                // await this.organizationService.updateOrganizationRoles(organizationId, userInfo.roles, userInfo.email)
             }
 
             console.log(result) 
@@ -126,4 +113,29 @@ export class UserService {
             throw new ApolloError(err)
         }
     }
+
+    async updateOrganizationRoles(data: UpdateOrganizationRolesInput) {
+        try {
+            const organization = await this.organizationService.findOneById(data.organizationId)
+            const user = await this.userRepository.findOneBy({email: data.email})
+            const roles = []
+
+            await Promise.all(data.roles.map(async (role) => {
+                const roleEntity = await this.roleService.findRoleByValue(role)
+                roles.push(roleEntity)
+            }))
+
+            const result = await this.orgUserRoleService.updateOrgUserRole({
+                user,
+                organization,
+                roles
+            })
+
+            return result
+
+        } catch(err) {
+            throw new ApolloError(err)
+        }
+    }
+
 }

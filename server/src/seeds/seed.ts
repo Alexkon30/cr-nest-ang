@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
-import { UserRole } from '../modules/roles/role.entity';
-import { Role } from '../generator/graphql.schema';
+import { Role } from '../modules/roles/role.entity';
+import { Role as RoleEnum } from '../generator/graphql.schema';
 import { TYPEORM } from '../environments/index';
 import { faker } from '@faker-js/faker';
 import { User } from '../modules/users/user.entity';
@@ -19,7 +19,7 @@ const main = async () => {
     useUnifiedTopology: true,
     keepConnectionAlive: false,
     logging: true,
-    entities: [UserRole, Organization, User, OrganizationUserRole],
+    entities: [Role, Organization, User, OrganizationUserRole],
     dropSchema: true,
   });
 
@@ -28,34 +28,32 @@ const main = async () => {
   const { manager } = myDataSource
 
 
+  
   //===============
   // Roles
   //===============
 
-  const ownerRole = manager.create(UserRole, {
-    value: Role.OWNER,
+  const ownerRole = manager.create(Role, {
+    value: RoleEnum.OWNER,
   });
-  const adminRole = manager.create(UserRole, {
-    value: Role.ADMIN,
+  const adminRole = manager.create(Role, {
+    value: RoleEnum.ADMIN,
   });
-  const teacherRole = manager.create(UserRole, {
-    value: Role.TEACHER,
+  const teacherRole = manager.create(Role, {
+    value: RoleEnum.TEACHER,
   });
-  const studentRole = manager.create(UserRole, {
-    value: Role.STUDENT,
-  });
-
-
-
-  //===============
-  // Organizations
-  //===============
-
-  const cambridge = manager.create(Organization, {
-    title: 'University of Cambridge'
+  const studentRole = manager.create(Role, {
+    value: RoleEnum.STUDENT,
   });
 
+  await manager.save([
+    ownerRole,
+    adminRole,
+    teacherRole,
+    studentRole,
+  ]);
 
+  
 
   //===============
   // Users
@@ -68,15 +66,38 @@ const main = async () => {
     lastName: 'Owner'
   });
 
+  const users = []
+
+  for(let i = 0; i < 10; i++) {
+    const user = manager.create(User, {
+      email: faker.internet.email(),
+      password: await hashPassword('simplepass'),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName()
+    });
+    users.push(user)
+  }
 
   await manager.save([
-    ownerRole,
-    adminRole,
-    teacherRole,
-    studentRole,
-    cambridge,
     owner,
+    ...users
   ]);
+
+
+
+  //===============
+  // Organizations
+  //===============
+
+  const cambridge = manager.create(Organization, {
+    title: 'University of Cambridge'
+  });
+
+  await manager.save([
+    cambridge
+  ]);
+
+
 
   //===============
   // OrganizationUserRoles
@@ -91,13 +112,6 @@ const main = async () => {
   await manager.save([
     orgUserRole
   ]);
-
-
-
-
-
-  
-
 
   await myDataSource.destroy()
 };

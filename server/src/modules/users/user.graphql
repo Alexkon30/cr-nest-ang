@@ -37,6 +37,12 @@ input UpdateUserInput {
 	# isLocked: Boolean
 }
 
+input UpdateOrganizationRolesInput {
+	organizationId: String!
+	email: String!
+	roles: [Role!]
+}
+
 type User {
 	_id: ID!
 	email: String!
@@ -61,4 +67,5 @@ type Mutation {
 	createUser(input: CreateUserInput! ): User
 	updateUser(input: UpdateUserInput! ): User
 	createUsersByAdmin(inputs: [CreateUserInput!]!, organizationId: String!): String
+	updateOrganizationRoles(input: UpdateOrganizationRolesInput! ): String
 }
