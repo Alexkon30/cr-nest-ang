@@ -17,6 +17,22 @@ abstract class LoginResponse {
     description: 'jwt access token',
   })
   accessToken: string;
+  @ApiProperty({
+    example: `{
+      _id: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+      patronymic: string;
+    }`,
+    description: 'user properties',
+  })
+  user: UserWithoutPass;
+  @ApiProperty({
+    example: `600`,
+    description: 'expire time of access token',
+  })
+  expiresIn: number;
 }
 
 abstract class UnauthorizedResponse {

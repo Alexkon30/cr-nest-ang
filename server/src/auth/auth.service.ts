@@ -23,10 +23,13 @@ export class AuthService {
     }
 
     async login(user: UserWithoutPass): Promise<LoginResponse> {
-        const payload = {email: user.email, sub: user._id}
+        const payload = { sub: user._id }
+        const expiresIn = 60 * 60 * 24
 
         return {
-            accessToken: this.jwtService.sign(payload)
+            accessToken: this.jwtService.sign(payload),
+            user,
+            expiresIn
         }
     }
 }
