@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http'
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from '../_models';
 import { environment } from '@environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -27,7 +27,13 @@ export class AuthenticationService {
 
   login(email: string, password: string) {
     return this.http.post<any>(`${environment.apiUrl}/auth/login`, { email, password })
-    .pipe()
+      .pipe(map(data => {
+        const { accessToken: token , user, expiresIn } = data
+        localStorage.setItem('user', JSON.stringify({...user, token, expiresIn}))
+        this.userSubject.next(user)
+
+        return user
+      }))
   }
 
   logout() {

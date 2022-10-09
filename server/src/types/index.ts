@@ -17,6 +17,7 @@ abstract class LoginResponse {
     description: 'jwt access token',
   })
   accessToken: string;
+
   @ApiProperty({
     example: `{
       _id: string;
@@ -28,6 +29,7 @@ abstract class LoginResponse {
     description: 'user properties',
   })
   user: UserWithoutPass;
+  
   @ApiProperty({
     example: `600`,
     description: 'expire time of access token',

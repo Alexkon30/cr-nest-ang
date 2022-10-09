@@ -36,7 +36,7 @@ async function bootstrap() {
       message: 'Too many request created from this IP, please try again after an hour'
     }))
 
-
+    app.enableCors();
 
 		app.enableShutdownHooks()    
 
