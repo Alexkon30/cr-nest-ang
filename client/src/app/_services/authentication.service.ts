@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class AuthenticationService {
   private userSubject: BehaviorSubject<User>
   public user: Observable<User>
+  public redirectUrl: string | null = null;
 
   constructor(
     private router: Router,
@@ -23,6 +24,11 @@ export class AuthenticationService {
 
   public get userValue(): User {
     return this.userSubject.value
+  }
+
+  public get isLoggedIn(): boolean {
+    const user = this.userSubject.value
+    return !!(user && user.token)
   }
 
   login(email: string, password: string) {
