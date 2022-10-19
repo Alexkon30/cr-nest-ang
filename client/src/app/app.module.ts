@@ -8,6 +8,7 @@ import { LoginComponent } from '@app/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from '@app/home/home.component';
 import { ErrorInterceptor } from '@app/_helpers';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, HomeComponent],
@@ -18,6 +19,7 @@ import { ErrorInterceptor } from '@app/_helpers';
     ReactiveFormsModule,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

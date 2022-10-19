@@ -26,11 +26,6 @@ export class AuthenticationService {
     return this.userSubject.value
   }
 
-  public get isLoggedIn(): boolean {
-    const user = this.userSubject.value
-    return !!(user && user.token)
-  }
-
   login(email: string, password: string) {
     return this.http.post<any>(`${environment.apiUrl}/auth/login`, { email, password })
       .pipe(map(data => {
