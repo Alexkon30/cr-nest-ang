@@ -4,14 +4,35 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
-import { LoginComponent } from '@app/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from '@app/home/home.component';
-import { ErrorInterceptor } from '@app/_helpers';
-import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { ErrorInterceptor, JwtInterceptor } from '@app/_helpers';
+import {
+  ProfileComponent,
+  HomeComponent,
+  SheduleComponent,
+  StatsComponent,
+  LessonComponent,
+  ResultsComponent,
+  InfoComponent,
+  NavigationComponent,
+  RegisterComponent,
+  LoginComponent
+} from '@app/_components';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    ProfileComponent,
+    SheduleComponent,
+    StatsComponent,
+    LessonComponent,
+    ResultsComponent,
+    InfoComponent,
+    NavigationComponent,
+    RegisterComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
