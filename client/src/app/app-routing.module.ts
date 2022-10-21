@@ -7,6 +7,9 @@ import {
   ProfileComponent,
   SheduleComponent,
   StatsComponent,
+  LessonComponent,
+  ResultsComponent,
+  PagenotfoundComponent,
 } from '@app/_components';
 import { AuthGuard } from '@app/_helpers';
 
@@ -23,7 +26,7 @@ const routes: Routes = [
         component: ProfileComponent,
       },
       {
-        path: '',
+        path: 'shedule',
         component: SheduleComponent,
       },
       {
@@ -34,9 +37,21 @@ const routes: Routes = [
         path: 'info',
         component: InfoComponent,
       },
+      {
+        path: 'lesson/:id',
+        component: LessonComponent,
+      },
+      {
+        path: 'results/:id',
+        component: ResultsComponent,
+      },
+      {
+        path: '**',
+        component: PagenotfoundComponent,
+      },
     ],
   },
-  { path: '**', component: HomeComponent },
+  // { path: '**',  redirectTo: '', },
 ];
 
 @NgModule({

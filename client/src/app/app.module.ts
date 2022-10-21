@@ -16,8 +16,12 @@ import {
   InfoComponent,
   NavigationComponent,
   RegisterComponent,
-  LoginComponent
+  LoginComponent,
+  PagenotfoundComponent,
+  FooterComponent
 } from '@app/_components';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -32,12 +36,16 @@ import {
     InfoComponent,
     NavigationComponent,
     RegisterComponent,
+    PagenotfoundComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatIconModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

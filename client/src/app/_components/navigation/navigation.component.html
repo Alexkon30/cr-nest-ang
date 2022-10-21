@@ -1,1 +1,27 @@
-<p>navigation works!</p>
+<nav>
+    <ul>
+        <li>
+            <a routerLink="/profile" routerLinkActive="active">
+                <mat-icon>person</mat-icon>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/shedule" routerLinkActive="active">
+                <mat-icon>dashboard</mat-icon>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/stats" routerLinkActive="active">
+                <mat-icon>show_chart</mat-icon>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/info" routerLinkActive="active">
+                <mat-icon>home</mat-icon>
+            </a>
+        </li>
+    </ul>
+    <button (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+    </button>
+</nav>
