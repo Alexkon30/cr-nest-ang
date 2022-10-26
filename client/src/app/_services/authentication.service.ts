@@ -26,7 +26,7 @@ export class AuthenticationService {
     return this.userSubject.value
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string) { //TODO switch email to username
     return this.http.post<any>(`${environment.apiUrl}/auth/login`, { email, password })
       .pipe(map(data => {
         const { accessToken: token , user, expiresIn } = data
@@ -40,6 +40,10 @@ export class AuthenticationService {
   logout() {
     localStorage.removeItem('user')
     this.userSubject.next(null);
-    this.router.navigate(['/login'])
+    this.router.navigate(['/auth'])
+  }
+
+  register(username: string, email: string, password: string, confirmPassword: string) {
+    console.log({username, email, password, confirmPassword})
   }
 }

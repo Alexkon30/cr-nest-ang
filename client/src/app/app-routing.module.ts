@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
-  LoginComponent,
   HomeComponent,
   InfoComponent,
   ProfileComponent,
@@ -10,11 +9,12 @@ import {
   LessonComponent,
   ResultsComponent,
   PagenotfoundComponent,
+  AuthComponent,
 } from '@app/_components';
 import { AuthGuard } from '@app/_helpers';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'auth', component: AuthComponent },
   {
     path: '',
     component: HomeComponent,

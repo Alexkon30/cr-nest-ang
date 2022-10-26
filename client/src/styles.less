@@ -39,5 +39,46 @@
 @group5-color4: #5a4e58;
 @group5-color5: #8c8e80;
 @group5-color6: #ddd1b7;
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.fullscreen-layout {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 20rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+
+    &__buttons {
+        text-align: center;
+
+        button {
+            width: 90%;
+
+            &:not(:last-child) {
+                margin-bottom: 14px;
+            }
+        }
+    }
+
+
+}
+
+.title {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 21px !important;
+}

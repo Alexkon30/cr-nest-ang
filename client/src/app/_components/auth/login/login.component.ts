@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   Validators,
@@ -17,11 +16,16 @@ import { first } from 'rxjs';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
-  submitted = false;
+  // submitted = false;
   error = '';
 
+  @Output() changeMode = new EventEmitter<string>()
+
+  handleChangeMode() {
+    this.changeMode.emit('register')
+  }
+
   constructor(
-    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthenticationService
@@ -32,12 +36,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-    });
     this.loginForm = new FormGroup({
-      email: new FormControl('', Validators.required),
+      username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
   }
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+    // this.submitted = true;
 
     if (this.loginForm.invalid) {
       return;
@@ -55,11 +55,11 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.authService
-      .login(this.f['email'].value, this.f['password'].value)
+      .login(this.f['username'].value, this.f['password'].value)
       .pipe(first())
       .subscribe({
         next: () => {
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/shedule';
           this.router.navigateByUrl(returnUrl);
         },
         error: (error) => {
