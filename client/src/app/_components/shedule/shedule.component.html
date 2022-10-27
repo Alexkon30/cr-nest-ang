@@ -1,1 +1,59 @@
-<p>shedule works!</p>
+<div class="shedule_settings">
+    <mat-form-field appearance="fill">
+        <mat-label>Choose a week</mat-label>
+        <input matInput [matDatepicker]="picker" disabled>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Choose source</mat-label>
+        <mat-select>
+            <mat-option>groups</mat-option>
+            <mat-option>teachers</mat-option>
+            <mat-option>rooms</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Choose element</mat-label>
+        <mat-select>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<table mat-table>
+    <ng-container matColumnDef="№">
+        <th mat-header-cell *matHeaderCellDef>№</th>
+        <td mat-cell>№</td>
+    </ng-container>
+    <ng-container matColumnDef="Mon">
+        <th mat-header-cell *matHeaderCellDef>Monday</th>
+        <td mat-cell>M</td>
+    </ng-container>
+    <ng-container matColumnDef="Tue">
+        <th mat-header-cell *matHeaderCellDef>Tuesday</th>
+        <td mat-cell>M</td>
+    </ng-container>
+    <ng-container matColumnDef="Wed">
+        <th mat-header-cell *matHeaderCellDef>Wednesday</th>
+        <td mat-cell>M</td>
+    </ng-container>
+    <ng-container matColumnDef="Thu">
+        <th mat-header-cell *matHeaderCellDef>Thursday</th>
+        <td mat-cell>M</td>
+    </ng-container>
+    <ng-container matColumnDef="Fri">
+        <th mat-header-cell *matHeaderCellDef>Friday</th>
+        <td mat-cell>M</td>
+    </ng-container>
+    <ng-container matColumnDef="Sat">
+        <th mat-header-cell *matHeaderCellDef>Saturday</th>
+        <td mat-cell>M</td>
+    </ng-container>
+    <ng-container matColumnDef="Sun">
+        <th mat-header-cell *matHeaderCellDef>Sunday</th>
+        <td mat-cell>M</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['№', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['№', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];"></tr>
+</table>

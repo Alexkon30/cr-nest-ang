@@ -7,38 +7,45 @@
 
 
 @group1-color1: #395563;
-@group1-color2: #74a3b7;
+@group1-color2: #958f77;
 @group1-color3: #adbfc3;
 @group1-color4: #f2eee2;
-@group1-color5: #958f77;
+@group1-color5: #74a3b7;
 
-@group2-color1: #d0edf3;
-@group2-color2: #ade1dc;
-@group2-color3: #78c4ba;
-@group2-color4: #3f666b;
-@group2-color5: #eed4d3;
-@group2-color6: #edf1e8;
+@group2-color1: #3f666b;
+@group2-color2: #78c4ba;
+@group2-color3: #ade1dc;
+@group2-color4: #d0edf3;
+@group2-color5: #edf1e8;
+@group2-color6: #eed4d3;
 
-@group3-color1: #f1ede1;
-@group3-color2: #d5cab6;
-@group3-color3: #969791;
-@group3-color4: #cbcdcc;
+@group3-color1: #969791;
+@group3-color2: #cbcdcc;
+@group3-color3: #d5cab6;
+@group3-color4: #f1ede1;
 @group3-color5: #e3e4e6;
 @group3-color6: #f0f2f1;
 
-@group4-color1: #e2eefa;
-@group4-color2: #cde3f0;
-@group4-color3: #97c6da;
-@group4-color4: #558ca1;
-@group4-color5: #224855;
-@group4-color6: #2a6d7d;
+@group4-color1: #224855;
+@group4-color2: #2a6d7d;
+@group4-color3: #558ca1;
+@group4-color4: #97c6da;
+@group4-color5: #cde3f0;
+@group4-color6: #e2eefa;
 
-@group5-color1: #ddd0d7;
-@group5-color2: #dabfb8;
+@group5-color1: #5a4e58;
+@group5-color2: #8c8e80;
 @group5-color3: #bd8e88;
-@group5-color4: #5a4e58;
-@group5-color5: #8c8e80;
-@group5-color6: #ddd1b7;
+@group5-color4: #dabfb8;
+@group5-color5: #ddd1b7;
+@group5-color6: #ddd0d7;
+
+@color1: @group4-color1;
+@color2: @group4-color2;
+@color3: @group4-color3;
+@color4: @group4-color4;
+@color5: @group4-color5;
+@color6: @group4-color6;
 
 html,
 body {
@@ -48,14 +55,6 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.fullscreen-layout {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    padding-top: 20rem;
 }
 
 .form {
@@ -73,12 +72,15 @@ body {
             }
         }
     }
-
-
 }
+
+// .button {
+//     background-color: @color3;
+// }
 
 .title {
     text-align: center;
     font-size: 1.8em;
     margin-bottom: 21px !important;
 }
+

@@ -19,7 +19,7 @@
                 <input type="password" matInput formControlName="confirmPassword">
             </mat-form-field>
             <div class="form__buttons">
-                <button mat-raised-button color="primary">Register</button>
+                <button mat-raised-button color="primary" [disabled]="registerForm.invalid">Register</button>
                 <button mat-stroked-button color="primary" (click)="handleChangeMode()">Already have an account</button>
             </div>
         </form>

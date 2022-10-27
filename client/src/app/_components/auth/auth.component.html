@@ -1,6 +1,6 @@
-<div class="fullscreen-layout">
-        <div class="auth__container">
-                <app-login *ngIf="mode==='login'" (changeMode)="handleChangeMode($event)"></app-login>
-                <app-register *ngIf="mode==='register'" (changeMode)="handleChangeMode($event)"></app-register>
-        </div>
+<div class="auth__layout">
+    <div class="auth__container">
+        <app-login *ngIf="mode==='login'" (changeMode)="handleChangeMode($event)"></app-login>
+        <app-register *ngIf="mode==='register'" (changeMode)="handleChangeMode($event)"></app-register>
+    </div>
 </div>

@@ -1,0 +1,32 @@
+.shedule {
+    &_settings {
+        display: flex;
+        align-items: center;
+        padding: 7px 0;
+        justify-content: space-around;
+    }
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    display: flex;
+}
+
+th {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:last-of-type,
+    &:first-of-type {
+        padding: 0 !important;
+    }
+
+    &:not(:last-of-type) {
+        border-right: 1px solid rgba(0, 0, 0, 0.12);
+    }
+}

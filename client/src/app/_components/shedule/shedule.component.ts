@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shedule.component.less']
 })
 export class SheduleComponent implements OnInit {
+  selectedValue: string;
 
   constructor() { }
 
