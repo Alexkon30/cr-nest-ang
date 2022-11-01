@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { ErrorInterceptor, JwtInterceptor } from '@app/_helpers';
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -32,7 +33,10 @@ import {
   AuthComponent,
   LoginComponent,
   RegisterComponent,
+  RulerComponent,
+  LessonCardComponent,
 } from '@app/_components';
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   declarations: [
@@ -50,6 +54,8 @@ import {
     PagenotfoundComponent,
     FooterComponent,
     AuthComponent,
+    RulerComponent,
+    LessonCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +72,8 @@ import {
     MatNativeDateModule,
     MatSelectModule,
     MatTableModule,
+    MatDividerModule,
+    GraphQLModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

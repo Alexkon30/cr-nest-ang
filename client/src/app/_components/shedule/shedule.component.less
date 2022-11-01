@@ -1,32 +1,41 @@
 .shedule {
-    &_settings {
+    &__settings {
         display: flex;
         align-items: center;
         padding: 7px 0;
         justify-content: space-around;
     }
-}
 
-table {
-    width: 100%;
-}
-
-tr {
-    display: flex;
-}
-
-th {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:last-of-type,
-    &:first-of-type {
-        padding: 0 !important;
+    &__body {
+        display: flex;
+        width: 100%;
     }
 
-    &:not(:last-of-type) {
-        border-right: 1px solid rgba(0, 0, 0, 0.12);
+    &__column {
+        width: 100%;
+        text-align: center;
+
+        &:not(:last-of-type) {
+            border-right: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .gap {
+            height: 15px;
+        }
+    
+    }
+
+    &__header {
+        padding: 14px 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        // margin-bottom: 15px;
+    }
+
+    
+
+    &__content {
+        margin-top: 15px;
     }
 }
+

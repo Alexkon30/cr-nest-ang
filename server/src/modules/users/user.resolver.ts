@@ -12,7 +12,7 @@ export class UserResolver {
     ) {}
 
     @Query()
-    @UseGuards(GqlAuthGuard)
+    // @UseGuards(GqlAuthGuard)
     users(): Promise<User[]> {
         return this.userService.findAllUsers()
     }

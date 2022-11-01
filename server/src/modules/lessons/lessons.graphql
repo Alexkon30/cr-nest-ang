@@ -1,0 +1,12 @@
+type Lesson {
+    _id: Int
+    discipline: String
+    theme: String
+    proups: String # [Group!]
+    teachers: [User!]
+    room: String
+}
+
+type Query {
+    lessons: [Lesson!]
+}

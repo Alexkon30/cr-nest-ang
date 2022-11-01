@@ -48,6 +48,23 @@ export class UpdateOrganizationRolesInput {
     roles?: Nullable<Role[]>;
 }
 
+export class Lesson {
+    _id?: Nullable<number>;
+    discipline?: Nullable<string>;
+    theme?: Nullable<string>;
+    proups?: Nullable<string>;
+    teachers?: Nullable<User[]>;
+    room?: Nullable<string>;
+}
+
+export abstract class IQuery {
+    abstract lessons(): Nullable<Lesson[]> | Promise<Nullable<Lesson[]>>;
+
+    abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
+
+    abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
+}
+
 export class Organization {
     _id: string;
     title: string;
@@ -56,12 +73,6 @@ export class Organization {
 export class UserRole {
     value: Role;
     _id?: Nullable<number>;
-}
-
-export abstract class IQuery {
-    abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
-
-    abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
 }
 
 export class RefreshTokenResponse {
