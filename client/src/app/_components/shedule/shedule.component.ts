@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Shedule } from '@app/_models';
 import { SheduleService } from '@app/_services';
 import { Apollo } from 'apollo-angular';
+import moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -12,6 +13,8 @@ import { Observable, Subscription } from 'rxjs';
 export class SheduleComponent implements OnInit {
   shedule: Shedule;
   subscription: Subscription;
+  date: object;
+  source: string;
 
   constructor(private apollo: Apollo, private sheduleService: SheduleService) {}
 
@@ -20,6 +23,9 @@ export class SheduleComponent implements OnInit {
     .subscribe(shedule => {
       this.shedule = shedule
     })
+
+    this.date = new Date();
+    this.source = 'groups';
   }
 
   ngOnDestroy() {
@@ -66,6 +72,8 @@ export class SheduleComponent implements OnInit {
   }
 
   show() {
-    console.log(this.shedule)
+    console.log(moment(this.date).day(1).format('DD.MM.YYYY'), moment(this.date).day(7).format('DD.MM.YYYY'))
+
+    // moment(this.date).day(7).format('DD.MM.YYYYTHH:mm')
   }
 }

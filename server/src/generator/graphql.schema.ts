@@ -52,7 +52,7 @@ export class Lesson {
     _id?: Nullable<number>;
     discipline?: Nullable<string>;
     theme?: Nullable<string>;
-    proups?: Nullable<string>;
+    groups?: Nullable<string>;
     teachers?: Nullable<User[]>;
     room?: Nullable<string>;
 }
