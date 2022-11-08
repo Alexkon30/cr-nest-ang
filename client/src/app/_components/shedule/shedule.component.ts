@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Shedule } from '@app/_models';
+import { Lesson, Shedule } from '@app/_models';
 import { SheduleService } from '@app/_services';
 import { Apollo } from 'apollo-angular';
+import { Subscription } from 'rxjs';
 import moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shedule',
@@ -20,9 +20,9 @@ export class SheduleComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription = this.sheduleService.shedule
-    .subscribe(shedule => {
-      this.shedule = shedule
-    })
+      .subscribe(shedule => {
+        this.shedule = shedule
+      })
 
     this.date = new Date();
     this.source = 'groups';
@@ -72,8 +72,10 @@ export class SheduleComponent implements OnInit {
   }
 
   show() {
-    console.log(moment(this.date).day(1).format('DD.MM.YYYY'), moment(this.date).day(7).format('DD.MM.YYYY'))
+    // console.log(moment(this.date).day(1).format('DD.MM.YYYY'), moment(this.date).day(7).format('DD.MM.YYYY'))
 
     // moment(this.date).day(7).format('DD.MM.YYYYTHH:mm')
+
+    console.log(this.shedule)
   }
 }

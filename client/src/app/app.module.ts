@@ -38,6 +38,7 @@ import {
   RulerComponent,
   LessonCardComponent,
 } from '@app/_components';
+import { AddPreviousLessonEndPipe, SortByTimePipe } from '@app/pipes';
 import { GraphQLModule } from './graphql.module';
 
 @NgModule({
@@ -58,6 +59,8 @@ import { GraphQLModule } from './graphql.module';
     AuthComponent,
     RulerComponent,
     LessonCardComponent,
+    SortByTimePipe,
+    AddPreviousLessonEndPipe
   ],
   imports: [
     BrowserModule,

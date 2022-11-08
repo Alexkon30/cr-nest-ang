@@ -28,14 +28,14 @@
         <div class="gap"></div>
         <app-ruler></app-ruler>
     </div>
-    <div class="shedule__column">
+    <div class="shedule__column" *ngIf="shedule[0]">
         <div class="shedule__header">
-            Monday
+            {{shedule[0].title | titlecase}}
         </div>
         <div class="gap"></div>
 
-        <ng-container *ngIf="shedule[0]">
-            <app-lesson-card *ngFor="let lesson of shedule[0].lessons" [lesson]="lesson"></app-lesson-card>
+        <ng-container>
+            <app-lesson-card *ngFor="let lesson of (shedule[0].lessons | sortByTime | addPreviousLessonEnd)" [lesson]="lesson"></app-lesson-card>
         </ng-container>
 
 
