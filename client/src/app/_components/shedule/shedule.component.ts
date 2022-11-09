@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Lesson, Shedule } from '@app/_models';
-import { SheduleService } from '@app/_services';
+import { LessonsService } from '@app/_services';
 import { Apollo } from 'apollo-angular';
 import { Subscription } from 'rxjs';
 import moment from 'moment';
@@ -11,18 +11,22 @@ import moment from 'moment';
   styleUrls: ['./shedule.component.less'],
 })
 export class SheduleComponent implements OnInit {
-  shedule: Shedule;
+  lessons: Lesson[];
   subscription: Subscription;
   date: object;
   source: string;
+  element: string;
+  elements = ['11-IK', '11-IB', '11-KE'];
 
-  constructor(private apollo: Apollo, private sheduleService: SheduleService) {}
+  constructor(
+    private apollo: Apollo,
+    private lessonsService: LessonsService
+  ) {}
 
   ngOnInit(): void {
-    this.subscription = this.sheduleService.shedule
-      .subscribe(shedule => {
-        this.shedule = shedule
-      })
+    this.subscription = this.lessonsService.lessons.subscribe((lessons) => {
+      this.lessons = lessons
+    })
 
     this.date = new Date();
     this.source = 'groups';
@@ -34,7 +38,7 @@ export class SheduleComponent implements OnInit {
 
   //mock data for test
   set() {
-    this.sheduleService.createSheduleFromLessons([
+    this.lessonsService.setLessons([
       {
         id: 1,
         teachers: [],
@@ -72,10 +76,9 @@ export class SheduleComponent implements OnInit {
   }
 
   show() {
-    // console.log(moment(this.date).day(1).format('DD.MM.YYYY'), moment(this.date).day(7).format('DD.MM.YYYY'))
+    console.log(moment(this.date).day(1).format('DD.MM.YYYY'), moment(this.date).day(7).format('DD.MM.YYYY'))
 
     // moment(this.date).day(7).format('DD.MM.YYYYTHH:mm')
-
-    console.log(this.shedule)
+    // console.log(moment(this.date).startOf('week').day());
   }
 }

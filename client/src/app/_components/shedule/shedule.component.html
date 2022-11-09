@@ -15,10 +15,13 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Choose element</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="element">
+            <mat-option *ngFor="let element of elements" [value]="element">{{element}}</mat-option>
         </mat-select>
     </mat-form-field>
 </div>
+<button (click)="set()">set</button>
+<button (click)="show()">show</button>
 
 <div class="shedule__body">
     <div class="shedule__column">
@@ -28,54 +31,14 @@
         <div class="gap"></div>
         <app-ruler></app-ruler>
     </div>
-    <div class="shedule__column" *ngIf="shedule[0]">
+
+    <div class="shedule__column" *ngFor="let day of (lessons | sortByDays)">
         <div class="shedule__header">
-            {{shedule[0].title | titlecase}}
+            {{day.title | titlecase}}
         </div>
         <div class="gap"></div>
 
-        <ng-container>
-            <app-lesson-card *ngFor="let lesson of (shedule[0].lessons | sortByTime | addPreviousLessonEnd)" [lesson]="lesson"></app-lesson-card>
-        </ng-container>
-
-
-    </div>
-    <div class="shedule__column">
-        <div class="shedule__header">
-            Tuesday
-        </div>
-        <div class="gap"></div>
-    </div>
-    <div class="shedule__column">
-        <div class="shedule__header">
-            Wednesday
-        </div>
-        <div class="gap"></div>
-    </div>
-    <div class="shedule__column">
-        <div class="shedule__header">
-            Thursday
-        </div>
-        <div class="gap"></div>
-    </div>
-    <div class="shedule__column">
-        <div class="shedule__header">
-            Friday
-        </div>
-        <div class="gap"></div>
-    </div>
-    <div class="shedule__column">
-        <div class="shedule__header">
-            Saturday
-        </div>
-        <div class="gap"></div>
-    </div>
-    <div class="shedule__column">
-        <div class="shedule__header">
-            Sunday
-        </div>
-        <div class="gap"></div>
+        <app-lesson-card *ngFor="let lesson of (day.lessons | sortByTime | addPreviousLessonEnd)" [lesson]="lesson">
+        </app-lesson-card>
     </div>
 </div>
-<button (click)="set()">set</button>
-<button (click)="show()">show</button>

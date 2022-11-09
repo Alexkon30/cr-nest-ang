@@ -40,6 +40,7 @@ import {
 } from '@app/_components';
 import { AddPreviousLessonEndPipe, SortByTimePipe } from '@app/pipes';
 import { GraphQLModule } from './graphql.module';
+import { SortByDaysPipe } from './pipes/sort-by-days.pipe';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { GraphQLModule } from './graphql.module';
     RulerComponent,
     LessonCardComponent,
     SortByTimePipe,
+    SortByDaysPipe,
     AddPreviousLessonEndPipe
   ],
   imports: [
