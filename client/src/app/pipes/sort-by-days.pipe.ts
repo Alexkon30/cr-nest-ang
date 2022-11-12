@@ -3,7 +3,7 @@ import { Lesson, Shedule } from '@app/_models';
 import moment from 'moment';
 
 @Pipe({
-  name: 'sortByDays',
+  name: 'sortByDays'
 })
 export class SortByDaysPipe implements PipeTransform {
   transform(lessons: Lesson[], ...args: any[]): Shedule {
@@ -39,7 +39,7 @@ export class SortByDaysPipe implements PipeTransform {
     ];
 
     lessons.forEach((lesson) => {
-      let day = moment(lesson.dateStart).day();
+      let day = moment(+lesson.dateStart).day();
       if (day > 0) {
         shedule[day - 1].lessons.push(lesson);
       } else {

@@ -5,8 +5,11 @@ type Lesson {
     groups: String # [Group!]
     teachers: [User!]
     room: String
+    dateStart: String
+    dateEnd: String
+    type: String
 }
 
 type Query {
-    lessons: [Lesson!]
+    lessons(dateStart: String, dateEnd: String): [Lesson!]
 }

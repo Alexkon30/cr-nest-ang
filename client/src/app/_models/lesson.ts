@@ -6,16 +6,16 @@ import { Theme } from './theme';
 import { User } from './user';
 
 export interface Lesson {
-  id: number;
+  id?: number;
 //   status: string;
-  teachers: User[];
-  groups: Group[];
-  discipline: string;
-  theme: string;
-  room: number;
+  teachers?: User[];
+  groups?: Group[];
+  discipline?: string;
+  theme?: string;
+  room?: number;
   dateStart: string;
   dateEnd: string;
-  type: string;
+  type?: string;
   previousLessonEnd?: string;
 //   marks: Mark[];
 }

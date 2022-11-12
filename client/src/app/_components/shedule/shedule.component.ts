@@ -18,15 +18,12 @@ export class SheduleComponent implements OnInit {
   element: string;
   elements = ['11-IK', '11-IB', '11-KE'];
 
-  constructor(
-    private apollo: Apollo,
-    private lessonsService: LessonsService
-  ) {}
+  constructor(private lessonsService: LessonsService) {}
 
   ngOnInit(): void {
     this.subscription = this.lessonsService.lessons.subscribe((lessons) => {
-      this.lessons = lessons
-    })
+      this.lessons = lessons;
+    });
 
     this.date = new Date();
     this.source = 'groups';
@@ -36,49 +33,55 @@ export class SheduleComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  //mock data for test
-  set() {
+  show() {
+    // console.log(moment(this.date).day(1).format('DD.MM.YYYY'), moment(this.date).day(7).format('DD.MM.YYYY'))
+    // moment(this.date).day(7).format('DD.MM.YYYYTHH:mm')
+    // console.log(moment(this.date).startOf('week').day());
+
+    this.lessonsService.loadLessons()
+    
+    // console.log(moment().valueOf().toString())
+  }
+
+  set1() {
+    // this.gqlService.getLessons()
+    // this.lessonsService.loadLessons()
     this.lessonsService.setLessons([
       {
-        id: 1,
-        teachers: [],
-        groups: [],
-        discipline: 'discipline 1',
-        theme: 'theme 1',
-        room: 213,
         dateStart: '2022-10-31T15:00',
         dateEnd: '2022-10-31T16:30',
-        type: 'lecture',
+        previousLessonEnd: ''
       },
       {
-        id: 2,
-        teachers: [],
-        groups: [],
-        discipline: 'discipline 2',
-        theme: 'theme 2',
-        room: 213,
         dateStart: '2022-10-31T16:30',
         dateEnd: '2022-10-31T19:00',
-        type: 'lecture',
+        previousLessonEnd: ''
       },
       {
-        id: 3,
-        teachers: [],
-        groups: [],
-        discipline: 'discipline 3',
-        theme: 'theme 3',
-        room: 213,
         dateStart: '2022-10-31T09:00',
         dateEnd: '2022-10-31T10:30',
-        type: 'lecture',
+        previousLessonEnd: ''
       },
     ]);
   }
 
-  show() {
-    console.log(moment(this.date).day(1).format('DD.MM.YYYY'), moment(this.date).day(7).format('DD.MM.YYYY'))
-
-    // moment(this.date).day(7).format('DD.MM.YYYYTHH:mm')
-    // console.log(moment(this.date).startOf('week').day());
-  }
+  set2() {
+    this.lessonsService.setLessons([
+      {
+        dateStart: '2022-11-01T14:00',
+        dateEnd: '2022-11-01T15:30',
+        previousLessonEnd: ''
+      },
+      {
+        dateStart: '2022-11-01T15:30',
+        dateEnd: '2022-11-01T18:00',
+        previousLessonEnd: ''
+      },
+      {
+        dateStart: '2022-11-01T08:00',
+        dateEnd: '2022-11-01T09:30',
+        previousLessonEnd: ''
+      },
+    ]);
+}
 }

@@ -12,4 +12,22 @@ const GET_ALL_USERS = gql`
   }
 `;
 
-export { GET_ALL_USERS }
+const GET_ALL_LESSONS = gql`
+  query {
+    lessons {
+      _id
+      theme
+      groups
+      teachers {
+        firstName
+      }
+      discipline
+      room
+      dateStart
+      dateEnd
+      type
+    }
+  }
+`;
+
+export { GET_ALL_USERS, GET_ALL_LESSONS };

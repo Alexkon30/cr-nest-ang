@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Lesson, Shedule } from '@app/_models';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import moment from 'moment';
+import { Apollo } from 'apollo-angular';
+import { GET_ALL_LESSONS } from '@app/graphql/graphql.queries';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,7 @@ export class LessonsService {
   private lessonsSubject: BehaviorSubject<Lesson[]>;
   public lessons: Observable<Lesson[]>;
 
-  constructor() {
+  constructor(private apollo: Apollo) {
     this.lessonsSubject = new BehaviorSubject<Lesson[]>([]);
     this.lessons = this.lessonsSubject.asObservable();
   }
@@ -25,5 +27,14 @@ export class LessonsService {
  
   setLessons(lessons: Lesson[]) {
     this.lessonsSubject.next(lessons);
+  }
+
+  loadLessons() {
+    this.apollo.query<{lessons: Lesson[]}>({
+      query: GET_ALL_LESSONS
+    }).subscribe(data => {
+      console.log(data)
+      this.lessonsSubject.next(JSON.parse(JSON.stringify(data.data.lessons)))
+    })
   }
 }

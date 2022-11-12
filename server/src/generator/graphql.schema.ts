@@ -55,10 +55,13 @@ export class Lesson {
     groups?: Nullable<string>;
     teachers?: Nullable<User[]>;
     room?: Nullable<string>;
+    dateStart?: Nullable<string>;
+    dateEnd?: Nullable<string>;
+    type?: Nullable<string>;
 }
 
 export abstract class IQuery {
-    abstract lessons(): Nullable<Lesson[]> | Promise<Nullable<Lesson[]>>;
+    abstract lessons(dateStart?: Nullable<string>, dateEnd?: Nullable<string>): Nullable<Lesson[]> | Promise<Nullable<Lesson[]>>;
 
     abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
 

@@ -22,5 +22,14 @@ export class Lesson {
   teachers: User[]
 
   @Column() //OneToOne()
-  room: string //Room
+  room: number //Room
+
+  @Column({ type: 'timestamp' })
+  dateStart: Date;
+
+  @Column({ type: 'timestamp' })
+  dateEnd: Date;
+
+  @Column()
+  type: string;
 }

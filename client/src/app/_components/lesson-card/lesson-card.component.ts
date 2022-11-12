@@ -18,8 +18,8 @@ export class LessonCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.gap = moment(this.lesson.dateStart).diff(moment(this.lesson.previousLessonEnd), 'm')
-    this.height = moment(this.lesson.dateEnd).diff(moment(this.lesson.dateStart), 'm')
+    this.gap = moment(+this.lesson.dateStart).diff(moment(+this.lesson.previousLessonEnd), 'm')
+    this.height = moment(+this.lesson.dateEnd).diff(moment(+this.lesson.dateStart), 'm')
     this.url = '/lesson/' + this.lesson.id
   }
 

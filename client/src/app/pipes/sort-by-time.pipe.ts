@@ -8,9 +8,9 @@ import moment from 'moment';
 export class SortByTimePipe implements PipeTransform {
   transform(lessons: Lesson[]) {
     lessons.sort((a, b) => {
-      if (moment(a.dateStart).isBefore(moment(b.dateStart))) {
+      if (moment(+a.dateStart).isBefore(moment(+b.dateStart))) {
         return -1;
-      } else if (moment(a.dateStart).isAfter(moment(b.dateStart))) {
+      } else if (moment(+a.dateStart).isAfter(moment(+b.dateStart))) {
         return 1;
       } else {
         return 0;
