@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Lesson, Shedule } from '@app/_models';
 import { LessonsService } from '@app/_services';
-import { Apollo } from 'apollo-angular';
 import { Subscription } from 'rxjs';
 import moment from 'moment';
 
@@ -13,7 +12,7 @@ import moment from 'moment';
 export class SheduleComponent implements OnInit {
   lessons: Lesson[];
   subscription: Subscription;
-  date: object;
+  date: Date;
   source: string;
   element: string;
   elements = ['11-IK', '11-IB', '11-KE'];
@@ -25,42 +24,52 @@ export class SheduleComponent implements OnInit {
       this.lessons = lessons;
     });
 
-    this.date = new Date();
+    // this.date = new Date();
+    this.date = new Date(2022, 10, 3);
     this.source = 'groups';
+
+    this.show(this.date);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  show() {
-    // console.log(moment(this.date).day(1).format('DD.MM.YYYY'), moment(this.date).day(7).format('DD.MM.YYYY'))
-    // moment(this.date).day(7).format('DD.MM.YYYYTHH:mm')
-    // console.log(moment(this.date).startOf('week').day());
+  show(date: Date) {
+    const currentDate = moment(date).hours(0).minutes(0);
 
-    this.lessonsService.loadLessons()
-    
-    // console.log(moment().valueOf().toString())
+    const firstDayOfWeek =
+      currentDate.day() === 0
+        ? currentDate.day(-6).format('YYYY-MM-DDTHH:mm')
+        : currentDate.day(1).format('YYYY-MM-DDTHH:mm');
+    const lastDayOfWeek =
+      currentDate.day() === 0
+        ? currentDate.hours(23).minutes(59).format('YYYY-MM-DDTHH:mm')
+        : currentDate
+            .day(8 - currentDate.day())
+            .hours(23)
+            .minutes(59)
+            .format('YYYY-MM-DDTHH:mm');
+
+    this.lessonsService.loadLessons(firstDayOfWeek, lastDayOfWeek);
   }
 
   set1() {
-    // this.gqlService.getLessons()
-    // this.lessonsService.loadLessons()
     this.lessonsService.setLessons([
       {
         dateStart: '2022-10-31T15:00',
         dateEnd: '2022-10-31T16:30',
-        previousLessonEnd: ''
+        previousLessonEnd: '',
       },
       {
         dateStart: '2022-10-31T16:30',
         dateEnd: '2022-10-31T19:00',
-        previousLessonEnd: ''
+        previousLessonEnd: '',
       },
       {
         dateStart: '2022-10-31T09:00',
         dateEnd: '2022-10-31T10:30',
-        previousLessonEnd: ''
+        previousLessonEnd: '',
       },
     ]);
   }
@@ -70,18 +79,18 @@ export class SheduleComponent implements OnInit {
       {
         dateStart: '2022-11-01T14:00',
         dateEnd: '2022-11-01T15:30',
-        previousLessonEnd: ''
+        previousLessonEnd: '',
       },
       {
         dateStart: '2022-11-01T15:30',
         dateEnd: '2022-11-01T18:00',
-        previousLessonEnd: ''
+        previousLessonEnd: '',
       },
       {
         dateStart: '2022-11-01T08:00',
         dateEnd: '2022-11-01T09:30',
-        previousLessonEnd: ''
+        previousLessonEnd: '',
       },
     ]);
-}
+  }
 }

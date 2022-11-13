@@ -13,8 +13,8 @@ const GET_ALL_USERS = gql`
 `;
 
 const GET_ALL_LESSONS = gql`
-  query {
-    lessons {
+  query lessons($dateStart: String!, $dateEnd: String!) {
+    lessons(dateStart: $dateStart, dateEnd: $dateEnd) {
       _id
       theme
       groups

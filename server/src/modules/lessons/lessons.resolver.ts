@@ -10,7 +10,6 @@ export class LessonsResolver {
     @Query()
     
     lessons(@Args('dateStart') dateStart: string, @Args('dateEnd') dateEnd: string) {
-        console.log(dateStart, dateEnd)
-        return this.lessonsService.find()
+        return this.lessonsService.find(dateStart, dateEnd)
     }
 }

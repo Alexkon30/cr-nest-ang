@@ -29,11 +29,14 @@ export class LessonsService {
     this.lessonsSubject.next(lessons);
   }
 
-  loadLessons() {
+  loadLessons(start: string, end: string) {
     this.apollo.query<{lessons: Lesson[]}>({
-      query: GET_ALL_LESSONS
+      query: GET_ALL_LESSONS,
+      variables: {
+        dateStart: start,
+        dateEnd: end
+      }
     }).subscribe(data => {
-      console.log(data)
       this.lessonsSubject.next(JSON.parse(JSON.stringify(data.data.lessons)))
     })
   }
