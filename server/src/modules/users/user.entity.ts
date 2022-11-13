@@ -1,5 +1,7 @@
 import { Gender } from 'src/generator/graphql.schema';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Group } from '../groups/group.entity';
+import { OrganizationUserRole } from '../org-user-roles/org-user-roles.entity';
 
 @Entity({
   name: 'users',
@@ -33,6 +35,16 @@ export class User {
     nullable: true
   })
   patronymic: string;
+
+  @ManyToOne(() => Group, (group) => group.students, {
+    nullable: true
+  })
+  group: Group
+
+  @OneToMany(() => OrganizationUserRole, orgUserRole => orgUserRole.user, {
+    nullable: true
+  })
+  orgUserRoles: OrganizationUserRole[]
 
   // @Column({
   //   nullable: true

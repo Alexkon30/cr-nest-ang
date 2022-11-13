@@ -8,6 +8,7 @@ import { hashPassword } from '../utils/index';
 import { Organization } from '../modules/organizations/organization.entity';
 import { OrganizationUserRole } from '../modules/org-user-roles/org-user-roles.entity';
 import { Lesson } from '../modules/lessons/lesson.entity';
+import { Group } from '../modules/groups/group.entity';
 
 const main = async () => {
   const myDataSource = new DataSource({
@@ -19,7 +20,7 @@ const main = async () => {
     useUnifiedTopology: true,
     keepConnectionAlive: false,
     logging: true,
-    entities: [Role, Organization, User, OrganizationUserRole, Lesson],
+    entities: [Role, Organization, User, OrganizationUserRole, Lesson, Group],
     dropSchema: true,
   });
 
@@ -57,19 +58,33 @@ const main = async () => {
     lastName: 'Owner',
   });
 
-  const users = [];
+  const students = [];
 
-  for (let i = 0; i < 10; i++) {
-    const user = manager.create(User, {
+  for (let i = 0; i < 5; i++) {
+    const student = manager.create(User, {
       email: faker.internet.email(),
       password: await hashPassword('simplepass'),
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
     });
-    users.push(user);
+    students.push(student);
   }
 
-  await manager.save([owner, ...users]);
+
+  const teachers = []
+
+  for (let i = 0; i < 5; i++) {
+    const techer = manager.create(User, {
+      email: faker.internet.email(),
+      password: await hashPassword('simplepass'),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+    });
+    teachers.push(techer);
+  }
+
+
+  await manager.save([owner, ...students, ...teachers]);
 
   //===============
   // Organizations
@@ -91,7 +106,33 @@ const main = async () => {
     roles: [ownerRole],
   });
 
-  await manager.save([orgUserRole]);
+
+  const studentsRelations = []
+
+  students.forEach(student => {
+    const studentsRelation = manager.create(OrganizationUserRole, {
+      organization: cambridge,
+      user: student,
+      roles: [studentRole],
+    })
+    studentsRelations.push(studentsRelation);
+  })
+
+
+
+  const teachersRelations = []
+
+  teachers.forEach(teacher => {
+    const teacherRelation = manager.create(OrganizationUserRole, {
+      organization: cambridge,
+      user: teacher,
+      roles: [teacherRole],
+    })
+    teachersRelations.push(teacherRelation);
+  })
+
+
+  await manager.save([orgUserRole, ...studentsRelations, ...teachersRelations]);
 
   //===============
   // Lessons
@@ -99,7 +140,7 @@ const main = async () => {
 
   const lesson1 = manager.create(Lesson, {
     teachers: [],
-    groups: '',
+    groups: [],
     discipline: 'discipline 1',
     theme: 'theme 1',
     room: 213,
@@ -110,7 +151,7 @@ const main = async () => {
 
   const lesson2 = manager.create(Lesson, {
     teachers: [],
-    groups: '',
+    groups: [],
     discipline: 'discipline 2',
     theme: 'theme 2',
     room: 213,
@@ -121,7 +162,7 @@ const main = async () => {
 
   const lesson3 = manager.create(Lesson, {
     teachers: [],
-    groups: '',
+    groups: [],
     discipline: 'discipline 3',
     theme: 'theme 3',
     room: 213,

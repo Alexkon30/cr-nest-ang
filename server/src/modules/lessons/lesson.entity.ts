@@ -1,4 +1,5 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Group } from '../groups/group.entity';
 import { User } from '../users/user.entity';
 
 @Entity({
@@ -14,14 +15,15 @@ export class Lesson {
   @Column() //@ManyToMany
   theme: string //Theme
 
-  @Column() //@ManyToMany
-  groups: string //Group[]
+  @ManyToMany(() => Group)
+  @JoinTable()
+  groups: Group[]
 
   @ManyToMany(() => User)
   @JoinTable()
   teachers: User[]
 
-  @Column() //OneToOne()
+  @Column() //@ManyToOne()
   room: number //Room
 
   @Column({ type: 'timestamp' })

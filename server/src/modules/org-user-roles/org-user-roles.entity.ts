@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Organization } from "../organizations/organization.entity";
 import { Role } from "../roles/role.entity";
 import { User } from "../users/user.entity";
@@ -10,14 +10,13 @@ export class OrganizationUserRole {
   @PrimaryGeneratedColumn()
   _id: number;
 
-  @OneToOne(() => Organization)
-  @JoinColumn()
+  @ManyToOne(() => Organization, organization => organization.orgUserRoles)
   organization: Organization
 
-  @OneToOne(() => User)
-  @JoinColumn()
+  @ManyToOne(() => User, user => user.orgUserRoles)
   user: User
 
-  @OneToMany(() => Role, (role) => role.org_user_role) //заменить одну роль на много
+  @ManyToMany(() => Role)
+  @JoinTable()
   roles: Role[]
 }
