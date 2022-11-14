@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role as RoleEnum } from 'src/generator/graphql.schema';
+import { RoleEnum } from 'src/generator/graphql.schema';
 import { Repository } from 'typeorm';
 import { Role } from './role.entity';
 

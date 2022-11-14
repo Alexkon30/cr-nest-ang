@@ -27,7 +27,14 @@ export class UserService {
     }
 
     findAllUsers(): Promise<User[]> {
-        return this.userRepository.find()
+        return this.userRepository.find({
+            relations: {
+                orgUserRoles: {
+                    roles: true,
+                    organization: true
+                }
+            }
+        })
     }
 
     async createUser(userInput: CreateUserInput): Promise<UserWithoutPass | undefined> {

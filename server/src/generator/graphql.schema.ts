@@ -8,16 +8,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export enum Gender {
-    MALE = "MALE",
-    FEMALE = "FEMALE"
-}
-
-export enum Role {
+export enum RoleEnum {
     OWNER = "OWNER",
     ADMIN = "ADMIN",
     TEACHER = "TEACHER",
     STUDENT = "STUDENT"
+}
+
+export enum Gender {
+    MALE = "MALE",
+    FEMALE = "FEMALE"
 }
 
 export class CreateOrganizationInput {
@@ -30,7 +30,7 @@ export class CreateUserInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     patronymic?: Nullable<string>;
-    roles?: Nullable<Role[]>;
+    roles?: Nullable<RoleEnum[]>;
 }
 
 export class UpdateUserInput {
@@ -39,21 +39,27 @@ export class UpdateUserInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     patronymic?: Nullable<string>;
-    roles?: Nullable<Role[]>;
+    roles?: Nullable<RoleEnum[]>;
 }
 
 export class UpdateOrganizationRolesInput {
     organizationId: string;
     email: string;
-    roles?: Nullable<Role[]>;
+    roles?: Nullable<RoleEnum[]>;
+}
+
+export class Group {
+    _id: string;
+    title: string;
+    students?: Nullable<User[]>;
 }
 
 export class Lesson {
-    _id?: Nullable<number>;
+    _id: number;
     discipline?: Nullable<string>;
     theme?: Nullable<string>;
-    groups?: Nullable<string>;
-    teachers?: Nullable<User[]>;
+    groups: Group[];
+    teachers: User[];
     room?: Nullable<string>;
     dateStart?: Nullable<string>;
     dateEnd?: Nullable<string>;
@@ -68,13 +74,20 @@ export abstract class IQuery {
     abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
 }
 
+export class OrganizationUserRole {
+    _id: string;
+    organization?: Nullable<Organization>;
+    user?: Nullable<User>;
+    roles?: Nullable<UserRole[]>;
+}
+
 export class Organization {
     _id: string;
     title: string;
 }
 
 export class UserRole {
-    value: Role;
+    value: RoleEnum;
     _id?: Nullable<number>;
 }
 
@@ -89,6 +102,8 @@ export class User {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     patronymic?: Nullable<string>;
+    group?: Nullable<Group>;
+    orgUserRoles?: Nullable<OrganizationUserRole[]>;
 }
 
 export abstract class IMutation {

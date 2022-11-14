@@ -7,20 +7,13 @@ type RefreshTokenResponse {
 	accessToken: String!
 }
 
-enum Role {
-	OWNER 
-	ADMIN
-	TEACHER
-	STUDENT
-}
-
 input CreateUserInput {
 	email: String!
 	password: String
 	firstName: String
 	lastName: String
 	patronymic: String
-	roles: [Role!]
+	roles: [RoleEnum!]
 }
 
 input UpdateUserInput {
@@ -29,7 +22,7 @@ input UpdateUserInput {
 	firstName: String
 	lastName: String
 	patronymic: String
-	roles: [Role!]
+	roles: [RoleEnum!]
 	# avatar: String
 	# gender: Gender
 	# isVerified: Boolean
@@ -40,7 +33,7 @@ input UpdateUserInput {
 input UpdateOrganizationRolesInput {
 	organizationId: String!
 	email: String!
-	roles: [Role!]
+	roles: [RoleEnum!]
 }
 
 type User {
@@ -50,6 +43,8 @@ type User {
 	firstName: String
 	lastName: String
 	patronymic: String
+	group: Group
+	orgUserRoles: [OrganizationUserRole!]
 	# avatar: String
 	# gender: Gender
 	# isVerified: Boolean

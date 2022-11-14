@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { Role } from '../modules/roles/role.entity';
-import { Role as RoleEnum } from '../generator/graphql.schema';
+import { RoleEnum } from '../generator/graphql.schema';
 import { TYPEORM } from '../environments/index';
 import { faker } from '@faker-js/faker';
 import { User } from '../modules/users/user.entity';
@@ -58,9 +58,10 @@ const main = async () => {
     lastName: 'Owner',
   });
 
-  const students = [];
 
-  for (let i = 0; i < 5; i++) {
+  const students: User[] = [];
+
+  for (let i = 0; i < 30; i++) {
     const student = manager.create(User, {
       email: faker.internet.email(),
       password: await hashPassword('simplepass'),
@@ -71,9 +72,9 @@ const main = async () => {
   }
 
 
-  const teachers = []
+  const teachers: User[] = []
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 3; i++) {
     const techer = manager.create(User, {
       email: faker.internet.email(),
       password: await hashPassword('simplepass'),
@@ -107,7 +108,7 @@ const main = async () => {
   });
 
 
-  const studentsRelations = []
+  const studentsRelations: OrganizationUserRole[] = []
 
   students.forEach(student => {
     const studentsRelation = manager.create(OrganizationUserRole, {
@@ -119,8 +120,7 @@ const main = async () => {
   })
 
 
-
-  const teachersRelations = []
+  const teachersRelations: OrganizationUserRole[] = []
 
   teachers.forEach(teacher => {
     const teacherRelation = manager.create(OrganizationUserRole, {
@@ -135,12 +135,42 @@ const main = async () => {
   await manager.save([orgUserRole, ...studentsRelations, ...teachersRelations]);
 
   //===============
+  // Groups
+  //===============
+
+  const groups: Group[] = []
+
+  const group_IK = manager.create(Group, {
+    title: 'IK',
+    students: []
+  })
+
+  const group_KE = manager.create(Group, {
+    title: 'KE',
+    students: []
+  })
+
+  const group_IB = manager.create(Group, {
+    title: 'IB',
+    students: []
+  })
+
+  groups.push(group_IK, group_KE, group_IB)
+
+  students.forEach((student, i) => {
+    groups[Math.floor(i / 10)].students.push(student)
+  })
+
+  await manager.save(groups);
+
+
+  //===============
   // Lessons
   //===============
 
   const lesson1 = manager.create(Lesson, {
-    teachers: [],
-    groups: [],
+    teachers: [teachers[0]],
+    groups: [group_IK],
     discipline: 'discipline 1',
     theme: 'theme 1',
     room: 213,
@@ -150,8 +180,8 @@ const main = async () => {
   });
 
   const lesson2 = manager.create(Lesson, {
-    teachers: [],
-    groups: [],
+    teachers: [teachers[1]],
+    groups: [group_IB],
     discipline: 'discipline 2',
     theme: 'theme 2',
     room: 213,
@@ -161,8 +191,8 @@ const main = async () => {
   });
 
   const lesson3 = manager.create(Lesson, {
-    teachers: [],
-    groups: [],
+    teachers: [teachers[2]],
+    groups: [group_KE],
     discipline: 'discipline 3',
     theme: 'theme 3',
     room: 213,

@@ -9,6 +9,7 @@ import { OrganizationsModule } from './modules/organizations/organizations.modul
 import { OrgUserRolesModule } from './modules/org-user-roles/org-user-roles.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { LessonsModule } from './modules/lessons/lessons.module';
+import { GroupsModule } from './modules/groups/group.module';
 
 
 @Module({
@@ -26,7 +27,8 @@ import { LessonsModule } from './modules/lessons/lessons.module';
     OrganizationsModule,
     OrgUserRolesModule,
     RolesModule,
-    LessonsModule
+    LessonsModule,
+    GroupsModule
   ]
 })
 export class AppModule {}

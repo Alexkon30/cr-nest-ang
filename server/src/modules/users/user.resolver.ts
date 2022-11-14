@@ -1,9 +1,10 @@
 import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { GqlAuthGuard } from "src/auth/guards/gql-auth.guard";
-import { CreateUserInput, UpdateOrganizationRolesInput, UpdateUserInput, User } from "src/generator/graphql.schema";
+import { CreateUserInput, UpdateOrganizationRolesInput, UpdateUserInput } from "src/generator/graphql.schema";
 import { UserService } from "src/modules/users/user.service";
 import { UserWithoutPass } from "src/types";
+import { User } from "./user.entity";
 
 @Resolver('User')
 export class UserResolver {

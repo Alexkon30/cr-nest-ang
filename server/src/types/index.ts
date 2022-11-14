@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from 'src/generator/graphql.schema';
+import { User } from 'src/modules/users/user.entity';
 
 type UserWithoutPass = Omit<User, 'password'>;
 

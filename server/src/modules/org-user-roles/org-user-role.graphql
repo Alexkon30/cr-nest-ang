@@ -1,0 +1,6 @@
+type OrganizationUserRole {
+    _id: ID!
+    organization: Organization
+    user: User
+    roles: [UserRole!]
+}

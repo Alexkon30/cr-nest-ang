@@ -1,6 +1,13 @@
 type UserRole {
-	value: Role!
+	value: RoleEnum!
 	_id: Int
+}
+
+enum RoleEnum {
+	OWNER 
+	ADMIN
+	TEACHER
+	STUDENT
 }
 
 type Query {
