@@ -26,10 +26,10 @@ export class Lesson {
   @Column() //@ManyToOne()
   room: number //Room
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamptz' })
   dateStart: Date;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamptz' })
   dateEnd: Date;
 
   @Column()

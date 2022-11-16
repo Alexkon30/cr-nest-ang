@@ -17,7 +17,9 @@ const GET_ALL_LESSONS = gql`
     lessons(dateStart: $dateStart, dateEnd: $dateEnd) {
       _id
       theme
-      groups
+      groups {
+        title
+      }
       teachers {
         firstName
       }

@@ -174,8 +174,8 @@ const main = async () => {
     discipline: 'discipline 1',
     theme: 'theme 1',
     room: 213,
-    dateStart: '2022-10-31T15:00',
-    dateEnd: '2022-10-31T16:30',
+    dateStart: '2022-10-31T15:00Z',
+    dateEnd: '2022-10-31T16:30Z',
     type: 'lecture',
   });
 
@@ -185,8 +185,8 @@ const main = async () => {
     discipline: 'discipline 2',
     theme: 'theme 2',
     room: 213,
-    dateStart: '2022-10-31T16:30',
-    dateEnd: '2022-10-31T19:00',
+    dateStart: '2022-10-31T16:30Z',
+    dateEnd: '2022-10-31T19:00Z',
     type: 'lecture',
   });
 
@@ -196,8 +196,8 @@ const main = async () => {
     discipline: 'discipline 3',
     theme: 'theme 3',
     room: 213,
-    dateStart: '2022-10-31T09:00',
-    dateEnd: '2022-10-31T10:30',
+    dateStart: '2022-10-31T09:00Z',
+    dateEnd: '2022-10-31T10:30Z',
     type: 'lecture',
   });
 

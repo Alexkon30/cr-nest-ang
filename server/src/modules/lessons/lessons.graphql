@@ -2,14 +2,20 @@ type Lesson {
     _id: Int!
     discipline: String
     theme: String
-    groups: [Group!]!
-    teachers: [User!]!
+    groups: [Group!]
+    teachers: [User!]
     room: String
     dateStart: String
     dateEnd: String
     type: String
 }
 
+enum Source {
+    GROUP
+    TEACHER
+    ROOM
+}
+
 type Query {
-    lessons(dateStart: String, dateEnd: String): [Lesson!]
+    lessons(dateStart: String, dateEnd: String, source: Source, id: Int): [Lesson!]
 }

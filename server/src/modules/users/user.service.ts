@@ -32,7 +32,8 @@ export class UserService {
                 orgUserRoles: {
                     roles: true,
                     organization: true
-                }
+                },
+                group: true
             }
         })
     }

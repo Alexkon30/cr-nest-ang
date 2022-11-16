@@ -40,16 +40,16 @@ export class SheduleComponent implements OnInit {
 
     const firstDayOfWeek =
       currentDate.day() === 0
-        ? currentDate.day(-6).format('YYYY-MM-DDTHH:mm')
-        : currentDate.day(1).format('YYYY-MM-DDTHH:mm');
+        ? currentDate.day(-6).format('YYYY-MM-DDTHH:mm') + 'Z'
+        : currentDate.day(1).format('YYYY-MM-DDTHH:mm') + 'Z';
     const lastDayOfWeek =
       currentDate.day() === 0
-        ? currentDate.hours(23).minutes(59).format('YYYY-MM-DDTHH:mm')
+        ? currentDate.hours(23).minutes(59).format('YYYY-MM-DDTHH:mm') + 'Z'
         : currentDate
             .day(8 - currentDate.day())
             .hours(23)
             .minutes(59)
-            .format('YYYY-MM-DDTHH:mm');
+            .format('YYYY-MM-DDTHH:mm') + 'Z';
 
     this.lessonsService.loadLessons(firstDayOfWeek, lastDayOfWeek);
   }

@@ -8,6 +8,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum Source {
+    GROUP = "GROUP",
+    TEACHER = "TEACHER",
+    ROOM = "ROOM"
+}
+
 export enum RoleEnum {
     OWNER = "OWNER",
     ADMIN = "ADMIN",
@@ -58,8 +64,8 @@ export class Lesson {
     _id: number;
     discipline?: Nullable<string>;
     theme?: Nullable<string>;
-    groups: Group[];
-    teachers: User[];
+    groups?: Nullable<Group[]>;
+    teachers?: Nullable<User[]>;
     room?: Nullable<string>;
     dateStart?: Nullable<string>;
     dateEnd?: Nullable<string>;
@@ -67,7 +73,7 @@ export class Lesson {
 }
 
 export abstract class IQuery {
-    abstract lessons(dateStart?: Nullable<string>, dateEnd?: Nullable<string>): Nullable<Lesson[]> | Promise<Nullable<Lesson[]>>;
+    abstract lessons(dateStart?: Nullable<string>, dateEnd?: Nullable<string>, source?: Nullable<Source>, id?: Nullable<number>): Nullable<Lesson[]> | Promise<Nullable<Lesson[]>>;
 
     abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
 

@@ -10,8 +10,8 @@ import { OrganizationUserRole } from '../org-user-roles/org-user-roles.entity';
   }
 })
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  _id: string;
+  @PrimaryGeneratedColumn()
+  _id: number;
 
   @Column({
     unique: true
