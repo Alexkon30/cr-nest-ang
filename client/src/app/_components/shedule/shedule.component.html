@@ -7,23 +7,30 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Choose source</mat-label>
-        <mat-select [(ngModel)]="source">
-            <mat-option value="groups">groups</mat-option>
-            <mat-option value="teachers">teachers</mat-option>
-            <mat-option value="rooms">rooms</mat-option>
+        <mat-select [(ngModel)]="sourceType">
+            <mat-option value="GROUPS">groups</mat-option>
+            <mat-option value="TEACHERS">teachers</mat-option>
+            <mat-option value="ROOMS">rooms</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Choose element</mat-label>
-        <mat-select [(ngModel)]="element">
-            <mat-option *ngFor="let element of elements" [value]="element">{{element}}</mat-option>
+        <mat-select [(ngModel)]="sourceId">
+            <ng-container *ngIf="sourceType === 'TEACHERS'">
+                <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.firstName + ' ' +
+                    teacher.lastName}}</mat-option>
+            </ng-container>
+            <ng-container *ngIf="sourceType === 'GROUPS'">
+                <mat-option *ngFor="let group of groups" [value]="group.id">{{group.title}}</mat-option>
+            </ng-container>
+            <ng-container *ngIf="sourceType === 'ROOMS'">
+                <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.title}}</mat-option>
+            </ng-container>
         </mat-select>
     </mat-form-field>
+    <button mat-raised-button color="primary" (click)="show(this.date, this.sourceType, this.sourceId)">Show
+        shedule</button>
 </div>
-<button (click)="set1()">set1</button>
-<button (click)="set2()">set2</button>
-<button (click)="show(this.date)">show</button>
-
 <div class="shedule__body">
     <div class="shedule__column">
         <div class="shedule__header">

@@ -1,5 +1,5 @@
 type Organization {
-    _id: ID!
+    id: String!
     title: String!
 }
 

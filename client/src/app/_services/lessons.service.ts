@@ -1,43 +1,71 @@
 import { Injectable } from '@angular/core';
-import { Lesson, Shedule } from '@app/_models';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import moment from 'moment';
-import { Apollo } from 'apollo-angular';
-import { GET_ALL_LESSONS } from '@app/graphql/graphql.queries';
+import { Lesson } from '@app/_models';
+import { Apollo, gql, QueryRef } from 'apollo-angular';
+
+export interface LessonsResult {
+  lessons: Lesson[];
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class LessonsService {
-  private lessonsSubject: BehaviorSubject<Lesson[]>;
-  public lessons: Observable<Lesson[]>;
+  private lessonsQuery: QueryRef<LessonsResult, {}>;
 
   constructor(private apollo: Apollo) {
-    this.lessonsSubject = new BehaviorSubject<Lesson[]>([]);
-    this.lessons = this.lessonsSubject.asObservable();
+    this.lessonsQuery = this.apollo.watchQuery({
+      query: gql`
+        query lessons($dateStart: String!, $dateEnd: String!) {
+          lessons(dateStart: $dateStart, dateEnd: $dateEnd) {
+            id
+            theme
+            groups {
+              title
+            }
+            teachers {
+              firstName
+              lastName
+            }
+            discipline
+            room
+            dateStart
+            dateEnd
+            type
+          }
+        }
+      `,
+    });
   }
 
-  public get lessonsValue(): Lesson[] {
-    return this.lessonsSubject.getValue();
+  async getLessons(dateStart: string, dateEnd: string): Promise<Lesson[]> {
+    const result = await this.lessonsQuery.refetch({dateStart, dateEnd})
+    return result.data.lessons
   }
 
-  clear() {
-    this.lessonsSubject.next([]);
-  }
- 
-  setLessons(lessons: Lesson[]) {
-    this.lessonsSubject.next(lessons);
-  }
+  // private lessonsSubject: BehaviorSubject<Lesson[]>;
+  // public lessons: Observable<Lesson[]>;
 
-  loadLessons(start: string, end: string) {
-    this.apollo.query<{lessons: Lesson[]}>({
-      query: GET_ALL_LESSONS,
-      variables: {
-        dateStart: start,
-        dateEnd: end
-      }
-    }).subscribe(data => {
-      this.lessonsSubject.next(JSON.parse(JSON.stringify(data.data.lessons)))
-    })
-  }
+  // public get lessonsValue(): Lesson[] {
+  //   return this.lessonsSubject.getValue();
+  // }
+
+  // clear() {
+  //   this.lessonsSubject.next([]);
+  // }
+
+  // setLessons(lessons: Lesson[]) {
+  //   this.lessonsSubject.next(lessons);
+  // }
+
+  // loadLessons(start: string, end: string) {
+  //   this.apollo.query<{lessons: Lesson[]}>({
+  //     query: GET_ALL_LESSONS,
+  //     variables: {
+  //       dateStart: start,
+  //       dateEnd: end
+  //     }
+  //   }).subscribe(data => {
+  //     this.lessonsSubject.next(JSON.parse(JSON.stringify(data.data.lessons)))
+  //   })
+  // }
 }

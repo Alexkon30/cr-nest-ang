@@ -23,7 +23,7 @@ export class AuthService {
     }
 
     async login(user: UserWithoutPass): Promise<LoginResponse> {
-        const payload = { sub: user._id }
+        const payload = { sub: user.id }
         const expiresIn = 60 * 60 * 24
 
         return {

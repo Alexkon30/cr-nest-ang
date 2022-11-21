@@ -10,7 +10,7 @@ import { User } from "../users/user.entity";
 })
 export class Organization {
   @PrimaryGeneratedColumn('uuid')
-  _id: string;
+  id: string;
 
   @Column()
   title: string;

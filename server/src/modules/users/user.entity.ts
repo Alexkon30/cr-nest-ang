@@ -11,7 +11,7 @@ import { OrganizationUserRole } from '../org-user-roles/org-user-roles.entity';
 })
 export class User {
   @PrimaryGeneratedColumn()
-  _id: number;
+  id: number;
 
   @Column({
     unique: true

@@ -1,3 +1,4 @@
+import { IElement } from './common';
 import { Discipline } from './discipline';
 import { Group } from './group';
 import { Mark } from './mark';
@@ -5,8 +6,7 @@ import { Room } from './room';
 import { Theme } from './theme';
 import { User } from './user';
 
-export interface Lesson {
-  id?: number;
+export interface Lesson extends IElement {
 //   status: string;
   teachers?: User[];
   groups?: Group[];

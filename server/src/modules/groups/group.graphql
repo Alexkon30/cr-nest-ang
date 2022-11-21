@@ -1,5 +1,9 @@
 type Group {
-    _id: ID!
+    id: Int!
     title: String!
     students: [User!]
+}
+
+type Query {
+    groups: [Group!]
 }

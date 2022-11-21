@@ -1,6 +1,6 @@
 type UserRole {
 	value: RoleEnum!
-	_id: Int
+	id: Int!
 }
 
 enum RoleEnum {

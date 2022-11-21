@@ -7,7 +7,7 @@ import { User } from '../users/user.entity';
 })
 export class Lesson {
   @PrimaryGeneratedColumn()
-  _id: number;
+  id: number;
 
   @Column() //@ManyToOne
   discipline: string //Discipline

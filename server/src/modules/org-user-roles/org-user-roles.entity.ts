@@ -8,7 +8,7 @@ import { User } from "../users/user.entity";
 })
 export class OrganizationUserRole {
   @PrimaryGeneratedColumn()
-  _id: number;
+  id: number;
 
   @ManyToOne(() => Organization, organization => organization.orgUserRoles)
   organization: Organization

@@ -55,13 +55,23 @@ export class UpdateOrganizationRolesInput {
 }
 
 export class Group {
-    _id: string;
+    id: number;
     title: string;
     students?: Nullable<User[]>;
 }
 
+export abstract class IQuery {
+    abstract groups(): Nullable<Group[]> | Promise<Nullable<Group[]>>;
+
+    abstract lessons(dateStart?: Nullable<string>, dateEnd?: Nullable<string>, source?: Nullable<Source>, id?: Nullable<number>): Nullable<Lesson[]> | Promise<Nullable<Lesson[]>>;
+
+    abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
+
+    abstract users(role?: Nullable<RoleEnum>): Nullable<User[]> | Promise<Nullable<User[]>>;
+}
+
 export class Lesson {
-    _id: number;
+    id: number;
     discipline?: Nullable<string>;
     theme?: Nullable<string>;
     groups?: Nullable<Group[]>;
@@ -72,29 +82,21 @@ export class Lesson {
     type?: Nullable<string>;
 }
 
-export abstract class IQuery {
-    abstract lessons(dateStart?: Nullable<string>, dateEnd?: Nullable<string>, source?: Nullable<Source>, id?: Nullable<number>): Nullable<Lesson[]> | Promise<Nullable<Lesson[]>>;
-
-    abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
-
-    abstract users(): Nullable<User[]> | Promise<Nullable<User[]>>;
-}
-
 export class OrganizationUserRole {
-    _id: string;
+    id: number;
     organization?: Nullable<Organization>;
     user?: Nullable<User>;
     roles?: Nullable<UserRole[]>;
 }
 
 export class Organization {
-    _id: string;
+    id: string;
     title: string;
 }
 
 export class UserRole {
     value: RoleEnum;
-    _id?: Nullable<number>;
+    id: number;
 }
 
 export class RefreshTokenResponse {
@@ -102,7 +104,7 @@ export class RefreshTokenResponse {
 }
 
 export class User {
-    _id: string;
+    id: number;
     email: string;
     password?: Nullable<string>;
     firstName?: Nullable<string>;

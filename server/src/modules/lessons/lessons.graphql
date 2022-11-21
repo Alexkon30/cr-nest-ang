@@ -1,5 +1,5 @@
 type Lesson {
-    _id: Int!
+    id: Int!
     discipline: String
     theme: String
     groups: [Group!]

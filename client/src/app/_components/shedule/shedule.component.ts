@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Lesson, Shedule } from '@app/_models';
-import { LessonsService } from '@app/_services';
-import { Subscription } from 'rxjs';
+import { Group, Lesson, Room, Shedule, User } from '@app/_models';
+import { GroupsService, LessonsService, UsersService, RoleEnum } from '@app/_services';
 import moment from 'moment';
+import { Source } from '@app/_models/common';
 
 @Component({
   selector: 'app-shedule',
@@ -11,32 +11,33 @@ import moment from 'moment';
 })
 export class SheduleComponent implements OnInit {
   lessons: Lesson[];
-  subscription: Subscription;
-  date: Date;
-  source: string;
-  element: string;
-  elements = ['11-IK', '11-IB', '11-KE'];
+  date: moment.Moment;
+  sourceType: Source;
+  sourceId: number | string;
+  teachers: User[];
+  groups: Group[];
+  rooms: Room[];
 
-  constructor(private lessonsService: LessonsService) {}
-
-  ngOnInit(): void {
-    this.subscription = this.lessonsService.lessons.subscribe((lessons) => {
-      this.lessons = lessons;
-    });
-
-    // this.date = new Date();
-    this.date = new Date(2022, 10, 3);
-    this.source = 'groups';
-
-    this.show(this.date);
+  constructor(
+    private lessonsService: LessonsService,
+    private usersService: UsersService,
+    private groupsService: GroupsService
+  ) {
+    this.lessons = [];
+    this.date = moment([2022, 10, 3])
+    // this.date = moment();
+    this.sourceType = 'GROUPS';
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  async ngOnInit(): Promise<void> {
+    this.teachers = await this.usersService.getUsersByRole(RoleEnum.TEACHER);
+    this.groups = await this.groupsService.getGroups()
   }
 
-  show(date: Date) {
-    const currentDate = moment(date).hours(0).minutes(0);
+  async show(date: moment.Moment, source: Source, id: number | string) {
+    // console.log({ date, source, id });
+
+    const currentDate = date.hours(0).minutes(0);
 
     const firstDayOfWeek =
       currentDate.day() === 0
@@ -51,46 +52,9 @@ export class SheduleComponent implements OnInit {
             .minutes(59)
             .format('YYYY-MM-DDTHH:mm') + 'Z';
 
-    this.lessonsService.loadLessons(firstDayOfWeek, lastDayOfWeek);
-  }
-
-  set1() {
-    this.lessonsService.setLessons([
-      {
-        dateStart: '2022-10-31T15:00',
-        dateEnd: '2022-10-31T16:30',
-        previousLessonEnd: '',
-      },
-      {
-        dateStart: '2022-10-31T16:30',
-        dateEnd: '2022-10-31T19:00',
-        previousLessonEnd: '',
-      },
-      {
-        dateStart: '2022-10-31T09:00',
-        dateEnd: '2022-10-31T10:30',
-        previousLessonEnd: '',
-      },
-    ]);
-  }
-
-  set2() {
-    this.lessonsService.setLessons([
-      {
-        dateStart: '2022-11-01T14:00',
-        dateEnd: '2022-11-01T15:30',
-        previousLessonEnd: '',
-      },
-      {
-        dateStart: '2022-11-01T15:30',
-        dateEnd: '2022-11-01T18:00',
-        previousLessonEnd: '',
-      },
-      {
-        dateStart: '2022-11-01T08:00',
-        dateEnd: '2022-11-01T09:30',
-        previousLessonEnd: '',
-      },
-    ]);
+    this.lessons = await this.lessonsService.getLessons(
+      firstDayOfWeek,
+      lastDayOfWeek
+    );
   }
 }

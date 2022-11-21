@@ -1,4 +1,5 @@
-export interface Room {
-    id: number;
+import { IElement } from "./common";
+
+export interface Room extends IElement {
     title: string;
 }

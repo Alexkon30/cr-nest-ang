@@ -4,7 +4,7 @@ import { RoleEnum } from '../../generator/graphql.schema';
 @Entity()
 export class Role {
   @PrimaryGeneratedColumn()
-  _id: number;
+  id: number;
 
   @Column({
     type: 'enum',

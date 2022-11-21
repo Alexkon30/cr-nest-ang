@@ -6,7 +6,7 @@ import { User } from "../users/user.entity";
 })
 export class Group {
     @PrimaryGeneratedColumn()
-    _id: number;
+    id: number;
 
     @Column()
     title: string

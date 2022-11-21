@@ -45,13 +45,13 @@ export class LessonsService {
       case 'GROUP':
         return {
           groups: {
-            _id: id,
+            id,
           },
         };
       case 'TEACHER':
         return {
           teachers: {
-            _id: id,
+            id,
           },
         };
     }

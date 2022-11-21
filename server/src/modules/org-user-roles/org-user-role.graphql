@@ -1,5 +1,5 @@
 type OrganizationUserRole {
-    _id: ID!
+    id: Int!
     organization: Organization
     user: User
     roles: [UserRole!]

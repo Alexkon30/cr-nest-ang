@@ -1,9 +1,9 @@
+import { IElement } from "./common";
 import { Role } from "./role";
 
-export interface User {
-    id: string;
-    firstname: string;
-    lastname: string;
+export interface User extends IElement {
+    firstName: string;
+    lastName: string;
     patronymic: string;
     token?: string;
     email: string;

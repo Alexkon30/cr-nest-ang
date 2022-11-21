@@ -37,7 +37,7 @@ input UpdateOrganizationRolesInput {
 }
 
 type User {
-	_id: ID!
+	id: Int!
 	email: String!
 	password: String
 	firstName: String
@@ -55,7 +55,7 @@ type User {
 }
 
 type Query {
-	users: [User!] #test route
+	users(role: RoleEnum): [User!] #test route
 }
 
 type Mutation {

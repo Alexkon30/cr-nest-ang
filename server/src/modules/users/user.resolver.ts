@@ -1,7 +1,7 @@
 import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { GqlAuthGuard } from "src/auth/guards/gql-auth.guard";
-import { CreateUserInput, UpdateOrganizationRolesInput, UpdateUserInput } from "src/generator/graphql.schema";
+import { CreateUserInput, RoleEnum, UpdateOrganizationRolesInput, UpdateUserInput } from "src/generator/graphql.schema";
 import { UserService } from "src/modules/users/user.service";
 import { UserWithoutPass } from "src/types";
 import { User } from "./user.entity";
@@ -14,8 +14,10 @@ export class UserResolver {
 
     @Query()
     // @UseGuards(GqlAuthGuard)
-    users(): Promise<User[]> {
-        return this.userService.findAllUsers()
+    users(
+        @Args('role') role?: RoleEnum
+        ): Promise<User[]> {
+        return this.userService.findAllUsers(role)
     }
 
     @Mutation()

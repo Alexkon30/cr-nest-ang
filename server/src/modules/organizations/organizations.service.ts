@@ -13,7 +13,7 @@ export class OrganizationsService {
     ) {}
 
     async findOneById(id: string): Promise<Organization> {
-        return this.organizationRepository.findOneBy({_id: id})
+        return this.organizationRepository.findOneBy({id})
     }
 
     async findAll(): Promise<Organization[]> {
@@ -34,7 +34,7 @@ export class OrganizationsService {
 
     async deleteOrganization(id: string) {
         try {
-            await this.organizationRepository.delete({_id: id})
+            await this.organizationRepository.delete({id})
         } catch(err) {
             throw new ApolloError(err)
         }

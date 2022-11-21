@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ApolloError } from "apollo-server-core";
 import { instanceToPlain } from "class-transformer";
-import { CreateUserInput, UpdateOrganizationRolesInput, UpdateUserInput } from "src/generator/graphql.schema";
+import { CreateUserInput, RoleEnum, UpdateOrganizationRolesInput, UpdateUserInput } from "src/generator/graphql.schema";
 import { UserWithoutPass } from "src/types";
 import { hashPassword } from "src/utils";
 import { Repository } from "typeorm";
@@ -26,7 +26,8 @@ export class UserService {
         return this.userRepository.findOneBy({ email })
     }
 
-    findAllUsers(): Promise<User[]> {
+    findAllUsers(role?: RoleEnum): Promise<User[]> {
+        console.log(role)
         return this.userRepository.find({
             relations: {
                 orgUserRoles: {
@@ -34,6 +35,13 @@ export class UserService {
                     organization: true
                 },
                 group: true
+            },
+            where: {
+                orgUserRoles: {
+                    roles: {
+                        value: role
+                    }
+                }
             }
         })
     }
