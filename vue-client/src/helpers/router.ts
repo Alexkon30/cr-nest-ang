@@ -7,6 +7,7 @@ const router = createRouter({
   routes: [
     {
       path: '/auth',
+      name: 'login',
       component: AuthView
     },
     {
@@ -55,6 +56,12 @@ const router = createRouter({
       component: () => import('../views/PageNotFoundView.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  // if (to.name !== 'Login' && !isAuthenticated) next({ name: 'Login' })
+  if (to.name !== 'login' && false) next({ name: 'login' })
+  else next()
 })
 
 export default router
