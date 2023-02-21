@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./vue-client/tsconfig.json"
+    },
+    {
+      "path": "./server/tsconfig.json"
+    },
+    {
+      "path": "./client/tsconfig.json"
+    }
+  ]
+}
