@@ -1,8 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { User } from '@/models'
-import router from '@/helpers/router'
-import { fetchWrapper } from '@/helpers/fetch-wrapper'
+import { fetchWrapper, router } from '@/helpers'
 import { environment } from '@/environments/environment'
 
 
@@ -19,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
 
             user.value = authUser
 
-            localStorage.setItem('user', JSON.stringify(user))
+            localStorage.setItem('user', JSON.stringify(authUser))
 
             router.push({path: returnUrl.value})
         } catch (error) {
