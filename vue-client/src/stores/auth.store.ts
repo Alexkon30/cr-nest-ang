@@ -33,5 +33,9 @@ export const useAuthStore = defineStore('auth', () => {
         router.push({name: 'login'})
     }
 
-    return { user, login, logout }
+    function register(username: string, email: string, password: string, confirmPassword: string) {
+        console.log({username, email, password, confirmPassword})
+    }
+
+    return { user, login, logout, register }
 })
