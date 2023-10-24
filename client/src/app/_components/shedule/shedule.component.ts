@@ -3,12 +3,14 @@ import { Group, Lesson, Room, Shedule, User } from '@app/_models';
 import { GroupsService, LessonsService, UsersService, RoleEnum } from '@app/_services';
 import moment from 'moment';
 import { Source } from '@app/_models/common';
+import { AutoUnsub } from '@app/_helpers';
 
 @Component({
   selector: 'app-shedule',
   templateUrl: './shedule.component.html',
   styleUrls: ['./shedule.component.less'],
 })
+@AutoUnsub()
 export class SheduleComponent implements OnInit {
   lessons: Lesson[];
   date: moment.Moment;
@@ -30,8 +32,10 @@ export class SheduleComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.teachers = await this.usersService.getUsersByRole(RoleEnum.TEACHER);
-    this.groups = await this.groupsService.getGroups()
+    console.log('init')
+    this.usersService.getAllUsers()
+    // this.teachers = await this.usersService.getUsersByRole(RoleEnum.TEACHER);
+    // this.groups = await this.groupsService.getGroups()
   }
 
   async show(date: moment.Moment, source: Source, id: number | string) {
@@ -52,9 +56,12 @@ export class SheduleComponent implements OnInit {
             .minutes(59)
             .format('YYYY-MM-DDTHH:mm') + 'Z';
 
-    this.lessons = await this.lessonsService.getLessons(
-      firstDayOfWeek,
-      lastDayOfWeek
-    );
+    // this.lessons = await this.lessonsService.getLessons(
+    //   firstDayOfWeek,
+    //   lastDayOfWeek
+    // );
+    this.usersService.getAllUsers().subscribe(data => {
+      console.log(data)
+    })
   }
 }

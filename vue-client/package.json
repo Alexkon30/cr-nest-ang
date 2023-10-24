@@ -14,8 +14,16 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vue/apollo-composable": "^4.0.0-beta.4",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.17",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
     "pinia": "^2.0.32",
     "vue": "^3.2.45",
+    "vue-apollo": "^3.1.0",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

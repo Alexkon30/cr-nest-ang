@@ -10,27 +10,27 @@ export interface GroupsResult {
     providedIn: 'root'
 })
 export class GroupsService {
-    private groupsQuery: QueryRef<GroupsResult, {}>
+    // private groupsQuery: QueryRef<GroupsResult, {}>
 
-    constructor(private apollo: Apollo) {
-        this.groupsQuery = this.apollo.watchQuery({
-            query: gql`
-            query {
-                groups {
-                id
-                title
-                students {
-                    firstName
-                    lastName
-                }
-              }
-            }
-          `
-        })
-    }
+    // constructor(private apollo: Apollo) {
+    //     this.groupsQuery = this.apollo.watchQuery({
+    //         query: gql`
+    //         query {
+    //             groups {
+    //             id
+    //             title
+    //             students {
+    //                 firstName
+    //                 lastName
+    //             }
+    //           }
+    //         }
+    //       `
+    //     })
+    // }
 
-    async getGroups(): Promise<Group[]> {
-        const result = await this.groupsQuery.refetch()
-        return result.data.groups
-    }
+    // async getGroups(): Promise<Group[]> {
+    //     const result = await this.groupsQuery.refetch()
+    //     return result.data.groups
+    // }
 }

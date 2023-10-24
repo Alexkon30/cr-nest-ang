@@ -10,37 +10,37 @@ export interface LessonsResult {
   providedIn: 'root',
 })
 export class LessonsService {
-  private lessonsQuery: QueryRef<LessonsResult, {}>;
+  // private lessonsQuery: QueryRef<LessonsResult, {}>;
 
-  constructor(private apollo: Apollo) {
-    this.lessonsQuery = this.apollo.watchQuery({
-      query: gql`
-        query lessons($dateStart: String!, $dateEnd: String!) {
-          lessons(dateStart: $dateStart, dateEnd: $dateEnd) {
-            id
-            theme
-            groups {
-              title
-            }
-            teachers {
-              firstName
-              lastName
-            }
-            discipline
-            room
-            dateStart
-            dateEnd
-            type
-          }
-        }
-      `,
-    });
-  }
+  // constructor(private apollo: Apollo) {
+  //   this.lessonsQuery = this.apollo.watchQuery({
+  //     query: gql`
+  //       query lessons($dateStart: String!, $dateEnd: String!) {
+  //         lessons(dateStart: $dateStart, dateEnd: $dateEnd) {
+  //           id
+  //           theme
+  //           groups {
+  //             title
+  //           }
+  //           teachers {
+  //             firstName
+  //             lastName
+  //           }
+  //           discipline
+  //           room
+  //           dateStart
+  //           dateEnd
+  //           type
+  //         }
+  //       }
+  //     `,
+  //   });
+  // }
 
-  async getLessons(dateStart: string, dateEnd: string): Promise<Lesson[]> {
-    const result = await this.lessonsQuery.refetch({dateStart, dateEnd})
-    return result.data.lessons
-  }
+  // async getLessons(dateStart: string, dateEnd: string): Promise<Lesson[]> {
+  //   const result = await this.lessonsQuery.refetch({dateStart, dateEnd})
+  //   return result.data.lessons
+  // }
 
   // private lessonsSubject: BehaviorSubject<Lesson[]>;
   // public lessons: Observable<Lesson[]>;

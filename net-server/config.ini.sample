@@ -1,0 +1,6 @@
+[DB_SETTINGS]
+HOST=localhost
+PORT=5432
+DATABASE=user
+USERNAME=user
+PASSWORD=user

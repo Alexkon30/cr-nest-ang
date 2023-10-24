@@ -39,7 +39,7 @@ import {
   LessonCardComponent,
 } from '@app/_components';
 import { AddPreviousLessonEndPipe, SortByTimePipe } from '@app/pipes';
-import { GraphQLModule } from './graphql.module';
+// import { GraphQLModule } from './graphql.module';
 import { SortByDaysPipe } from './pipes/sort-by-days.pipe';
 
 @NgModule({
@@ -80,7 +80,7 @@ import { SortByDaysPipe } from './pipes/sort-by-days.pipe';
     MatSelectModule,
     MatTableModule,
     MatDividerModule,
-    GraphQLModule,
+    // GraphQLModule,
     FormsModule,
     MatMomentDateModule
   ],

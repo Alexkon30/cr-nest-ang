@@ -105,7 +105,7 @@ export class UserService {
         }
     }
 
-    async createUsersByAdmin(inputs: [CreateUserInput], organizationId: string): Promise<any> {
+    async createUsersByAdmin(inputs: CreateUserInput[], organizationId: string): Promise<any> {
         try {
             const result = {}
 
