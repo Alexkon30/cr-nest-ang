@@ -4,15 +4,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
-import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -41,6 +41,7 @@ import {
 import { AddPreviousLessonEndPipe, SortByTimePipe } from '@app/pipes';
 // import { GraphQLModule } from './graphql.module';
 import { SortByDaysPipe } from './pipes/sort-by-days.pipe';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { SortByDaysPipe } from './pipes/sort-by-days.pipe';
     MatDividerModule,
     // GraphQLModule,
     FormsModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    StoreModule.forRoot({}, {})
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
