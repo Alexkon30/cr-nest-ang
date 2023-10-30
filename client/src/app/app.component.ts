@@ -4,6 +4,8 @@ import { Store } from '@ngrx/store';
 import { LessonsApiActions } from './_store/Lessons/lessons.actions';
 import { GroupsApiActions } from './_store/Groups/groups.actions';
 import { UsersApiActions } from './_store/Users/users.actions';
+import { RoomsService } from './_services/rooms.service';
+import { RoomsApiActions } from './_store/Rooms/rooms.actions';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +19,11 @@ export class AppComponent implements OnInit {
     private lessonsService: LessonsService,
     private groupsService: GroupsService,
     private usersService: UsersService,
+    private roomsService: RoomsService,
     private lessonsStore: Store,
     private groupsStore: Store,
-    private usersStore: Store
+    private usersStore: Store,
+    private roomsStore: Store
   ) {
   }
 
@@ -34,6 +38,10 @@ export class AppComponent implements OnInit {
 
     this.usersService.getAllUsers().subscribe(users => {
       this.usersStore.dispatch(UsersApiActions.retrievedUsersList({users}))
+    })
+
+    this.roomsService.getAllRooms().subscribe(rooms => {
+      this.roomsStore.dispatch(RoomsApiActions.retrievedRoomsList({rooms}))
     })
   }
 

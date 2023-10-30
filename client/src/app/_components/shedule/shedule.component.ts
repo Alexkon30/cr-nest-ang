@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Group, Lesson, Room, User } from '@app/_models';
-import { LessonsService, RoleEnum } from '@app/_services';
+import { LessonsService } from '@app/_services';
 import moment from 'moment';
 import { Source } from '@app/_models/lesson';
 import { AutoUnsub } from '@app/_helpers';
@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { selectLessons } from '@app/_store/Lessons/lessons.selectors';
 import { selectGroups } from '@app/_store/Groups/groups.selector';
 import { selectTeachers } from '@app/_store/Users/users.selector';
+import { selectRooms } from '@app/_store/Rooms/rooms.selector';
 
 @Component({
   selector: 'app-shedule',
@@ -20,16 +21,17 @@ export class SheduleComponent implements OnInit {
   lessons$: Observable<Lesson[]> = this.lessonsStore.select(selectLessons)
   groups$: Observable<Group[]> = this.groupsStore.select(selectGroups)
   teachers$: Observable<User[]> = this.usersStore.select(selectTeachers)
+  rooms$: Observable<Room[]> = this.roomsStore.select(selectRooms)
   date: moment.Moment;
   sourceType = Source.GROUPS;
-  elementId: number;
-  rooms: Room[];
+  sourceId: number;
 
   constructor(
     private lessonsService: LessonsService,
     private lessonsStore: Store<Lesson[]>,
     private groupsStore: Store<Group[]>,
-    private usersStore: Store<User[]>
+    private usersStore: Store<User[]>,
+    private roomsStore: Store<User[]>
   ) {
     this.date = moment([2022, 10, 3])
     // this.date = moment();
@@ -42,7 +44,7 @@ export class SheduleComponent implements OnInit {
   }
 
   async show(date: moment.Moment, source: Source, sourceId: number) {
-    // console.log({ date, source, id });
+    console.log({ date, source, sourceId });
 
     const currentDate = date.hours(0).minutes(0);
 

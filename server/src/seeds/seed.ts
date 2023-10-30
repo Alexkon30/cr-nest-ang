@@ -9,6 +9,7 @@ import { Organization } from '../modules/organizations/organization.entity';
 import { OrganizationUserRole } from '../modules/org-user-roles/org-user-roles.entity';
 import { Lesson } from '../modules/lessons/lesson.entity';
 import { Group } from '../modules/groups/group.entity';
+import { Room } from '../modules/rooms/room.entity';
 
 const main = async () => {
   const myDataSource = new DataSource({
@@ -20,7 +21,7 @@ const main = async () => {
     useUnifiedTopology: true,
     keepConnectionAlive: false,
     logging: true,
-    entities: [Role, Organization, User, OrganizationUserRole, Lesson, Group],
+    entities: [Role, Organization, User, OrganizationUserRole, Lesson, Group, Room],
     dropSchema: true,
   });
 
@@ -163,6 +164,28 @@ const main = async () => {
 
   await manager.save(groups);
 
+  //===============
+  // Rooms
+  //===============
+
+  const rooms: Room[] = []
+
+  const room1 = manager.create(Room, {
+    number: 211
+  })
+
+  const room2 = manager.create(Room, {
+    number: 212
+  })
+
+  const room3 = manager.create(Room, {
+    number: 213
+  })
+
+  rooms.push(room1, room2, room3);
+
+  await manager.save(rooms);
+
 
   //===============
   // Lessons
@@ -173,7 +196,7 @@ const main = async () => {
     groups: [group_IK],
     discipline: 'discipline 1',
     theme: 'theme 1',
-    room: 213,
+    room: room1,
     dateStart: '2022-10-31T15:00Z',
     dateEnd: '2022-10-31T16:30Z',
     type: 'lecture',
@@ -184,7 +207,7 @@ const main = async () => {
     groups: [group_IB],
     discipline: 'discipline 2',
     theme: 'theme 2',
-    room: 213,
+    room: room2,
     dateStart: '2022-10-31T16:30Z',
     dateEnd: '2022-10-31T19:00Z',
     type: 'lecture',
@@ -195,7 +218,7 @@ const main = async () => {
     groups: [group_KE],
     discipline: 'discipline 3',
     theme: 'theme 3',
-    room: 213,
+    room: room3,
     dateStart: '2022-10-31T09:00Z',
     dateEnd: '2022-10-31T10:30Z',
     type: 'lecture',

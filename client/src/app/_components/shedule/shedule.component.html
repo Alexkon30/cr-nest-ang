@@ -15,7 +15,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Choose element</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="sourceId">
             <ng-container *ngIf="sourceType === 'TEACHERS'">
                 <mat-option *ngFor="let teacher of teachers$ | async" [value]="teacher.id">{{teacher.firstName + ' ' +
                     teacher.lastName}}</mat-option>
@@ -24,11 +24,11 @@
                 <mat-option *ngFor="let group of groups$ | async" [value]="group.id">{{group.title}}</mat-option>
             </ng-container>
             <ng-container *ngIf="sourceType === 'ROOMS'">
-                <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.title}}</mat-option>
+                <mat-option *ngFor="let room of rooms$ | async" [value]="room.id">{{room.number}}</mat-option>
             </ng-container>
         </mat-select>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="show(this.date, this.sourceType, this.elementId)">Show
+    <button mat-raised-button color="primary" (click)="show(this.date, this.sourceType, this.sourceId)">Show
         shedule</button>
 </div>
 <div class="shedule__body">

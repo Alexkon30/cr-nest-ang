@@ -1,6 +1,7 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Group } from '../groups/group.entity';
 import { User } from '../users/user.entity';
+import { Room } from '../rooms/room.entity';
 
 @Entity({
   name: 'lessons',
@@ -23,8 +24,10 @@ export class Lesson {
   @JoinTable()
   teachers: User[]
 
-  @Column() //@ManyToOne()
-  room: number //Room
+  @ManyToOne(() => Room, (room) => room.lessons, {
+    nullable: true
+  })
+  room: Room
 
   @Column({ type: 'timestamptz' })
   dateStart: Date;

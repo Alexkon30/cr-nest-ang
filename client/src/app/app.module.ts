@@ -45,6 +45,7 @@ import { EffectsModule } from '@ngrx/effects'
 import { lessonsReducer } from './_store/Lessons/lessons.reducer';
 import { groupsReducer } from './_store/Groups/groups.reducer';
 import { usersReducer } from './_store/Users/users.reducer';
+import { roomsReducer } from './_store/Rooms/rooms.reducer';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,7 @@ import { usersReducer } from './_store/Users/users.reducer';
     GraphQLModule,
     FormsModule,
     MatMomentDateModule,
-    StoreModule.forRoot({lessons: lessonsReducer, groups: groupsReducer, users: usersReducer}),
+    StoreModule.forRoot({lessons: lessonsReducer, groups: groupsReducer, users: usersReducer, rooms: roomsReducer}),
     EffectsModule.forRoot([])
   ],
   providers: [
