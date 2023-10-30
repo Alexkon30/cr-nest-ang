@@ -15,20 +15,20 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Choose element</mat-label>
-        <mat-select [(ngModel)]="sourceId">
+        <mat-select>
             <ng-container *ngIf="sourceType === 'TEACHERS'">
-                <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.firstName + ' ' +
+                <mat-option *ngFor="let teacher of teachers$ | async" [value]="teacher.id">{{teacher.firstName + ' ' +
                     teacher.lastName}}</mat-option>
             </ng-container>
             <ng-container *ngIf="sourceType === 'GROUPS'">
-                <mat-option *ngFor="let group of groups" [value]="group.id">{{group.title}}</mat-option>
+                <mat-option *ngFor="let group of groups$ | async" [value]="group.id">{{group.title}}</mat-option>
             </ng-container>
             <ng-container *ngIf="sourceType === 'ROOMS'">
                 <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.title}}</mat-option>
             </ng-container>
         </mat-select>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="show(this.date, this.sourceType, this.sourceId)">Show
+    <button mat-raised-button color="primary" (click)="show(this.date, this.sourceType, this.elementId)">Show
         shedule</button>
 </div>
 <div class="shedule__body">
@@ -40,7 +40,7 @@
         <app-ruler></app-ruler>
     </div>
 
-    <div class="shedule__column" *ngFor="let day of (lessons | sortByDays)">
+        <div class="shedule__column" *ngFor="let day of (lessons$ | async | sortByDays)">
         <div class="shedule__header">
             {{day.title | titlecase}}
         </div>

@@ -38,10 +38,13 @@ import {
   RulerComponent,
   LessonCardComponent,
 } from '@app/_components';
-import { AddPreviousLessonEndPipe, SortByTimePipe } from '@app/pipes';
-// import { GraphQLModule } from './graphql.module';
-import { SortByDaysPipe } from './pipes/sort-by-days.pipe';
+import { AddPreviousLessonEndPipe, SortByTimePipe, SortByDaysPipe } from '@app/pipes';
+import { GraphQLModule } from './graphql.module';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects'
+import { lessonsReducer } from './_store/Lessons/lessons.reducer';
+import { groupsReducer } from './_store/Groups/groups.reducer';
+import { usersReducer } from './_store/Users/users.reducer';
 
 @NgModule({
   declarations: [
@@ -81,10 +84,11 @@ import { StoreModule } from '@ngrx/store';
     MatSelectModule,
     MatTableModule,
     MatDividerModule,
-    // GraphQLModule,
+    GraphQLModule,
     FormsModule,
     MatMomentDateModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({lessons: lessonsReducer, groups: groupsReducer, users: usersReducer}),
+    EffectsModule.forRoot([])
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

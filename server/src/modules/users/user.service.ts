@@ -32,9 +32,9 @@ export class UserService {
             relations: {
                 orgUserRoles: {
                     roles: true,
-                    organization: true
+                    // organization: true,
                 },
-                group: true
+                group: true,
             },
             where: {
                 orgUserRoles: {

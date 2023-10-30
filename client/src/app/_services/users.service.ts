@@ -1,74 +1,59 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { User } from "@app/_models";
-// import { Apollo, gql, QueryRef } from "apollo-angular";
-import { BehaviorSubject, Observable, catchError, map, throwError } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { User } from '@app/_models';
+import { Apollo, gql, QueryRef } from 'apollo-angular';
+import { Observable, catchError } from 'rxjs';
 import { environment } from '@environments/environment';
-
+import { ErrorService } from './error.service';
 
 export enum RoleEnum {
-    TEACHER = "TEACHER",
-    STUDENT = "STUDENT",
-    ADMIN = "ADMIN"
+  TEACHER = 'TEACHER',
+  STUDENT = 'STUDENT',
+  ADMIN = 'ADMIN',
 }
 
 export interface UsersResult {
-  users: User[]
+  users: User[];
 }
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersService {
+  private usersQuery: QueryRef<UsersResult, { role: RoleEnum }>;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private errorService: ErrorService,
+    private apollo: Apollo
   ) {
-  }
-
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiUrl}/users/all`)
-    .pipe(catchError(this.handleError))
-      // .pipe(map(data => {
-      //   console.log(data)
-      //   this.usersSubject.next(data)
-      // }))
-  }
-
-   // Error handling
-   handleError(error: any) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(() => {
-      return errorMessage;
+    this.usersQuery = this.apollo.watchQuery({
+      query: gql`
+        query users($role: RoleEnum) {
+          users(role: $role) {
+            id
+            firstName
+            lastName
+            orgUserRoles {
+              roles {
+                value
+              }
+            }
+          }
+        }
+      `,
     });
   }
 
-    // private usersQuery: QueryRef<UsersResult, {role: RoleEnum}>
+  getAllUsers(): Observable<User[]> {
+    return this.http
+      .get<User[]>(`${environment.apiUrl}/users/all`)
+      .pipe(catchError(this.errorService.handleError));
+  }
 
-    // constructor(private apollo: Apollo) {
-    //     this.usersQuery = this.apollo.watchQuery({
-    //         query: gql`
-    //         query users($role: RoleEnum) {
-    //           users(role: $role) {
-    //             id
-    //             firstName
-    //             lastName
-    //           }
-    //         }
-    //       `
-    //     })
-    // }
-
-    // async getUsersByRole(role?: RoleEnum): Promise<User[]> {
-    //     const result = await this.usersQuery.refetch({role})
-    //     return result.data.users
-    // }
+  async getUsersByRole(role?: RoleEnum): Promise<User[]> {
+    const result = await this.usersQuery.refetch({ role });
+    console.log(result.data.users)
+    return result.data.users;
+  }
 }

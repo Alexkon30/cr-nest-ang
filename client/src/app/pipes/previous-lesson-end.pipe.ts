@@ -7,14 +7,12 @@ import moment from 'moment';
 })
 export class AddPreviousLessonEndPipe implements PipeTransform {
   transform(lessons: Lesson[]) {
-    lessons.forEach((lesson, index) => {
+    return lessons.map((lesson, index) => {
       if (index === 0) {
-        lesson.previousLessonEnd = moment(moment(+lesson.dateStart).toISOString().split('T')[0] + 'T07:30Z').valueOf().toString();
+        return {...lesson, previousLessonEnd: moment(lesson.dateStart).toISOString().split('T')[0] + 'T07:30Z'};
       } else {
-        lesson.previousLessonEnd = lessons[index - 1].dateEnd;
+        return {...lesson, previousLessonEnd: lessons[index - 1].dateEnd}
       }
     });
-
-    return lessons;
   }
 }

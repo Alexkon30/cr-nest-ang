@@ -25,3 +25,15 @@ interface SheduleColumn {
   title: string;
   lessons: Lesson[]
 }
+
+export interface ScheduleConfig {
+  sourceType: Source,
+  date: moment.Moment,
+  selectedElement: User | Group | Room
+}
+
+export enum Source {
+  TEACHERS = 'TEACHERS',
+  GROUPS = 'GROUPS',
+  ROOMS = 'ROOMS',
+}
