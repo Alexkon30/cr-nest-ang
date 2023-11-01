@@ -7,5 +7,5 @@ const initialState: Lesson[] = [];
 
 export const lessonsReducer = createReducer(
   initialState,
-  on(LessonsApiActions.retrievedLessonsList, (_state, {lessons}) => lessons)
+  on(LessonsApiActions.lessonsLoadedSuccess, (_state, {lessons}) => lessons)
 );

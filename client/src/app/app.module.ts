@@ -46,6 +46,10 @@ import { lessonsReducer } from './_store/Lessons/lessons.reducer';
 import { groupsReducer } from './_store/Groups/groups.reducer';
 import { usersReducer } from './_store/Users/users.reducer';
 import { roomsReducer } from './_store/Rooms/rooms.reducer';
+import { LessonsEffects } from './_store/Lessons/lessons.effects';
+import { GroupsEffects } from './_store/Groups/groups.effects';
+import { RoomsEffects } from './_store/Rooms/rooms.effects';
+import { UsersEffects } from './_store/Users/users.effects';
 
 @NgModule({
   declarations: [
@@ -89,7 +93,7 @@ import { roomsReducer } from './_store/Rooms/rooms.reducer';
     FormsModule,
     MatMomentDateModule,
     StoreModule.forRoot({lessons: lessonsReducer, groups: groupsReducer, users: usersReducer, rooms: roomsReducer}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([LessonsEffects, GroupsEffects, RoomsEffects, UsersEffects])
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

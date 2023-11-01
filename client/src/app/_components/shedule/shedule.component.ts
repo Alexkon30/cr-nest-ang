@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Group, Lesson, Room, User } from '@app/_models';
+import { Group, Lesson, Room, User, Source, IStore } from '@app/_models';
 import { LessonsService } from '@app/_services';
 import moment from 'moment';
-import { Source } from '@app/_models/lesson';
 import { AutoUnsub } from '@app/_helpers';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -18,29 +17,23 @@ import { selectRooms } from '@app/_store/Rooms/rooms.selector';
 })
 // @AutoUnsub()
 export class SheduleComponent implements OnInit {
-  lessons$: Observable<Lesson[]> = this.lessonsStore.select(selectLessons)
-  groups$: Observable<Group[]> = this.groupsStore.select(selectGroups)
-  teachers$: Observable<User[]> = this.usersStore.select(selectTeachers)
-  rooms$: Observable<Room[]> = this.roomsStore.select(selectRooms)
+  lessons$: Observable<Lesson[]> = this.store.select(selectLessons)
+  groups$: Observable<Group[]> = this.store.select(selectGroups)
+  teachers$: Observable<User[]> = this.store.select(selectTeachers)
+  rooms$: Observable<Room[]> = this.store.select(selectRooms)
   date: moment.Moment;
   sourceType = Source.GROUPS;
   sourceId: number;
 
   constructor(
     private lessonsService: LessonsService,
-    private lessonsStore: Store<Lesson[]>,
-    private groupsStore: Store<Group[]>,
-    private usersStore: Store<User[]>,
-    private roomsStore: Store<User[]>
+    private store: Store<IStore>,
   ) {
     this.date = moment([2022, 10, 3])
     // this.date = moment();
   }
 
   async ngOnInit(): Promise<void> {
-    this.lessonsStore.select(selectLessons).subscribe(data => {
-      console.log(data)
-    })
   }
 
   async show(date: moment.Moment, source: Source, sourceId: number) {

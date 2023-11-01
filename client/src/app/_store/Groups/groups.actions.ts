@@ -1,10 +1,11 @@
 import { Group } from '@app/_models';
-import { createActionGroup, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
  
 export const GroupsApiActions = createActionGroup({
-  source: 'Groups API',
+  source: 'Lessons API',
   events: {
-    'Retrieved Groups List': props<{groups: Group[]}>(),
+    'Groups Loaded Success': props<{groups: Group[]}>(),
+    'Load Groups': emptyProps(),
   },
 });

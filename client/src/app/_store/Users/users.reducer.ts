@@ -7,5 +7,5 @@ export const initialState: User[] = [];
 
 export const usersReducer = createReducer(
   initialState,
-  on(UsersApiActions.retrievedUsersList, (_state, {users}) => users)
+  on(UsersApiActions.usersLoadedSuccess, (_state, {users}) => users)
 );

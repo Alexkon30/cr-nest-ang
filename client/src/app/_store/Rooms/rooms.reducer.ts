@@ -7,5 +7,5 @@ export const initialState: Room[] = [];
 
 export const roomsReducer = createReducer(
   initialState,
-  on(RoomsApiActions.retrievedRoomsList, (_state, {rooms}) => rooms)
+  on(RoomsApiActions.roomsLoadedSuccess, (_state, {rooms}) => rooms)
 );

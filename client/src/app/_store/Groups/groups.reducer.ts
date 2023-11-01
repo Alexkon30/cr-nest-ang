@@ -7,5 +7,5 @@ const initialState: Group[] = [];
 
 export const groupsReducer = createReducer(
   initialState,
-  on(GroupsApiActions.retrievedGroupsList, (_state, {groups}) => groups)
+  on(GroupsApiActions.groupsLoadedSuccess, (_state, {groups}) => groups)
 );
