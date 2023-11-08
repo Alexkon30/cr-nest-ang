@@ -1,20 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Lesson } from '@app/_models';
+import { Lesson, Source } from '@app/_models';
 import { Apollo, gql, QueryRef } from 'apollo-angular';
 import { ErrorService } from './error.service';
 import { environment } from '@environments/environment';
 import { catchError, Observable } from 'rxjs';
 
-// export interface LessonsResult {
-//   lessons: Lesson[];
-// }
+export interface LessonsResult {
+  findLessons: Lesson[];
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class LessonsService {
-  constructor(private http: HttpClient, private errorService: ErrorService) {}
 
   getAllLessons(): Observable<Lesson[]> {
     return this.http
@@ -22,37 +21,39 @@ export class LessonsService {
       .pipe(catchError(this.errorService.handleError));
   }
 
-  // private lessonsQuery: QueryRef<LessonsResult, {}>;
+  private lessonsQuery: QueryRef<LessonsResult, {}>;
 
-  // constructor(private apollo: Apollo) {
-  //   this.lessonsQuery = this.apollo.watchQuery({
-  //     query: gql`
-  //       query lessons($dateStart: String!, $dateEnd: String!) {
-  //         lessons(dateStart: $dateStart, dateEnd: $dateEnd) {
-  //           id
-  //           theme
-  //           groups {
-  //             title
-  //           }
-  //           teachers {
-  //             firstName
-  //             lastName
-  //           }
-  //           discipline
-  //           room
-  //           dateStart
-  //           dateEnd
-  //           type
-  //         }
-  //       }
-  //     `,
-  //   });
-  // }
+  constructor(private apollo: Apollo, private http: HttpClient, private errorService: ErrorService) {
+    this.lessonsQuery = this.apollo.watchQuery({
+      query: gql`
+        query findLessons($dateStart: String!, $dateEnd: String!, $source: Source!, $id: Int!) {
+          findLessons(dateStart: $dateStart, dateEnd: $dateEnd, source: $source, id: $id) {
+            id
+            theme
+            groups {
+              title
+            }
+            teachers {
+              firstName
+              lastName
+            }
+            discipline
+            room {
+              number
+            }
+            dateStart
+            dateEnd
+            type
+          }
+        }
+      `,
+    });
+  }
 
-  // async getLessons(dateStart: string, dateEnd: string): Promise<Lesson[]> {
-  //   const result = await this.lessonsQuery.refetch({dateStart, dateEnd})
-  //   return result.data.lessons
-  // }
+  async getLessonsByFilter(dateStart: string, dateEnd: string, source: Source, id: number): Promise<Lesson[]> {
+    const result = await this.lessonsQuery.refetch({dateStart, dateEnd, source, id})
+    return result.data.findLessons
+  }
 
   // loadLessons(start: string, end: string) {
   //   this.apollo.query<{lessons: Lesson[]}>({

@@ -16,6 +16,7 @@ export class LessonsService {
       relations: {
         teachers: true,
         groups: true,
+        room: true
       },
     });
   }
@@ -26,16 +27,16 @@ export class LessonsService {
     source: Source,
     id: number,
   ): Promise<Lesson[]> {
-    console.log({ start, end, source, id });
     const filter = this.createFilter(source, id);
     return this.lessonRepository.find({
       where: {
         dateStart: Between(new Date(start), new Date(end)),
-        ...filter
+        ...filter,
       },
       relations: {
         teachers: true,
         groups: true,
+        room: true
       },
     });
   }
@@ -54,6 +55,12 @@ export class LessonsService {
             id,
           },
         };
+      case 'ROOM':
+        return {
+          room: {
+            id
+          }
+        }
     }
   }
 }

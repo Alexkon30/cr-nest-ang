@@ -7,7 +7,7 @@ export class LessonsResolver {
   constructor(private readonly lessonsService: LessonsService) {}
 
   @Query()
-  lessons(
+  findLessons(
     @Args('dateStart') dateStart: string,
     @Args('dateEnd') dateEnd: string,
     @Args('source') source: Source,

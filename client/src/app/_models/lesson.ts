@@ -33,7 +33,7 @@ export interface ScheduleConfig {
 }
 
 export enum Source {
-  TEACHERS = 'TEACHERS',
-  GROUPS = 'GROUPS',
-  ROOMS = 'ROOMS',
+  TEACHER = 'TEACHER',
+  GROUP = 'GROUP',
+  ROOM = 'ROOM',
 }

@@ -63,7 +63,7 @@ export class Group {
 export abstract class IQuery {
     abstract groups(): Nullable<Group[]> | Promise<Nullable<Group[]>>;
 
-    abstract lessons(dateStart?: Nullable<string>, dateEnd?: Nullable<string>, source?: Nullable<Source>, id?: Nullable<number>): Nullable<Lesson[]> | Promise<Nullable<Lesson[]>>;
+    abstract findLessons(dateStart?: Nullable<string>, dateEnd?: Nullable<string>, source?: Nullable<Source>, id?: Nullable<number>): Nullable<Lesson[]> | Promise<Nullable<Lesson[]>>;
 
     abstract roles(): Nullable<UserRole[]> | Promise<Nullable<UserRole[]>>;
 
@@ -76,7 +76,7 @@ export class Lesson {
     theme?: Nullable<string>;
     groups?: Nullable<Group[]>;
     teachers?: Nullable<User[]>;
-    room?: Nullable<string>;
+    room?: Nullable<Room>;
     dateStart?: Nullable<string>;
     dateEnd?: Nullable<string>;
     type?: Nullable<string>;
@@ -97,6 +97,12 @@ export class Organization {
 export class UserRole {
     value: RoleEnum;
     id: number;
+}
+
+export class Room {
+    id: number;
+    number: number;
+    lessons?: Nullable<Lesson[]>;
 }
 
 export class RefreshTokenResponse {

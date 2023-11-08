@@ -9,6 +9,7 @@ import { selectLessons } from '@app/_store/Lessons/lessons.selectors';
 import { selectGroups } from '@app/_store/Groups/groups.selector';
 import { selectTeachers } from '@app/_store/Users/users.selector';
 import { selectRooms } from '@app/_store/Rooms/rooms.selector';
+import { LessonsApiActions } from '@app/_store/Lessons/lessons.actions';
 
 @Component({
   selector: 'app-shedule',
@@ -16,27 +17,24 @@ import { selectRooms } from '@app/_store/Rooms/rooms.selector';
   styleUrls: ['./shedule.component.less'],
 })
 // @AutoUnsub()
-export class SheduleComponent implements OnInit {
+export class SheduleComponent {
   lessons$: Observable<Lesson[]> = this.store.select(selectLessons)
   groups$: Observable<Group[]> = this.store.select(selectGroups)
   teachers$: Observable<User[]> = this.store.select(selectTeachers)
   rooms$: Observable<Room[]> = this.store.select(selectRooms)
   date: moment.Moment;
-  sourceType = Source.GROUPS;
+  sourceType = Source.GROUP;
   sourceId: number;
 
   constructor(
-    private lessonsService: LessonsService,
+    // private lessonsService: LessonsService,
     private store: Store<IStore>,
   ) {
     this.date = moment([2022, 10, 3])
     // this.date = moment();
   }
 
-  async ngOnInit(): Promise<void> {
-  }
-
-  async show(date: moment.Moment, source: Source, sourceId: number) {
+  show(date: moment.Moment, source: Source, sourceId: number) {
     console.log({ date, source, sourceId });
 
     const currentDate = date.hours(0).minutes(0);
@@ -54,9 +52,6 @@ export class SheduleComponent implements OnInit {
             .minutes(59)
             .format('YYYY-MM-DDTHH:mm') + 'Z';
 
-    // this.lessons = await this.lessonsService.getLessons(
-    //   firstDayOfWeek,
-    //   lastDayOfWeek
-    // );
+    this.store.dispatch(LessonsApiActions.loadLessonsByFilters({start: firstDayOfWeek, end: lastDayOfWeek, source, id: sourceId}));
   }
 }

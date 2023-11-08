@@ -1,12 +1,14 @@
+scalar Date
+
 type Lesson {
     id: Int!
     discipline: String
     theme: String
     groups: [Group!]
     teachers: [User!]
-    room: String
-    dateStart: String
-    dateEnd: String
+    room: Room
+    dateStart: Date
+    dateEnd: Date
     type: String
 }
 
@@ -17,5 +19,5 @@ enum Source {
 }
 
 type Query {
-    lessons(dateStart: String, dateEnd: String, source: Source, id: Int): [Lesson!]
+    findLessons(dateStart: String, dateEnd: String, source: Source, id: Int): [Lesson!]
 }
