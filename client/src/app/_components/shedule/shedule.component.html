@@ -15,20 +15,27 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Choose element</mat-label>
-        <mat-select [(ngModel)]="sourceId">
-            <ng-container *ngIf="sourceType === 'TEACHER'">
+
+        <ng-container *ngIf="sourceType === 'TEACHER'">
+            <mat-select [(ngModel)]="teacherId">
                 <mat-option *ngFor="let teacher of teachers$ | async" [value]="teacher.id">{{teacher.firstName + ' ' +
                     teacher.lastName}}</mat-option>
-            </ng-container>
-            <ng-container *ngIf="sourceType === 'GROUP'">
+            </mat-select>
+        </ng-container>
+        <ng-container *ngIf="sourceType === 'GROUP'">
+            <mat-select [(ngModel)]="groupId">
                 <mat-option *ngFor="let group of groups$ | async" [value]="group.id">{{group.title}}</mat-option>
-            </ng-container>
-            <ng-container *ngIf="sourceType === 'ROOM'">
+            </mat-select>
+        </ng-container>
+        <ng-container *ngIf="sourceType === 'ROOM'">
+            <mat-select [(ngModel)]="roomId">
                 <mat-option *ngFor="let room of rooms$ | async" [value]="room.id">{{room.number}}</mat-option>
-            </ng-container>
-        </mat-select>
+            </mat-select>
+        </ng-container>
+
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="show(this.date, this.sourceType, this.sourceId)">Show
+    <button mat-raised-button color="primary" (click)="show(this.date, this.sourceType, this.sourceId)"
+        disabled={{!this.sourceId}}>Show
         shedule</button>
 </div>
 <div class="shedule__body">

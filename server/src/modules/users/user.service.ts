@@ -1,157 +1,180 @@
-import { ForbiddenException, Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { ApolloError } from "apollo-server-core";
-import { instanceToPlain } from "class-transformer";
-import { CreateUserInput, RoleEnum, UpdateOrganizationRolesInput, UpdateUserInput } from "src/generator/graphql.schema";
-import { UserWithoutPass } from "src/types";
-import { hashPassword } from "src/utils";
-import { Repository } from "typeorm";
-import { OrgUserRolesService } from "../org-user-roles/org-user-roles.service";
-import { OrganizationsService } from "../organizations/organizations.service";
-import { RolesService } from '../roles/roles.service'
-import { Role } from "../roles/role.entity";
-import { User } from "./user.entity";
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ApolloError } from 'apollo-server-core';
+import { instanceToPlain } from 'class-transformer';
+import {
+  CreateUserInput,
+  RoleEnum,
+  UpdateOrganizationRolesInput,
+  UpdateUserInput,
+} from 'src/generator/graphql.schema';
+import { UserWithoutPass } from 'src/types';
+import { hashPassword } from 'src/utils';
+import { Repository } from 'typeorm';
+// import { OrgUserRolesService } from '../org-user-roles/org-user-roles.service';
+import { OrganizationsService } from '../organizations/organizations.service';
+import { RolesService } from '../roles/roles.service';
+import { Role } from '../roles/role.entity';
+import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
-    constructor(
-        @InjectRepository(User)
-        private readonly userRepository: Repository<User>,
-        private readonly orgUserRoleService: OrgUserRolesService,
-        private readonly organizationService: OrganizationsService,
-        private readonly roleService: RolesService
-    ) {}
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    // private readonly orgUserRoleService: OrgUserRolesService,
+    private readonly organizationService: OrganizationsService,
+    private readonly roleService: RolesService,
+  ) {}
 
-    findUserByEmail(email: string): Promise<User> {
-        return this.userRepository.findOneBy({ email })
+  findUserByEmail(email: string): Promise<User> {
+    return this.userRepository.findOne({
+      relations: {
+        roles: true,
+      },
+      where: {
+        email
+      }
+    });
+  }
+
+  findAllUsers(role?: RoleEnum): Promise<User[]> {
+    console.log({role});
+    return this.userRepository.find({
+      relations: {
+          roles: true,
+          // organization: true,
+        group: true,
+      },
+      where: {
+          roles: {
+            value: role,
+          },
+      },
+    });
+  }
+
+  async createUser(
+    userInput: CreateUserInput,
+  ): Promise<UserWithoutPass | undefined> {
+    try {
+      const { email } = userInput;
+
+      const existedUser = await this.userRepository.findOneBy({ email });
+
+      if (existedUser) {
+        throw new ForbiddenException('Email already existed');
+      }
+
+      const newUser = this.userRepository.create({
+        email,
+        password: await hashPassword(userInput.password),
+      });
+
+      await this.userRepository.save(newUser);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...result } = newUser;
+      return result;
+    } catch (err) {
+      throw new ApolloError(err);
     }
+  }
 
-    findAllUsers(role?: RoleEnum): Promise<User[]> {
-        console.log(role)
-        return this.userRepository.find({
-            relations: {
-                orgUserRoles: {
-                    roles: true,
-                    // organization: true,
-                },
-                group: true,
-            },
-            where: {
-                orgUserRoles: {
-                    roles: {
-                        value: role
-                    }
-                }
-            }
-        })
+  async updateUser(
+    userInput: UpdateUserInput,
+  ): Promise<UserWithoutPass | undefined> {
+    try {
+      const { email } = userInput;
+
+      const existedUser = await this.userRepository.findOneBy({ email });
+
+      if (!existedUser) {
+        throw new ForbiddenException('User is not exist');
+      }
+
+      const properties = Object.keys(userInput).filter((el) => el !== 'email');
+
+      await Promise.all(
+        properties.map(async (prop) => {
+          if (prop === 'password') {
+            existedUser.password = await hashPassword(userInput[prop]);
+          } else {
+            existedUser[prop] = userInput[prop];
+          }
+        }),
+      );
+
+      await this.userRepository.save(existedUser);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...result } = existedUser;
+      return result;
+    } catch (err) {
+      throw new ApolloError(err);
     }
+  }
 
-    async createUser(userInput: CreateUserInput): Promise<UserWithoutPass | undefined> {
-        try {
-            const { email } = userInput
+  async createUsersByAdmin(
+    inputs: CreateUserInput[],
+    organizationId: string,
+  ): Promise<any> {
+    try {
+      const result = {};
 
-            const existedUser = await this.userRepository.findOneBy({ email })
+      for (const userInfo of inputs) {
+        const existedUser = await this.userRepository.findOneBy({
+          email: userInfo.email,
+        });
 
-            if(existedUser) {
-                throw new ForbiddenException('Email already existed')
-            }
-    
-            const newUser = this.userRepository.create({
-                email,
-                password: await hashPassword(userInput.password)
-            })
-            
-            await this.userRepository.save(newUser)
-    
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { password, ...result} = newUser
-            return result
-
-        } catch(err) {
-            throw new ApolloError(err)
-        }
-    }
-
-    async updateUser(userInput: UpdateUserInput): Promise<UserWithoutPass | undefined> {
-        try {
-            const { email } = userInput
-
-            const existedUser = await this.userRepository.findOneBy({ email })
-
-            if(!existedUser) {
-                throw new ForbiddenException('User is not exist')
-            }
-
-            const properties = Object.keys(userInput).filter(el => el !== 'email')
-
-            await Promise.all(properties.map(async (prop) => {
-                if (prop === 'password') {
-                    existedUser.password = await hashPassword(userInput[prop])
-                } else if (prop === 'roles') {
-                    //roles logic
-                } else {
-                    existedUser[prop] = userInput[prop]
-                }
-            }))
-            
-            await this.userRepository.save(existedUser)
-            
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { password, ...result} = existedUser
-            return result
-            
-        } catch(err) {
-            throw new ApolloError(err)
-        }
-    }
-
-    async createUsersByAdmin(inputs: CreateUserInput[], organizationId: string): Promise<any> {
-        try {
-            const result = {}
-
-            for (const userInfo of inputs) {
-                const existedUser = await this.userRepository.findOneBy({ email: userInfo.email })
-
-                if (!existedUser) {
-                    const newUser = this.userRepository.create(userInfo)
-                    await this.userRepository.save(newUser)
-                    result[userInfo.email] = 'Created'
-                } else {
-                    result[userInfo.email] = 'Existed'
-                }
-
-                // await this.organizationService.updateOrganizationRoles(organizationId, userInfo.roles, userInfo.email)
-            }
-
-            console.log(result) 
-            return 'ok' //add types
-        } catch(err) {
-            throw new ApolloError(err)
-        }
-    }
-
-    async updateOrganizationRoles(data: UpdateOrganizationRolesInput) {
-        try {
-            const organization = await this.organizationService.findOneById(data.organizationId)
-            const user = await this.userRepository.findOneBy({email: data.email})
+        if (!existedUser) {
             const roles = []
-
-            await Promise.all(data.roles.map(async (role) => {
+            for (const role of userInfo.roles) {
                 const roleEntity = await this.roleService.findRoleByValue(role)
                 roles.push(roleEntity)
-            }))
-
-            const result = await this.orgUserRoleService.updateOrgUserRole({
-                user,
-                organization,
-                roles
-            })
-
-            return result
-
-        } catch(err) {
-            throw new ApolloError(err)
+            }
+          const newUser = this.userRepository.create({...userInfo, roles});
+          await this.userRepository.save(newUser);
+          result[userInfo.email] = 'Created';
+        } else {
+          result[userInfo.email] = 'Existed';
         }
-    }
 
+        // await this.organizationService.updateOrganizationRoles(organizationId, userInfo.roles, userInfo.email)
+      }
+
+      console.log(result);
+      return 'ok'; //add types
+    } catch (err) {
+      throw new ApolloError(err);
+    }
+  }
+
+  async updateOrganizationRoles(data: UpdateOrganizationRolesInput) {
+    try {
+      const organization = await this.organizationService.findOneById(
+        data.organizationId,
+      );
+      const user = await this.userRepository.findOneBy({ email: data.email });
+      const roles = [];
+
+      await Promise.all(
+        data.roles.map(async (role) => {
+          const roleEntity = await this.roleService.findRoleByValue(role);
+          roles.push(roleEntity);
+        }),
+      );
+
+    //   const result = await this.orgUserRoleService.updateOrgUserRole({
+    //     user,
+    //     organization,
+    //     roles,
+    //   });
+        user.roles = roles
+
+      return 'ok';
+    } catch (err) {
+      throw new ApolloError(err);
+    }
+  }
 }

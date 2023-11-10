@@ -1,7 +1,8 @@
-import { Gender } from 'src/generator/graphql.schema';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Gender, RoleEnum } from 'src/generator/graphql.schema';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Group } from '../groups/group.entity';
-import { OrganizationUserRole } from '../org-user-roles/org-user-roles.entity';
+// import { OrganizationUserRole } from '../org-user-roles/org-user-roles.entity';
+import { Role } from '../roles/role.entity';
 
 @Entity({
   name: 'users',
@@ -18,7 +19,7 @@ export class User {
   })
   email: string;
 
-  @Column({ select: false })
+  @Column()
   password: string;
 
   @Column({
@@ -41,10 +42,21 @@ export class User {
   })
   group: Group
 
-  @OneToMany(() => OrganizationUserRole, orgUserRole => orgUserRole.user, {
-    nullable: true
-  })
-  orgUserRoles: OrganizationUserRole[]
+  // @OneToMany(() => OrganizationUserRole, orgUserRole => orgUserRole.user, {
+  //   nullable: true
+  // })
+  // orgUserRoles: OrganizationUserRole[]
+
+  @ManyToMany(() => Role)
+  @JoinTable()
+  roles: Role[]
+
+  // @Column({
+  //   type: 'enum',
+  //   enum: RoleEnum
+  // })
+  // roles: RoleEnum;
+
 
   // @Column({
   //   nullable: true

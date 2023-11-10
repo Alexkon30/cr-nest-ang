@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { OrgUserRolesModule } from "../org-user-roles/org-user-roles.module";
+// import { OrgUserRolesModule } from "../org-user-roles/org-user-roles.module";
 import { OrganizationsModule } from "../organizations/organizations.module";
 import { RolesModule } from "../roles/roles.module";
 import { UsersController } from "./user.controller";
@@ -9,7 +9,7 @@ import { UserResolver } from "./user.resolver";
 import { UserService } from "./user.service";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User]), OrgUserRolesModule, OrganizationsModule, RolesModule],
+    imports: [TypeOrmModule.forFeature([User]), OrganizationsModule, RolesModule],
     providers: [UserService, UserResolver],
     exports: [UserService],
     controllers: [UsersController]

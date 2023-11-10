@@ -21,4 +21,12 @@ export class LessonCardComponent implements OnInit {
     this.height = moment(this.lesson.dateEnd).diff(moment(this.lesson.dateStart), 'm')
     this.url = '/lesson/' + this.lesson.id
   }
+
+  get teachersList(): string {
+    return this.lesson.teachers.map(user => `${user.firstName} ${user.lastName}`).join(', ')
+  }
+
+  get groupsList(): string {
+    return this.lesson.groups.map(group => group.title).join(', ')
+  }
 }

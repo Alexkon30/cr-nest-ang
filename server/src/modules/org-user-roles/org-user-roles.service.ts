@@ -17,8 +17,8 @@ export class OrgUserRolesService {
     async findAll(): Promise<OrganizationUserRole[]> {
         return this.orgUserRoleRepository.find({
             relations: {
-                organization: true,
-                user: true,
+                // organization: true,
+                // user: true,
                 roles: true
             }
         })
@@ -27,8 +27,8 @@ export class OrgUserRolesService {
     async updateOrgUserRole(dto: UpdateOrgUserRoleDto): Promise<string> {
         try {
             const existedOrgUserRole = await this.orgUserRoleRepository.findOneBy({ 
-                organization: dto.organization,
-                user: dto.user
+                // organization: dto.organization,
+                // user: dto.user
             })
 
             if(existedOrgUserRole) {

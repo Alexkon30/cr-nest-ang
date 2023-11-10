@@ -77,8 +77,8 @@ export class Lesson {
     groups?: Nullable<Group[]>;
     teachers?: Nullable<User[]>;
     room?: Nullable<Room>;
-    dateStart?: Nullable<string>;
-    dateEnd?: Nullable<string>;
+    dateStart?: Nullable<Date>;
+    dateEnd?: Nullable<Date>;
     type?: Nullable<string>;
 }
 
@@ -117,7 +117,7 @@ export class User {
     lastName?: Nullable<string>;
     patronymic?: Nullable<string>;
     group?: Nullable<Group>;
-    orgUserRoles?: Nullable<OrganizationUserRole[]>;
+    roles?: Nullable<RoleEnum[]>;
 }
 
 export abstract class IMutation {

@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 import { User } from '../modules/users/user.entity';
 import { hashPassword } from '../utils/index';
 import { Organization } from '../modules/organizations/organization.entity';
-import { OrganizationUserRole } from '../modules/org-user-roles/org-user-roles.entity';
+// import { OrganizationUserRole } from '../modules/org-user-roles/org-user-roles.entity';
 import { Lesson } from '../modules/lessons/lesson.entity';
 import { Group } from '../modules/groups/group.entity';
 import { Room } from '../modules/rooms/room.entity';
@@ -21,7 +21,7 @@ const main = async () => {
     useUnifiedTopology: true,
     keepConnectionAlive: false,
     logging: true,
-    entities: [Role, Organization, User, OrganizationUserRole, Lesson, Group, Room],
+    entities: [Role, Organization, User, Lesson, Group, Room],
     dropSchema: true,
   });
 
@@ -57,6 +57,7 @@ const main = async () => {
     password: await hashPassword('simplepass'),
     firstName: 'Alex',
     lastName: 'Owner',
+    roles: [ownerRole]
   });
 
 
@@ -68,6 +69,7 @@ const main = async () => {
       password: await hashPassword('simplepass'),
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
+      roles: [studentRole]
     });
     students.push(student);
   }
@@ -81,6 +83,7 @@ const main = async () => {
       password: await hashPassword('simplepass'),
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
+      roles: [teacherRole]
     });
     teachers.push(techer);
   }
@@ -102,38 +105,37 @@ const main = async () => {
   // OrganizationUserRoles
   //===============
 
-  const orgUserRole = manager.create(OrganizationUserRole, {
-    organization: cambridge,
-    user: owner,
-    roles: [ownerRole],
-  });
+  // const orgUserRole = manager.create(OrganizationUserRole, {
+  //   organization: cambridge,
+  //   user: owner,
+  //   roles: [ownerRole],
+  // });
+
+  // const studentsRelations: OrganizationUserRole[] = []
+
+  // students.forEach(student => {
+  //   const studentsRelation = manager.create(OrganizationUserRole, {
+  //     organization: cambridge,
+  //     user: student,
+  //     roles: [studentRole],
+  //   })
+  //   studentsRelations.push(studentsRelation);
+  // })
 
 
-  const studentsRelations: OrganizationUserRole[] = []
+  // const teachersRelations: OrganizationUserRole[] = []
 
-  students.forEach(student => {
-    const studentsRelation = manager.create(OrganizationUserRole, {
-      organization: cambridge,
-      user: student,
-      roles: [studentRole],
-    })
-    studentsRelations.push(studentsRelation);
-  })
-
-
-  const teachersRelations: OrganizationUserRole[] = []
-
-  teachers.forEach(teacher => {
-    const teacherRelation = manager.create(OrganizationUserRole, {
-      organization: cambridge,
-      user: teacher,
-      roles: [teacherRole],
-    })
-    teachersRelations.push(teacherRelation);
-  })
+  // teachers.forEach(teacher => {
+  //   const teacherRelation = manager.create(OrganizationUserRole, {
+  //     organization: cambridge,
+  //     user: teacher,
+  //     roles: [teacherRole],
+  //   })
+  //   teachersRelations.push(teacherRelation);
+  // })
 
 
-  await manager.save([orgUserRole, ...studentsRelations, ...teachersRelations]);
+  // await manager.save([orgUserRole, ...studentsRelations, ...teachersRelations]);
 
   //===============
   // Groups

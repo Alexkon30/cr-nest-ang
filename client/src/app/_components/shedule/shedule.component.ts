@@ -18,25 +18,25 @@ import { LessonsApiActions } from '@app/_store/Lessons/lessons.actions';
 })
 // @AutoUnsub()
 export class SheduleComponent {
-  lessons$: Observable<Lesson[]> = this.store.select(selectLessons)
-  groups$: Observable<Group[]> = this.store.select(selectGroups)
-  teachers$: Observable<User[]> = this.store.select(selectTeachers)
-  rooms$: Observable<Room[]> = this.store.select(selectRooms)
+  lessons$: Observable<Lesson[]> = this.store.select(selectLessons);
+  groups$: Observable<Group[]> = this.store.select(selectGroups);
+  teachers$: Observable<User[]> = this.store.select(selectTeachers);
+  rooms$: Observable<Room[]> = this.store.select(selectRooms);
   date: moment.Moment;
   sourceType = Source.GROUP;
-  sourceId: number;
+  teacherId: number;
+  groupId: number;
+  roomId: number;
 
   constructor(
     // private lessonsService: LessonsService,
-    private store: Store<IStore>,
+    private store: Store<IStore>
   ) {
-    this.date = moment([2022, 10, 3])
+    this.date = moment([2022, 10, 3]);
     // this.date = moment();
   }
 
   show(date: moment.Moment, source: Source, sourceId: number) {
-    console.log({ date, source, sourceId });
-
     const currentDate = date.hours(0).minutes(0);
 
     const firstDayOfWeek =
@@ -52,6 +52,26 @@ export class SheduleComponent {
             .minutes(59)
             .format('YYYY-MM-DDTHH:mm') + 'Z';
 
-    this.store.dispatch(LessonsApiActions.loadLessonsByFilters({start: firstDayOfWeek, end: lastDayOfWeek, source, id: sourceId}));
+    this.store.dispatch(
+      LessonsApiActions.loadLessonsByFilters({
+        start: firstDayOfWeek,
+        end: lastDayOfWeek,
+        source,
+        id: sourceId,
+      })
+    );
+  }
+
+  get sourceId() {
+    switch (this.sourceType) {
+      case Source.GROUP:
+        return this.groupId;
+      case Source.TEACHER:
+        return this.teacherId;
+      case Source.ROOM:
+        return this.roomId;
+      default:
+        return null
+    }
   }
 }

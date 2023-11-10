@@ -4,7 +4,10 @@
     <a mat-raised-button routerLink="/shedule" routerLinkActive="active"><mat-icon>dashboard</mat-icon></a>
     <a mat-raised-button routerLink="/stats" routerLinkActive="active"><mat-icon>show_chart</mat-icon></a>
     <a mat-raised-button routerLink="/info" routerLinkActive="active"><mat-icon>home</mat-icon></a>
-    <a mat-raised-button (click)="logout()"><mat-icon>exit_to_app</mat-icon></a>
+    <div>
+        <span>{{this.userName}} </span>
+        <a mat-raised-button (click)="logout()"><mat-icon>exit_to_app</mat-icon></a>
+    </div>
 </mat-toolbar> 
         
         

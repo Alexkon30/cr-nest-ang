@@ -10,11 +10,11 @@ export class OrganizationUserRole {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Organization, organization => organization.orgUserRoles)
-  organization: Organization
+  // @ManyToOne(() => Organization, organization => organization.orgUserRoles)
+  // organization: Organization
 
-  @ManyToOne(() => User, user => user.orgUserRoles)
-  user: User
+  // @ManyToOne(() => User, user => user.orgUserRoles)
+  // user: User
 
   @ManyToMany(() => Role)
   @JoinTable()

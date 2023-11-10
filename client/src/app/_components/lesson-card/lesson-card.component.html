@@ -1,3 +1,6 @@
 <div class="lesson" [routerLink]="url" [ngStyle]="{'height': height + 'px', 'margin-top': gap + 'px'}">
-    Lesson
+    <p class="discipline"><b>{{lesson.discipline}}</b></p>
+    <p>{{teachersList}}</p>
+    <p><i>groups</i>: {{groupsList}}</p>
+    <p><i>room</i>: {{lesson.room.number}}</p>
 </div>

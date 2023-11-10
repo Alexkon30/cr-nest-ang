@@ -2,13 +2,6 @@ import { IElement } from './common';
 import { Group } from './group';
 import { Role } from './role';
 
-interface OrgUserRole extends IElement {
-  roles: Array<{
-    id: number;
-    value: Role;
-  }>;
-}
-
 export interface User extends IElement {
   firstName: string;
   lastName: string;
@@ -16,8 +9,10 @@ export interface User extends IElement {
   token?: string;
   email: string;
   // avatar: string;
-  // role: Role
-  orgUserRoles: OrgUserRole[];
+  roles: Array<{
+    id: number;
+    value: Role;
+  }>;
   group: Omit<Group, 'students'>;
 }
 
@@ -27,17 +22,12 @@ export interface User extends IElement {
 //     "firstName": "Eleazar",
 //     "lastName": "Ankunding",
 //     "patronymic": null,
-//     "orgUserRoles": [
-//         {
-//             "id": 27,
-//             "roles": [
-//                 {
-//                     "id": 4,
-//                     "value": "STUDENT"
-//                 }
-//             ]
-//         }
-//     ],
+//     "roles": [
+//        {
+//          "id": 4,
+//          "value": "STUDENT"
+//        }
+//      ]
 //     "group": {
 //         "id": 3,
 //         "title": "IB"

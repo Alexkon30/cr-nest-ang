@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { OrganizationUserRole } from "../org-user-roles/org-user-roles.entity";
+// import { OrganizationUserRole } from "../org-user-roles/org-user-roles.entity";
 import { User } from "../users/user.entity";
 
 @Entity({
@@ -15,8 +15,8 @@ export class Organization {
   @Column()
   title: string;
 
-  @OneToMany(() => OrganizationUserRole, (orgUserRole) => orgUserRole.organization)
-  orgUserRoles: OrganizationUserRole[]
+  // @OneToMany(() => OrganizationUserRole, (orgUserRole) => orgUserRole.organization)
+  // orgUserRoles: OrganizationUserRole[]
 
   // @Column()
   // lessons: Lesson[];

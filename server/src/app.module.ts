@@ -6,7 +6,7 @@ import { TypeOrmService } from './config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './modules/users/user.module';
 import { OrganizationsModule } from './modules/organizations/organizations.module';
-import { OrgUserRolesModule } from './modules/org-user-roles/org-user-roles.module';
+// import { OrgUserRolesModule } from './modules/org-user-roles/org-user-roles.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { LessonsModule } from './modules/lessons/lessons.module';
 import { GroupsModule } from './modules/groups/group.module';
@@ -26,7 +26,7 @@ import { RoomsModule } from './modules/rooms/rooms.module';
     UserModule,
     AuthModule,
     OrganizationsModule,
-    OrgUserRolesModule,
+    // OrgUserRolesModule,
     RolesModule,
     LessonsModule,
     GroupsModule,

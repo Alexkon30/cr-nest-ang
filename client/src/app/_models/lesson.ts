@@ -8,11 +8,11 @@ import { User } from './user';
 
 export interface Lesson extends IElement {
 //   status: string;
-  teachers?: User[];
-  groups?: Group[];
+  teachers: User[];
+  groups: Group[];
   discipline?: string;
   theme?: string;
-  room?: number;
+  room?: Room;
   dateStart: string;
   dateEnd: string;
   type?: string;
