@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Group, IStore, User } from '@app/_models';
+import { Group, IStore, Source, User } from '@app/_models';
 import { selectGroups } from '@app/_store/Groups/groups.selector';
 import { selectTeachers } from '@app/_store/Users/users.selector';
 import { Store } from '@ngrx/store';
@@ -14,7 +14,7 @@ export class InfoComponent implements OnInit {
   groups$: Observable<Group[]> = this.store.select(selectGroups);
   teachers$: Observable<User[]> = this.store.select(selectTeachers);
 
-  selectedItem: string
+  selectedItem: Source = Source.GROUP
   groupId: number
   teacherId: number
 
@@ -26,8 +26,16 @@ export class InfoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  selectItem(item: string) {
+  selectItem(item: Source) {
     this.selectedItem = item
+  }
+
+  setTeachers() {
+    this.selectedItem = Source.TEACHER
+  }
+
+  setGroups() {
+    this.selectedItem = Source.GROUP
   }
 
 }

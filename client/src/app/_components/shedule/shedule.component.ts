@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Group, Lesson, Room, User, Source, IStore } from '@app/_models';
-import { LessonsService } from '@app/_services';
 import moment from 'moment';
 import { AutoUnsub } from '@app/_helpers';
 import { Observable } from 'rxjs';

@@ -18,18 +18,24 @@
 
         <ng-container *ngIf="sourceType === 'TEACHER'">
             <mat-select [(ngModel)]="teacherId">
-                <mat-option *ngFor="let teacher of teachers$ | async" [value]="teacher.id">{{teacher.firstName + ' ' +
+                @for (teacher of teachers$ | async; track teacher) {
+                <mat-option [value]="teacher.id">{{teacher.firstName + ' ' +
                     teacher.lastName}}</mat-option>
+                }
             </mat-select>
         </ng-container>
         <ng-container *ngIf="sourceType === 'GROUP'">
             <mat-select [(ngModel)]="groupId">
-                <mat-option *ngFor="let group of groups$ | async" [value]="group.id">{{group.title}}</mat-option>
+                @for (group of groups$ | async; track group) {
+                <mat-option [value]="group.id">{{group.title}}</mat-option>
+                }
             </mat-select>
         </ng-container>
         <ng-container *ngIf="sourceType === 'ROOM'">
             <mat-select [(ngModel)]="roomId">
-                <mat-option *ngFor="let room of rooms$ | async" [value]="room.id">{{room.number}}</mat-option>
+                @for (room of rooms$ | async; track room) {
+                <mat-option [value]="room.id">{{room.number}}</mat-option>
+                }
             </mat-select>
         </ng-container>
 
@@ -44,16 +50,18 @@
             time
         </div>
         <div class="gap"></div>
-        <app-ruler></app-ruler>
+        <app-ruler />
     </div>
 
-    <div class="shedule__column" *ngFor="let day of (lessons$ | async | sortByDays)">
+    @for (day of (lessons$ | async | sortByDays); track day) {
+    <div class="shedule__column">
         <div class="shedule__header">
             {{day.title | titlecase}}
         </div>
         <div class="gap"></div>
-
-        <app-lesson-card *ngFor="let lesson of (day.lessons | sortByTime | addPreviousLessonEnd)" [lesson]="lesson">
-        </app-lesson-card>
+        @for (lesson of (day.lessons | sortByTime | addPreviousLessonEnd); track lesson) {
+        <app-lesson-card [lesson]="lesson" />
+        }
     </div>
+    }
 </div>

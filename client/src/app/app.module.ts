@@ -16,9 +16,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatListModule} from '@angular/material/list';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { ErrorInterceptor, JwtInterceptor } from '@app/_helpers';
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -41,10 +41,14 @@ import {
   RulerComponent,
   LessonCardComponent,
 } from '@app/_components';
-import { AddPreviousLessonEndPipe, SortByTimePipe, SortByDaysPipe } from '@app/pipes';
+import {
+  AddPreviousLessonEndPipe,
+  SortByTimePipe,
+  SortByDaysPipe,
+} from '@app/pipes';
 import { GraphQLModule } from './graphql.module';
 import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects'
+import { EffectsModule } from '@ngrx/effects';
 import { lessonsReducer } from './_store/Lessons/lessons.reducer';
 import { groupsReducer } from './_store/Groups/groups.reducer';
 import { usersReducer } from './_store/Users/users.reducer';
@@ -74,7 +78,7 @@ import { UsersEffects } from './_store/Users/users.effects';
     LessonCardComponent,
     SortByTimePipe,
     SortByDaysPipe,
-    AddPreviousLessonEndPipe
+    AddPreviousLessonEndPipe,
   ],
   imports: [
     BrowserModule,
@@ -98,8 +102,18 @@ import { UsersEffects } from './_store/Users/users.effects';
     GraphQLModule,
     FormsModule,
     MatMomentDateModule,
-    StoreModule.forRoot({lessons: lessonsReducer, groups: groupsReducer, users: usersReducer, rooms: roomsReducer}),
-    EffectsModule.forRoot([LessonsEffects, GroupsEffects, RoomsEffects, UsersEffects])
+    StoreModule.forRoot({
+      lessons: lessonsReducer,
+      groups: groupsReducer,
+      users: usersReducer,
+      rooms: roomsReducer,
+    }),
+    EffectsModule.forRoot([
+      LessonsEffects,
+      GroupsEffects,
+      RoomsEffects,
+      UsersEffects,
+    ]),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
