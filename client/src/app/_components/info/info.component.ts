@@ -1,41 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Group, IStore, Source, User } from '@app/_models';
-import { selectGroups } from '@app/_store/Groups/groups.selector';
-import { selectTeachers } from '@app/_store/Users/users.selector';
+import { selectGroupById, selectGroups } from '@app/_store/Groups/groups.selector';
+import {
+  selectTeachers,
+  selectUserById,
+} from '@app/_store/Users/users.selector';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
-  styleUrls: ['./info.component.less']
+  styleUrls: ['./info.component.less'],
 })
-export class InfoComponent implements OnInit {
+export class InfoComponent {
   groups$: Observable<Group[]> = this.store.select(selectGroups);
   teachers$: Observable<User[]> = this.store.select(selectTeachers);
 
-  selectedItem: Source = Source.GROUP
-  groupId: number
-  teacherId: number
+  selectedItem: Source = Source.GROUP;
+  groupId: number;
+  teacherId: number;
+  teacher: Observable<User>;
+  group: Observable<Group>;
 
-  constructor(
-    private store: Store<IStore>
-  ) {
-  }
-
-  ngOnInit(): void {
-  }
-
-  selectItem(item: Source) {
-    this.selectedItem = item
-  }
+  constructor(private store: Store<IStore>) {}
 
   setTeachers() {
-    this.selectedItem = Source.TEACHER
+    this.selectedItem = Source.TEACHER;
   }
 
   setGroups() {
-    this.selectedItem = Source.GROUP
+    this.selectedItem = Source.GROUP;
   }
 
+  handleSelectTeacher() {
+    // if (!this.teacherId) return
+    this.teacher = this.store.select(selectUserById(this.teacherId));
+  }
+
+  handleSelectGroup() {
+    this.group = this.store.select(selectGroupById(this.groupId))
+  }
 }

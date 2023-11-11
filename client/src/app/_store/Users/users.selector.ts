@@ -8,3 +8,9 @@ export const selectTeachers = createSelector(selectUsers, (users) => {
     user.roles.some((role) => role.value === Role.TEACHER)
   );
 });
+
+export const selectUserById = (id: number) => 
+  createSelector(selectUsers, (users) => {
+    return users.find(user => user.id === id)
+  })
+

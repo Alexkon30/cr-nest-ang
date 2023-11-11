@@ -8,7 +8,7 @@
   <div class="select">
       <mat-form-field *ngIf="selectedItem === 'GROUP'">
         <mat-label>Choose group</mat-label>
-        <mat-select [(ngModel)]="groupId">
+        <mat-select [(ngModel)]="groupId" (selectionChange)="handleSelectGroup()">
           @for (group of groups$ | async; track group) {
           <mat-option [value]="group.id">{{group.title}}</mat-option>
           }
@@ -16,15 +16,21 @@
       </mat-form-field>
       <mat-form-field *ngIf="selectedItem === 'TEACHER'">
         <mat-label>Choose teacher</mat-label>
-        <mat-select [(ngModel)]="teacherId">
+        <mat-select [(ngModel)]="teacherId" (selectionChange)="handleSelectTeacher()">
           @for (teacher of teachers$ | async; track teacher) {
           <mat-option [value]="teacher.id">{{teacher.firstName + ' ' +
-            teacher.lastName}}</mat-option>
+            teacher.lastName + ' ' + teacher.id}}</mat-option>
           }
         </mat-select>
       </mat-form-field>
   </div>
   <div class="content">
-    
+    <mat-card *ngIf="selectedItem === 'TEACHER' && teacherId">
+      <mat-card-content>{{(this.teacher | async).firstName}}</mat-card-content>
+    </mat-card>
+
+    <mat-card *ngIf="selectedItem === 'GROUP' && groupId">
+      <mat-card-content>{{(this.group | async).title}}</mat-card-content>
+    </mat-card>
   </div>
 </div>
