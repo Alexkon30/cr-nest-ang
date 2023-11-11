@@ -16,6 +16,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { ErrorInterceptor, JwtInterceptor } from '@app/_helpers';
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -88,6 +91,9 @@ import { UsersEffects } from './_store/Users/users.effects';
     MatNativeDateModule,
     MatSelectModule,
     MatTableModule,
+    MatSidenavModule,
+    MatListModule,
+    MatFormFieldModule,
     MatDividerModule,
     GraphQLModule,
     FormsModule,

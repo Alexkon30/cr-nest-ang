@@ -1,1 +1,28 @@
-<p>info works!</p>
+<div class="info">
+  <div class="sidenav">
+    <mat-list>
+      <mat-list-item (click)="this.selectItem('Groups')">Groups</mat-list-item>
+      <mat-list-item (click)="this.selectItem('Teachers')">Teachers</mat-list-item>
+    </mat-list>
+  </div>
+  <div class="content">
+    <div>
+      <!-- <mat-form-field appearance="fill">
+        <mat-label>Choose element</mat-label>
+        <ng-container *ngIf="selectedItem === 'Teachers'">
+          <mat-select [(ngModel)]="teacherId">
+            <input matInput placeholder="Teachers">
+            <mat-option *ngFor="let teacher of teachers$ | async" [value]="teacher.id">{{teacher.firstName + ' ' +
+              teacher.lastName}}</mat-option>
+          </mat-select>
+        </ng-container>
+        <ng-container *ngIf="selectedItem === 'Groups'">
+          <mat-select [(ngModel)]="groupId">
+            <input matInput placeholder="Groups">
+            <mat-option *ngFor="let group of groups$ | async" [value]="group.id">{{group.title}}</mat-option>
+          </mat-select>
+        </ng-container>
+      </mat-form-field> -->
+    </div>
+  </div>
+</div>
