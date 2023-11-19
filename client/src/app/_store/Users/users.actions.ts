@@ -8,3 +8,9 @@ export const UsersApiActions = createActionGroup({
     'Load Users': emptyProps(),
   },
 });
+
+export const UsersActions = createActionGroup({
+  source: 'Users',
+  events: {
+  }
+})

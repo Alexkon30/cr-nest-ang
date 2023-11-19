@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Group, Lesson, Room, User, Source, IStore } from '@app/_models';
+import { Group, Lesson, Room, User, Source, IStore, Role } from '@app/_models';
 import moment from 'moment';
 import { AutoUnsub } from '@app/_helpers';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectLessons } from '@app/_store/Lessons/lessons.selectors';
-import { selectGroups } from '@app/_store/Groups/groups.selector';
-import { selectTeachers } from '@app/_store/Users/users.selector';
+import { selectAllGroups } from '@app/_store/Groups/groups.selector';
+import { selectUsersByRole } from '@app/_store/Users/users.selector';
 import { selectRooms } from '@app/_store/Rooms/rooms.selector';
 import { LessonsApiActions } from '@app/_store/Lessons/lessons.actions';
 
@@ -18,8 +18,8 @@ import { LessonsApiActions } from '@app/_store/Lessons/lessons.actions';
 // @AutoUnsub()
 export class SheduleComponent {
   lessons$: Observable<Lesson[]> = this.store.select(selectLessons);
-  groups$: Observable<Group[]> = this.store.select(selectGroups);
-  teachers$: Observable<User[]> = this.store.select(selectTeachers);
+  groups$: Observable<Group[]> = this.store.select(selectAllGroups);
+  teachers$: Observable<User[]> = this.store.select(selectUsersByRole(Role.TEACHER));
   rooms$: Observable<Room[]> = this.store.select(selectRooms);
   date: moment.Moment;
   sourceType = Source.GROUP;

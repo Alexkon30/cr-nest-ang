@@ -1,0 +1,24 @@
+<div class="user-card">
+  <mat-card>
+    <mat-card-content>
+      <div class="user-field">
+        <div class="user-field__title">{{'firstName:' | titlecase }}</div>
+        <div class="user-field__content" *ngIf="this.user">{{this.user.firstName}}</div>
+      </div>
+      <div class="user-field">
+        <div class="user-field__title">{{'lastName:' | titlecase }}</div>
+        <div class="user-field__content" *ngIf="this.user">{{this.user.lastName}}</div>
+      </div>
+      <div class="user-field">
+        <div class="user-field__title">{{'email:' | titlecase }}</div>
+        <div class="user-field__content" *ngIf="this.user">{{this.user.email}}</div>
+      </div>
+      <div class="user-field">
+        <div class="user-field__title">{{'roles:' | titlecase }}</div>
+        <div class="user-field__content" *ngIf="this.user">{{this.userRoles | lowercase}}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+

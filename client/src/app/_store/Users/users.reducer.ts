@@ -1,11 +1,22 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { UsersApiActions } from './users.actions';
+import { UsersActions, UsersApiActions } from './users.actions';
 import { User } from '@app/_models';
+import _ from 'lodash';
 
-export const initialState: User[] = [];
+export interface UsersState {
+  users: User[],
+}
+
+export const initialState: UsersState = {
+  users: [],
+};
 
 export const usersReducer = createReducer(
   initialState,
-  on(UsersApiActions.usersLoadedSuccess, (_state, {users}) => users)
+  on(UsersApiActions.usersLoadedSuccess, (_state, {users}) => {
+    let copy = _.cloneDeep(_state)
+    copy.users = users
+    return copy
+  }),
 );

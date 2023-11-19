@@ -1,9 +1,11 @@
-import { Group } from '@app/_models';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { IStore } from '@app/_models';
+import { createSelector } from '@ngrx/store';
 
-export const selectGroups = createFeatureSelector<Group[]>('groups');
+const groupsState = (state: IStore) => state.groupsState
 
-export const selectGroupById = (id: number) => 
-  createSelector(selectGroups, groups => {
-    return groups.find(group => group.id === id)
-  })
+export const selectAllGroups = createSelector(groupsState, state => state.groups)
+
+export const selectGroupById = (id: number) =>
+  createSelector(groupsState, (state) => {
+    return state.groups.find((group) => group.id === id);
+  });

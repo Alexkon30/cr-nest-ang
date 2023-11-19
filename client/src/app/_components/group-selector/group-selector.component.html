@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-label>Choose group</mat-label>
+  <mat-select>
+    @for (group of groups$ | async; track group) {
+    <mat-option [value]="group.id">{{group.title}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

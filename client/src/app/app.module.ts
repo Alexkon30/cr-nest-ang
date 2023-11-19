@@ -31,7 +31,6 @@ import {
   StatsComponent,
   LessonComponent,
   ResultsComponent,
-  InfoComponent,
   NavigationComponent,
   PagenotfoundComponent,
   FooterComponent,
@@ -40,6 +39,10 @@ import {
   RegisterComponent,
   RulerComponent,
   LessonCardComponent,
+  GroupSelectorComponent,
+  UserSelectorComponent,
+  GroupInfoComponent,
+  UserInfoComponent
 } from '@app/_components';
 import {
   AddPreviousLessonEndPipe,
@@ -57,6 +60,9 @@ import { LessonsEffects } from './_store/Lessons/lessons.effects';
 import { GroupsEffects } from './_store/Groups/groups.effects';
 import { RoomsEffects } from './_store/Rooms/rooms.effects';
 import { UsersEffects } from './_store/Users/users.effects';
+import { InfoComponent } from '@app/_pages';
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
+
 
 @NgModule({
   declarations: [
@@ -76,9 +82,13 @@ import { UsersEffects } from './_store/Users/users.effects';
     AuthComponent,
     RulerComponent,
     LessonCardComponent,
+    GroupSelectorComponent,
+    UserSelectorComponent,
     SortByTimePipe,
     SortByDaysPipe,
     AddPreviousLessonEndPipe,
+    GroupInfoComponent,
+    UserInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,9 +114,10 @@ import { UsersEffects } from './_store/Users/users.effects';
     MatMomentDateModule,
     StoreModule.forRoot({
       lessons: lessonsReducer,
-      groups: groupsReducer,
-      users: usersReducer,
+      groupsState: groupsReducer,
+      usersState: usersReducer,
       rooms: roomsReducer,
+      router: routerReducer,
     }),
     EffectsModule.forRoot([
       LessonsEffects,
@@ -114,6 +125,7 @@ import { UsersEffects } from './_store/Users/users.effects';
       RoomsEffects,
       UsersEffects,
     ]),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

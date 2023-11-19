@@ -1,16 +1,28 @@
-import { Role, User } from '@app/_models';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { IStore, Role } from '@app/_models';
+import { createSelector } from '@ngrx/store';
+import { selectRouteParams } from '../Router/router.selector';
 
-export const selectUsers = createFeatureSelector<User[]>('users');
+const usersState = (state: IStore) => state.usersState;
 
-export const selectTeachers = createSelector(selectUsers, (users) => {
-  return users.filter((user) =>
-    user.roles.some((role) => role.value === Role.TEACHER)
-  );
-});
+export const selectUserById = (id: number) =>
+  createSelector(usersState, (state) => {
+    const user = state.users.find((user) => user.id === id);
+    return user;
+  });
 
-export const selectUserById = (id: number) => 
-  createSelector(selectUsers, (users) => {
-    return users.find(user => user.id === id)
-  })
+export const selectUsersByRole = (searchRole: Role) =>
+  createSelector(usersState, (state) => {
+    return state.users.filter((user) =>
+      user.roles.some((role) => role.value === searchRole)
+    );
+  });
 
+export const selectUserByUrl = createSelector(
+  usersState,
+  selectRouteParams,
+  (state, params) => {
+    const user = state.users.find((user) => user.id === Number(params.id))
+    // console.log({user})
+    return user;
+  }
+);

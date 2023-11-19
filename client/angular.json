@@ -33,7 +33,8 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "moment"
+              "moment",
+              "lodash"
             ]
           },
           "configurations": {

@@ -52,10 +52,11 @@ export class User {
   roles: Role[]
 
   // @Column({
-  //   type: 'enum',
-  //   enum: RoleEnum
+  //   type: 'simple-array',
+  //   array: true,
+  //   default: []
   // })
-  // roles: RoleEnum;
+  // roles: RoleEnum[];
 
 
   // @Column({

@@ -13,8 +13,8 @@ export class Role {
   })
   value: RoleEnum;
 
-  @ManyToMany(() => User, {
-    nullable: true
-  })
-  users: User[]
+  // @ManyToMany(() => User, {
+  //   nullable: true
+  // })
+  // users: User[]
 }

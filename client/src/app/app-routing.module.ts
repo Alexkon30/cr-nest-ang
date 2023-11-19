@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
   HomeComponent,
-  InfoComponent,
   ProfileComponent,
   SheduleComponent,
   StatsComponent,
@@ -12,6 +11,11 @@ import {
   AuthComponent,
 } from '@app/_components';
 import { AuthGuard } from '@app/_helpers';
+import { InfoComponent } from '@app/_pages';
+import { GroupInfoComponent } from './_components/group-info/group-info.component';
+import { UserInfoComponent } from './_components/user-info/user-info.component';
+import { GroupSelectorComponent } from './_components/group-selector/group-selector.component';
+import { UserSelectorComponent } from './_components/user-selector/user-selector.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -36,6 +40,28 @@ const routes: Routes = [
       {
         path: 'info',
         component: InfoComponent,
+        children: [
+          {
+            path: 'groups',
+            component: GroupSelectorComponent,
+            children: [
+              {
+                path: ':id',
+                component: GroupInfoComponent
+              }
+            ]
+          },
+          {
+            path: 'users',
+            component: UserSelectorComponent,
+            children: [
+              {
+                path: ':id',
+                component: UserInfoComponent
+              }
+            ]
+          }
+        ]
       },
       {
         path: 'lesson/:id',
