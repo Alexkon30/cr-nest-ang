@@ -16,6 +16,7 @@ import { GroupInfoComponent } from './_components/group-info/group-info.componen
 import { UserInfoComponent } from './_components/user-info/user-info.component';
 import { GroupSelectorComponent } from './_components/group-selector/group-selector.component';
 import { UserSelectorComponent } from './_components/user-selector/user-selector.component';
+import { AdminComponent } from './_components/admin/admin.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -70,6 +71,10 @@ const routes: Routes = [
       {
         path: 'results/:id',
         component: ResultsComponent,
+      },
+      {
+        path: 'admin',
+        component: AdminComponent,
       },
       {
         path: '**',

@@ -14,13 +14,6 @@ export interface LessonsResult {
   providedIn: 'root',
 })
 export class LessonsService {
-
-  getAllLessons(): Observable<Lesson[]> {
-    return this.http
-      .get<Lesson[]>(`${environment.apiUrl}/lessons/all`)
-      .pipe(catchError(this.errorService.handleError));
-  }
-
   private lessonsQuery: QueryRef<LessonsResult, {}>;
 
   constructor(private apollo: Apollo, private http: HttpClient, private errorService: ErrorService) {
@@ -55,15 +48,9 @@ export class LessonsService {
     return result.data.findLessons
   }
 
-  // loadLessons(start: string, end: string) {
-  //   this.apollo.query<{lessons: Lesson[]}>({
-  //     query: GET_ALL_LESSONS,
-  //     variables: {
-  //       dateStart: start,
-  //       dateEnd: end
-  //     }
-  //   }).subscribe(data => {
-  //     this.lessonsSubject.next(JSON.parse(JSON.stringify(data.data.lessons)))
-  //   })
-  // }
+  getAllLessons(): Observable<Lesson[]> {
+    return this.http
+      .get<Lesson[]>(`${environment.apiUrl}/lessons/all`)
+      .pipe(catchError(this.errorService.handleError));
+  }
 }

@@ -1,0 +1,50 @@
+  <mat-tab-group class="tab-group">
+    <mat-tab label="Users">
+      <div class="tab">
+        <div class="sidenav">
+            <div (click)="changeUserMode('student')" class="sidenav__item">Students</div>
+            <div (click)="changeUserMode('teacher')" class="sidenav__item">Teachers</div>
+            <div (click)="changeUserMode('new')" class="sidenav__item"><mat-icon>person_add</mat-icon>New</div>
+        </div>
+        <div class="content">
+          <mat-form-field *ngIf="userMode !== 'new'">
+            <mat-label>User</mat-label>
+            <ng-container *ngIf="userMode === 'teacher'">
+              <mat-select>
+                @for (teacher of teachers$ | async; track teacher) {
+                <mat-option [value]="teacher.id">{{teacher.firstName + ' ' +
+                  teacher.lastName}}</mat-option>
+                }
+              </mat-select>
+            </ng-container>
+  
+            <ng-container *ngIf="userMode === 'student'">
+              <mat-select>
+                @for (student of students$ | async; track student) {
+                <mat-option [value]="student.id">{{student.firstName + ' ' +
+                  student.lastName}}</mat-option>
+                }
+              </mat-select>
+            </ng-container>
+          </mat-form-field>
+
+          <mat-card *ngIf="userMode === 'new'">
+            <mat-card-content>Simple card</mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Groups">
+      <mat-form-field>
+        <mat-label>Group</mat-label>
+        <mat-select>
+          @for (group of groups$ | async; track group) {
+          <mat-option [value]="group.id">{{group.title}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </mat-tab>
+    <mat-tab label="Lessons"> Content 3 </mat-tab>
+    <mat-tab label="Rooms"> Content 3 </mat-tab>
+    <mat-tab label="Disciplines"> Content 3 </mat-tab>
+  </mat-tab-group>

@@ -64,11 +64,14 @@ const main = async () => {
   const students: User[] = [];
 
   for (let i = 0; i < 30; i++) {
+    const firstName = faker.name.firstName()
+    const lastName = faker.name.lastName()
+
     const student = manager.create(User, {
-      email: faker.internet.email(),
+      email: faker.internet.email(firstName, lastName),
       password: await hashPassword('simplepass'),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
+      firstName: firstName,
+      lastName: lastName,
       roles: [studentRole]
     });
     students.push(student);
@@ -78,11 +81,14 @@ const main = async () => {
   const teachers: User[] = []
 
   for (let i = 0; i < 3; i++) {
+    const firstName = faker.name.firstName()
+    const lastName = faker.name.lastName()
+
     const techer = manager.create(User, {
-      email: faker.internet.email(),
+      email: faker.internet.email(firstName, lastName),
       password: await hashPassword('simplepass'),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
+      firstName: firstName,
+      lastName: lastName,
       roles: [teacherRole]
     });
     teachers.push(techer);

@@ -19,6 +19,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { ErrorInterceptor, JwtInterceptor } from '@app/_helpers';
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -42,7 +43,8 @@ import {
   GroupSelectorComponent,
   UserSelectorComponent,
   GroupInfoComponent,
-  UserInfoComponent
+  UserInfoComponent,
+  AdminComponent
 } from '@app/_components';
 import {
   AddPreviousLessonEndPipe,
@@ -89,6 +91,7 @@ import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
     AddPreviousLessonEndPipe,
     GroupInfoComponent,
     UserInfoComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -105,6 +108,7 @@ import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
     MatNativeDateModule,
     MatSelectModule,
     MatTableModule,
+    MatTabsModule,
     MatSidenavModule,
     MatListModule,
     MatFormFieldModule,
